@@ -20,7 +20,7 @@ public class Search {
     /**
      * search by path.
      * @param path is a String that contains path
-     * @return list of Files
+     * @return list of Filesgi
      */
     public  List<File> searchByPath(String path) {
         try {
