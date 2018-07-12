@@ -1,4 +1,11 @@
+/.gradle/
 /.idea/
 /build/
 /out/
 *.iml
+*.xml
+*.log
+*.class
+*.md
+*.txt
+*.db
