@@ -14,6 +14,8 @@
 
 package com.fundation.search.model;
 
+import com.fundation.search.controller.Criteria;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -115,12 +117,21 @@ public class Search {
         return listFile;
     }
 
+    /**
+     * this medthod search extension.
+     *
+     * @param listfile  is a list filterd.
+     * @param extension type of extension that search.
+     * @return a list that is filterd.
+     */
     public List<File> searchByExtention(List<File> listfile, String extension) {
         return listfile.stream().filter(file -> file.getName().endsWith(extension)).collect(Collectors.toList());
     }
 
     /**
-     * @param criteria
+     * this method search a object criteria.
+     *
+     * @param criteria is a criteria for search.
      */
     public void searchByCriteria(Criteria criteria) {
         if (criteria.getPath() == null) {
@@ -138,6 +149,11 @@ public class Search {
         }
     }
 
+    /**
+     * this method get the result about search.
+     *
+     * @return the list that contains result.
+     */
     public List<AssetFile> getResult() {
         return fileList.stream()
                 .map(file -> new AssetFile(file.getPath(), file.getName(), file.length(), file.isHidden()))

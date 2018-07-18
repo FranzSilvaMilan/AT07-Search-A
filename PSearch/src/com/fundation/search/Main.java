@@ -1,7 +1,7 @@
 package com.fundation.search;
 
 
-import com.fundation.search.model.Criteria;
+import com.fundation.search.controller.Criteria;
 import com.fundation.search.model.AssetFile;
 import com.fundation.search.model.Search;
 

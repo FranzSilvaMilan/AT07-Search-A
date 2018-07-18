@@ -12,7 +12,7 @@
  * with Jala Foundation.
  */
 
-package com.fundation.search.model;
+package com.fundation.search.controller;
 
 /**
  * This class is a object that have a criterias for search.
