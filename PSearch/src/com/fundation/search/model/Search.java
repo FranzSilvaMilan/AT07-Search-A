@@ -114,4 +114,10 @@ public class Search {
         }
         return listFile;
     }
+
+    public List<File> criterialSearch() {
+        AssetFile dataSearch;
+
+        return fileList;
+    }
 }
