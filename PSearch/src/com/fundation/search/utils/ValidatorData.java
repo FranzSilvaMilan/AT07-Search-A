@@ -1,5 +1,5 @@
 /**
- * @(#)Asset.java Copyright (c) 2018 Jala Foundation.
+ * @(#)ValidatorData.java Copyright (c) 2018 Jala Foundation.
  * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  * This software is the confidential and proprietary information of
@@ -15,7 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
- * This class Asset can be FileResult, MultimediaResult and maybe SearchFolder.
+ * This class ValidatorData can be valid, MultimediaResult and maybe SearchFolder.
  *
  * @author Denis Camacho - AT-[07].
  * @version 1.0.

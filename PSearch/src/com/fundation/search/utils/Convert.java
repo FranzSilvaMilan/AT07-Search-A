@@ -1,5 +1,5 @@
 /**
- * @(#)Asset.java Copyright (c) 2018 Jala Foundation.
+ * @(#)Convert.java Copyright (c) 2018 Jala Foundation.
  * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  * This software is the confidential and proprietary information of
@@ -11,7 +11,7 @@
 package com.fundation.search.utils;
 
 /**
- * This class Asset can be FileResult, MultimediaResult and maybe SearchFolder.
+ * This class Convert can be FileResult, MultimediaResult and maybe SearchFolder.
  *
  * @author Denis Camacho - AT-[07].
  * @version 1.0.
@@ -24,7 +24,7 @@ public class Convert {
      * @param choose of size.
      * @return size in bits.
      */
-    public int convertTOLong(int size, String choose) {
+    public long convertTOLong(long size, String choose) {
         switch (choose) {
             case "Gb":
                 size *= MODIFIER * MODIFIER * MODIFIER;
