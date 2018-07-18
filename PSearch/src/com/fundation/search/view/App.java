@@ -7,7 +7,11 @@ package com.fundation.search.view;
  */
 public class App {
     public static void main(String[] arg) {
+
         new FrameMain();
+        System.out.println(new PanelSearch().getOperator());
+
+
     }
 
 }

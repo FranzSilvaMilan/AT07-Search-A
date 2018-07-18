@@ -15,7 +15,6 @@ import javax.swing.JTable;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
-import javax.swing.JSpinner;
 
 /**
  * This class Asset can be FileResult SearchFolder.
@@ -28,18 +27,18 @@ import javax.swing.JSpinner;
 public class PanelSearch extends JPanel {
 
 
-    JTextField textFile;
-    JLabel labelFile;
-    JTextField textPath;
-    JLabel labelPhat;
-    JButton bottoSearsh;
-    JLabel LabelSize;
-
+    private JTextField textFile;
+    private JTextField textPath;
+    private JButton bottoSearsh;
+    private JComboBox<String> operator;
     String[] tipeList = new String[]{">", "<", "="};
-    JComboBox<String> tipeLista;
     //create a arreglo of contain ListSize the bytes,kb,Mb and Gb.
     String[] ListSize = new String[]{"bytes", "kb", "Mb", "Gb"};
     JComboBox<String> tipeListSize;
+
+    JLabel LabelSize;
+    JLabel labelFile;
+    JLabel labelPhat;
 
     //JTable tables;
     //here look at size the cant.
@@ -53,8 +52,6 @@ public class PanelSearch extends JPanel {
         settingPanelSearch();
         initComponetTable();
         initComponetPanel();
-
-
     }
 
     /**
@@ -99,7 +96,7 @@ public class PanelSearch extends JPanel {
         //create a text field whit columns 10.
         textFile = new JTextField(10);
         //look at "FILE-NAME" on text field.
-        textFile.setText("FILE-NAME");
+        textFile.setToolTipText("text file");
         //position x,y,width and height.
         textFile.setBounds(90, 20, 100, 30);
         //add on panelSearch.
@@ -127,8 +124,8 @@ public class PanelSearch extends JPanel {
         LabelSize = new JLabel("SIZE:");
         LabelSize.setBounds(320, 50, 100, 30);
         //dropdown a list that contain =`,`>` and ´<`.
-        tipeLista = new JComboBox<>(tipeList);
-        tipeLista.setBounds(440, 50, 60, 30);
+        operator = new JComboBox<>(tipeList);
+        operator.setBounds(440, 50, 60, 30);
         //create a size  tipe dropdown.
         tipeListSize = new JComboBox<>(ListSize);
         //position size.
@@ -147,11 +144,32 @@ public class PanelSearch extends JPanel {
         add(labelPhat);
         add(bottoSearsh);
         add(LabelSize);
-        add(tipeLista);
+        add(operator);
         add(tipeListSize);
         add(textPath);
-
-
     }
+
+    public String getTipeListSize() {
+        System.out.println(tipeListSize.getSelectedItem().toString());
+        return tipeListSize.getSelectedItem().toString();
+    }
+
+    public String getOperator() {
+        System.out.println(operator.getSelectedItem().toString());
+        return operator.getSelectedItem().toString();
+    }
+
+    public String getTextFile() {
+        return textFile.getText();
+    }
+
+    public String getTextPath() {
+        return textPath.getText();
+    }
+
+    public String getBottoSearsh() {
+        return bottoSearsh.getText();
+    }
+
 
 }

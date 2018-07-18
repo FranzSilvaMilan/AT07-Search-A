@@ -7,6 +7,7 @@ import java.awt.Color;
 
 /**
  * @author Ketty Camacho Vasquez.
+ * @author Franz Elmer Silva Milan.
  * this is class is a Jframe fisrt,it contain panel of.
  * search panel of a archive and path.
  */
@@ -19,7 +20,7 @@ public class FrameMain  extends JFrame {
     PanelSearch panelSearch;
     PanelMultimedia panelMultimedia;
     JLabel title;
-    JTabbedPane Tab;
+    JTabbedPane Tab;// crear una nueva clase
 
     /**
      * this is constructor of class {@link FrameMain}
@@ -48,7 +49,6 @@ public class FrameMain  extends JFrame {
     public void iniComponent() {
         //create panel Search.
         panelSearch = new PanelSearch();
-
         panelSearch.setBackground(Color.CYAN);
         //create of panel multimedia.
         panelMultimedia = new PanelMultimedia();
