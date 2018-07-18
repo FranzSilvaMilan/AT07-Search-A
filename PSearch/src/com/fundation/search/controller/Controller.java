@@ -1,5 +1,5 @@
 /**
- * @(#)Asset.java Copyright (c) 2018 Jala Foundation.
+ * @(#)Controller.java Copyright (c) 2018 Jala Foundation.
  * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  * This software is the confidential and proprietary information of
@@ -14,20 +14,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Model;
-import View.ViewInterface;
-import utils.ValidatorData;
+import com.fundation.search.model.Search;
+import com.fundation.search.utils.ValidatorData;
+import com.fundation.search.view.FrameMain;
+
 
 /**
  *
- * This class Asset can be FileResult, MultimediaResult and maybe SearchFolder.
+ * This class controller can be FileResult, MultimediaResult and maybe SearchFolder.
  *
  * @author Denis Camacho - AT-[07].
  * @version 1.0.
  */
 public class Controller {
-    private Model model;
-    private ViewInterface view;
+    private Search model;
+    private FrameMain view;
     private ValidatorData valid;
     private String path;
     private String size;
@@ -36,8 +37,8 @@ public class Controller {
      * builder of class Controller.
      */
     public Controller() {
-        model = new Model();
-        view = new ViewInterface();
+        model = new Search();
+        view = new FrameMain();
         valid = new ValidatorData();
     }
 
