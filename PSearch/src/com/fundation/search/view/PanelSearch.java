@@ -15,6 +15,8 @@ import javax.swing.JTable;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * This class Asset can be FileResult SearchFolder.
@@ -31,9 +33,11 @@ public class PanelSearch extends JPanel {
     private JTextField textPath;
     private JButton bottoSearsh;
     private JComboBox<String> operator;
-    String[] tipeList = new String[]{">", "<", "="};
-    //create a arreglo of contain ListSize the bytes,kb,Mb and Gb.
-    String[] ListSize = new String[]{"bytes", "kb", "Mb", "Gb"};
+    String[] operatiorOptions;
+    /**
+     * array that contains units of the bytes,kb,Mb and Gb.
+     */
+    String[] listUnitSize;
     JComboBox<String> tipeListSize;
 
     JLabel LabelSize;
@@ -68,23 +72,35 @@ public class PanelSearch extends JPanel {
      * this method containTable contain table of information list archive.
      */
     private void initComponetTable() {
-
+        listUnitSize = new String[]{"bytes", "kb", "Mb", "Gb"};
+        operatiorOptions = new String[]{">", "<", "="};
         String column[] = {"FILE", "SIZE", "PATH"};
-        DefaultTableModel model = new DefaultTableModel(column, 30);
+
+        String date[] = {"path","aaa","aaaaaa"};
+        DefaultTableModel model = new DefaultTableModel(column, 0);
+
+
         JTable table = new JTable(model);
+        model.addRow(date);
         JTableHeader heard = table.getTableHeader();
         JPanel panel = new JPanel();
         //review on interface the table.
         panel.setLayout(new BorderLayout());
         panel.add(heard, BorderLayout.NORTH);
-        panel.add(table, BorderLayout.CENTER);
 
+        //table.setModel(new javax.swing.table.DefaultTableModel{dates,new String[]{"Path","File Name","Size","Hidden"}});
+
+
+
+
+
+
+        panel.add(table, BorderLayout.CENTER);
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setPreferredSize(new Dimension(0, 0));
         //position of table.
         panel.setBounds(15, 120, 600, 340);
         add(panel);
-
     }
 
     /**
@@ -124,10 +140,10 @@ public class PanelSearch extends JPanel {
         LabelSize = new JLabel("SIZE:");
         LabelSize.setBounds(320, 50, 100, 30);
         //dropdown a list that contain =`,`>` and ´<`.
-        operator = new JComboBox<>(tipeList);
+        operator = new JComboBox<>(operatiorOptions);
         operator.setBounds(440, 50, 60, 30);
         //create a size  tipe dropdown.
-        tipeListSize = new JComboBox<>(ListSize);
+        tipeListSize = new JComboBox<>(listUnitSize);
         //position size.
         tipeListSize.setBounds(500, 50, 100, 30);
         //create spinner.
@@ -150,12 +166,10 @@ public class PanelSearch extends JPanel {
     }
 
     public String getTipeListSize() {
-        System.out.println(tipeListSize.getSelectedItem().toString());
         return tipeListSize.getSelectedItem().toString();
     }
 
     public String getOperator() {
-        System.out.println(operator.getSelectedItem().toString());
         return operator.getSelectedItem().toString();
     }
 
