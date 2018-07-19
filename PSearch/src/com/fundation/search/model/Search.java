@@ -14,6 +14,8 @@
 
 package com.fundation.search.model;
 
+import com.fundation.search.controller.Criteria;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +28,6 @@ import java.util.stream.Collectors;
  * @author Franz Silva - AT-[07].
  * @version 1.0.
  */
-
 public class Search {
     /**
      * This variable contens all files searched.
@@ -56,6 +57,7 @@ public class Search {
                 }
             });
         } catch (NullPointerException e) {
+
         }
         return fileList;
     }
@@ -79,7 +81,7 @@ public class Search {
      * @param operator that have the criteria
      * @return files that are filters
      */
-    public List<File> searchBySize(List<File> listFile, int size, int operator) {
+    public List<File> searchBySize(List<File> listFile, long size, int operator) {
         List<File> listFilter = new ArrayList<>();
         listFile.forEach(file -> {
             if (operator == 0) {
@@ -113,5 +115,48 @@ public class Search {
             return listFile.stream().filter(File::isHidden).collect(Collectors.toList());
         }
         return listFile;
+    }
+
+    /**
+     * this medthod search extension.
+     *
+     * @param listfile  is a list filterd.
+     * @param extension type of extension that search.
+     * @return a list that is filterd.
+     */
+    public List<File> searchByExtention(List<File> listfile, String extension) {
+        return listfile.stream().filter(file -> file.getName().endsWith(extension)).collect(Collectors.toList());
+    }
+
+    /**
+     * this method search a object criteria.
+     *
+     * @param criteria is a criteria for search.
+     */
+    public void searchByCriteria(Criteria criteria) {
+        if (criteria.getPath() == null) {
+            return;
+        }
+        fileList = searchByPath(criteria.getPath());
+        if (criteria.getFileName() != null) {
+            fileList = searchByName(fileList, criteria.getFileName());
+        }
+        if (criteria.getSize() >= 0) {
+            fileList = searchBySize(fileList, criteria.getSize(), criteria.getOperator());
+        }
+        if (criteria.getIsIshidden()) {
+            fileList = searchByHidden(fileList, criteria.getIsIshidden());
+        }
+    }
+
+    /**
+     * this method get the result about search.
+     *
+     * @return the list that contains result.
+     */
+    public List<AssetFile> getResult() {
+        return fileList.stream()
+                .map(file -> new AssetFile(file.getPath(), file.getName(), file.length(), file.isHidden()))
+                .collect(Collectors.toList());
     }
 }
