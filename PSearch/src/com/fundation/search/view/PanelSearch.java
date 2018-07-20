@@ -1,22 +1,15 @@
 package com.fundation.search.view;
 
 
-import javax.swing.JPanel;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
 
+import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Color;
-import javax.swing.JSpinner;
-
 /**
  * This class Asset can be FileResult SearchFolder.
  *
@@ -26,24 +19,26 @@ import javax.swing.JSpinner;
 
 
 public class PanelSearch extends JPanel {
-
-
-    JTextField textFile;
-    JLabel labelFile;
-    JTextField textPath;
-    JLabel labelPhat;
-    JButton bottoSearsh;
-    JLabel LabelSize;
-
-    String[] tipeList = new String[]{">", "<", "="};
-    JComboBox<String> tipeLista;
-    //create a arreglo of contain ListSize the bytes,kb,Mb and Gb.
-    String[] ListSize = new String[]{"bytes", "kb", "Mb", "Gb"};
+    private JTextField textFile;
+    private JTextField textPath;
+    private JButton buttonSearsh;
+    private JComboBox<String> operator;
+    String[] operatiorOptions;
+    /**
+     * array that contains units of the bytes,kb,Mb and Gb.
+     */
+    String[] listUnitSize;
     JComboBox<String> tipeListSize;
+
+    JLabel LabelSize;
+    JLabel labelFile;
+    JLabel labelPhat;
 
     //JTable tables;
     //here look at size the cant.
     JSpinner spinnerSize;
+    private DefaultTableModel model;
+    JTable table;
 
     /**
      * this is constructor of the class PanelSearch.
@@ -53,8 +48,6 @@ public class PanelSearch extends JPanel {
         settingPanelSearch();
         initComponetTable();
         initComponetPanel();
-
-
     }
 
     /**
@@ -71,23 +64,36 @@ public class PanelSearch extends JPanel {
      * this method containTable contain table of information list archive.
      */
     private void initComponetTable() {
+        listUnitSize = new String[]{"bytes", "kb", "Mb", "Gb"};
+        operatiorOptions = new String[]{">", "<", "="};
+        String columnHead[] = {"FILE", "SIZE", "PATH","HIDDEN"};
 
-        String column[] = {"FILE", "SIZE", "PATH"};
-        DefaultTableModel model = new DefaultTableModel(column, 30);
-        JTable table = new JTable(model);
+        Object[][] data = {
+                {"USA", "Washington DC", 280, true},
+                {"Canada", "Ottawa", 32, true},
+                {"United Kingdom", "London", 60, true},
+                {"Germany", "Berlin", 83, true},
+                {"France", "Paris", 60, true},
+                {"Norway", "Oslo", 4.5, true},
+                {"India", "New Delhi", 1046, true}
+        };
+
+        model = new DefaultTableModel(columnHead,0);
+        table = new JTable(model);
+
         JTableHeader heard = table.getTableHeader();
         JPanel panel = new JPanel();
+
         //review on interface the table.
         panel.setLayout(new BorderLayout());
         panel.add(heard, BorderLayout.NORTH);
-        panel.add(table, BorderLayout.CENTER);
 
+        panel.add(table, BorderLayout.CENTER);
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setPreferredSize(new Dimension(0, 0));
         //position of table.
         panel.setBounds(15, 120, 600, 340);
         add(panel);
-
     }
 
     /**
@@ -96,41 +102,33 @@ public class PanelSearch extends JPanel {
      */
 
     public void initComponetPanel() {
-        //create a text field whit columns 10.
         textFile = new JTextField(10);
-        //look at "FILE-NAME" on text field.
         textFile.setText("FILE-NAME");
-        //position x,y,width and height.
         textFile.setBounds(90, 20, 100, 30);
-        //add on panelSearch.
         add(textFile);
-        //text reference JtexField.
         labelFile = new JLabel("FILE NAME:");
-        //position x,y,width and height.
         labelFile.setBounds(10, 20, 100, 30);
-        //create a text field whit columns 10 of path.
         textPath = new JTextField(10);
         textPath.setText("PATH");
-        //position of path.
         textPath.setBounds(90, 50, 100, 30);
-        //title reference a JtextFileld of File.
         labelPhat = new JLabel("PATH:");
         //position.
         labelPhat.setBounds(10, 50, 100, 30);
         //create a botton search for search.
-        bottoSearsh = new JButton();
+        buttonSearsh = new JButton();
         //name of botton.
-        bottoSearsh.setText("SEARCH");
+        buttonSearsh.setText("SEARCH");
         //position of botton.
-        bottoSearsh.setBounds(200, 50, 100, 30);
-        bottoSearsh.setBackground(Color.YELLOW);
+        buttonSearsh.setBounds(500, 20, 100, 30);
+        //bottoSearsh.setIcon(new ImageIcon(Class.class.getResource("/images/lupa.jpg")));
+        buttonSearsh.setBackground(Color.YELLOW);
         LabelSize = new JLabel("SIZE:");
         LabelSize.setBounds(320, 50, 100, 30);
         //dropdown a list that contain =`,`>` and ´<`.
-        tipeLista = new JComboBox<>(tipeList);
-        tipeLista.setBounds(440, 50, 60, 30);
+        operator = new JComboBox<>(operatiorOptions);
+        operator.setBounds(440, 50, 60, 30);
         //create a size  tipe dropdown.
-        tipeListSize = new JComboBox<>(ListSize);
+        tipeListSize = new JComboBox<>(listUnitSize);
         //position size.
         tipeListSize.setBounds(500, 50, 100, 30);
         //create spinner.
@@ -145,13 +143,50 @@ public class PanelSearch extends JPanel {
         add(textPath);
         add(labelFile);
         add(labelPhat);
-        add(bottoSearsh);
+        add(buttonSearsh);
         add(LabelSize);
-        add(tipeLista);
+        add(operator);
         add(tipeListSize);
         add(textPath);
-
-
     }
 
+    /**
+     * get value that is selected.
+     * @return value that selected
+     */
+    public String getTipeListSize() {
+        return tipeListSize.getSelectedItem().toString();
+    }
+
+    /**
+     * this method get operatod.
+     * @return operator selected
+     */
+    public String getOperator() {
+        return operator.getSelectedItem().toString();
+    }
+
+    /**
+     * this method get file text.
+     * @return value of file text
+     */
+    public String getTextFile() {
+        return textFile.getText();
+    }
+
+    /**
+     * this method get path.
+     * @return  value of camp path
+     */
+    public String getTextPath() {
+        return textPath.getText();
+    }
+
+    /**
+     * this method get button
+     * @return button
+     */
+    public String getButtoSearsh() {
+        return buttonSearsh.getText();
+    }
 }
