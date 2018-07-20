@@ -186,7 +186,10 @@ public class PanelSearch extends JPanel {
      * this method get button
      * @return button
      */
-    public String getButtoSearsh() {
-        return buttonSearsh.getText();
+    public  JButton getButtoSearsh() {
+        return buttonSearsh;
+    }
+    public void addRow(String[] newRow){
+        model.addRow(newRow);
     }
 }

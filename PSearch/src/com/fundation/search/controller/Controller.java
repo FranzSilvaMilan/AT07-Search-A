@@ -10,90 +10,60 @@
  */
 package com.fundation.search.controller;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.fundation.search.model.Search;
+//import com.fundation.search.model.AssetFile;
 import com.fundation.search.utils.ValidatorData;
 import com.fundation.search.view.FrameMain;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+//import java.util.List;
 
 /**
  *
  * This class controller can be FileResult, MultimediaResult and maybe SearchFolder.
  *
  * @author Denis Camacho - AT-[07].
+ * @author Ketty Camacho- AT -[07].
  * @version 1.0.
+ *
  */
 public class Controller {
-    private Search model;
-    private FrameMain view;
-    private ValidatorData valid;
-    private String path;
-    private String size;
+    FrameMain frame;
+    Criteria criteria;
+    ValidatorData validator;
+    //List<AssetFile> listResult;
+    public  Controller()
+    {
+        frame = new FrameMain();
+        criteria = new Criteria();
+        validator = new ValidatorData();
+        actionListener();
 
-    /**
-     * builder of class Controller.
-     */
-    public Controller() {
-        model = new Search();
-        view = new FrameMain();
-        valid = new ValidatorData();
+
     }
+    public void actionListener(){
+        frame.getPanelSearch().getButtoSearsh().addActionListener(new ActionListener() {
 
-    /**
-     * Show the file in the UI.
-     */
-    public void showFile() {
+            public void actionPerformed(ActionEvent e) {
 
-        if (valid.isPathValid(getPath())) {
-            List<File> resultSearch = new ArrayList<>();
-            resultSearch = this.model.searchByPath(getPath());
-            for (File file : resultSearch) {
-                System.out.println(file);
+                if(validator.isPathValid(frame.getPanelSearch().getTextPath())){
+                    criteria.setPath(frame.getPanelSearch().getTextPath());
+                }else {
+                    System.out.println("Path no valid");
+                    System.out.println(frame.getPanelSearch().getTextPath());
+                    String valu = frame.getPanelSearch().getTextFile();
+                    String[] row=new String[]{valu,"Size","file","ii"};
+                    frame.getPanelSearch().addRow(row);
+                }
+
+
+
+
+                // System.out.println("This is my Name:");
             }
-        } else {
-            System.out.println("path no valido");
-        }
-    }
 
-    /**
-     * view if data of size is valid.
-     */
-    public void viewValidSize() {
-        System.out.println(valid.isSizeValid(getSize()));
-    }
-
-    /**
-     *
-     * @return getters of methods.
-     */
-    public String getPath() {
-        return path;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    /**
-     *
-     * @param path
-     *            is of data of setup.
-     */
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    /**
-     *
-     * @param size
-     *            is of data of setup.
-     */
-    public void setSize(String size) {
-        this.size = size;
+        });
     }
 
 }
-

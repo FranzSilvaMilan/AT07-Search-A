@@ -17,4 +17,8 @@ public class Tab extends JTabbedPane{
         add("FILE", panelSearch);
         addTab("MULTIMEDIA", panelMultimedia);
     }
+
+    public PanelSearch getPanelSearch(){
+        return panelSearch;
+    }
 }
