@@ -45,9 +45,8 @@ public class Search {
      * This method search by path.
      *
      * @param path is a String that contains path
-     * @return list of Files filters
      */
-    public List<AssetFile> searchByPath(String path) {
+    public void searchByPath(String path) {
         try {
             File[] files = new File(path).listFiles();
             for (File file : files) {
@@ -63,31 +62,26 @@ public class Search {
             }
         } catch (NullPointerException e) {
         }
-        return fileList;
     }
 
     /**
      * This method search by Name.
      *
-     * @param listFile the list that contains files
      * @param nameFile criteria with file name
-     * @return the list filter
      */
-    public List<AssetFile> searchByName(List<AssetFile> listFile, String nameFile) {
-        return listFile.stream().filter(file -> file.getFileName().contains(nameFile)).collect(Collectors.toList());
+    public void searchByName(String nameFile) {
+        fileList.stream().filter(file -> file.getFileName().contains(nameFile)).collect(Collectors.toList());
     }
 
     /**
      * This method search by Size.
      *
-     * @param listFile This list contains files
      * @param size     that search
      * @param operator that have the criteria
-     * @return files that are filters
      */
-    public List<AssetFile> searchBySize(List<AssetFile> listFile, long size, int operator) {
+    public void searchBySize(long size, int operator) {
         List<AssetFile> listFilter = new ArrayList<>();
-        listFile.forEach(file -> {
+        fileList.forEach(file -> {
             if (operator == 0) {
                 if (file.getSize() == size) {
                     listFilter.add(file);
@@ -104,32 +98,26 @@ public class Search {
                 }
             }
         });
-        return listFilter;
     }
 
     /**
      * This method search by hidden.
      *
-     * @param listFile This list contains files
      * @param isHidden Criteria is hidden
-     * @return list that is filterd
      */
-    public List<AssetFile> searchByHidden(List<AssetFile> listFile, boolean isHidden) {
+    public void searchByHidden(boolean isHidden) {
         if (isHidden) {
-            return listFile.stream().filter(AssetFile::getIsIsHidden).collect(Collectors.toList());
+            fileList.stream().filter(AssetFile::getIsIsHidden).collect(Collectors.toList());
         }
-        return listFile;
     }
 
     /**
      * this medthod search extension.
      *
-     * @param listfile  is a list filterd.
      * @param extension type of extension that search.
-     * @return a list that is filterd.
      */
-    public List<AssetFile> searchByExtention(List<AssetFile> listfile, String extension) {
-        return listfile.stream().filter(file -> file.getFileName().endsWith(extension)).collect(Collectors.toList());
+    public void searchByExtention(String extension) {
+        fileList.stream().filter(file -> file.getFileName().endsWith(extension)).collect(Collectors.toList());
     }
 
     /**
@@ -137,21 +125,21 @@ public class Search {
      *
      * @param criteria is a criteria for search.
      */
-    public List<AssetFile> searchByCriteria(Criteria criteria) {
+    public void searchByCriteria(Criteria criteria) {
         if (criteria.getPath() == null) {
-            return null;
+            // return null;
         }
-        fileList = searchByPath(criteria.getPath());
+        searchByPath(criteria.getPath());
         if (criteria.getFileName() != null) {
-            fileList = searchByName(fileList, criteria.getFileName());
+            searchByName(criteria.getFileName());
         }
         if (criteria.getSize() >= 0) {
-            fileList = searchBySize(fileList, criteria.getSize(), criteria.getOperator());
+            searchBySize(criteria.getSize(), criteria.getOperator());
         }
         if (criteria.getIsIshidden()) {
-            fileList = searchByHidden(fileList, criteria.getIsIshidden());
+            searchByHidden(criteria.getIsIshidden());
         }
-        return fileList;
+
     }
 
     /**
