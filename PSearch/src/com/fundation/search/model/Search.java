@@ -18,7 +18,6 @@ import com.fundation.search.controller.Criteria;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,8 @@ public class Search {
     /**
      * This variable contens all files searched.
      */
-    private List<File> fileList;
+    private List<AssetFile> fileList;
+    private AssetFile data;
 
     /**
      * Search Class constructor.
@@ -47,17 +47,21 @@ public class Search {
      * @param path is a String that contains path
      * @return list of Files filters
      */
-    public List<File> searchByPath(String path) {
+    public List<AssetFile> searchByPath(String path) {
         try {
             File[] files = new File(path).listFiles();
-            Arrays.stream(files).forEachOrdered(file -> {
-                fileList.add(file);
+            for (File file : files) {
+                data = new AssetFile();
+                data.setPath(file.getPath());
+                data.setFileName(file.getName());
+                data.setIshidden(file.isHidden());
+                data.setSize(file.length());
+                fileList.add(data);
                 if (file.isDirectory()) {
                     searchByPath(file.getPath());
                 }
-            });
+            }
         } catch (NullPointerException e) {
-
         }
         return fileList;
     }
@@ -69,8 +73,8 @@ public class Search {
      * @param nameFile criteria with file name
      * @return the list filter
      */
-    public List<File> searchByName(List<File> listFile, String nameFile) {
-        return listFile.stream().filter(file -> file.getName().contains(nameFile)).collect(Collectors.toList());
+    public List<AssetFile> searchByName(List<AssetFile> listFile, String nameFile) {
+        return listFile.stream().filter(file -> file.getFileName().contains(nameFile)).collect(Collectors.toList());
     }
 
     /**
@@ -81,21 +85,21 @@ public class Search {
      * @param operator that have the criteria
      * @return files that are filters
      */
-    public List<File> searchBySize(List<File> listFile, long size, int operator) {
-        List<File> listFilter = new ArrayList<>();
+    public List<AssetFile> searchBySize(List<AssetFile> listFile, long size, int operator) {
+        List<AssetFile> listFilter = new ArrayList<>();
         listFile.forEach(file -> {
             if (operator == 0) {
-                if (file.length() == size) {
+                if (file.getSize() == size) {
                     listFilter.add(file);
                 }
             }
             if (operator == 1) {
-                if (file.length() < size) {
+                if (file.getSize() < size) {
                     listFilter.add(file);
                 }
             }
             if (operator == 2) {
-                if (file.length() > size) {
+                if (file.getSize() > size) {
                     listFilter.add(file);
                 }
             }
@@ -110,9 +114,9 @@ public class Search {
      * @param isHidden Criteria is hidden
      * @return list that is filterd
      */
-    public List<File> searchByHidden(List<File> listFile, boolean isHidden) {
+    public List<AssetFile> searchByHidden(List<AssetFile> listFile, boolean isHidden) {
         if (isHidden) {
-            return listFile.stream().filter(File::isHidden).collect(Collectors.toList());
+            return listFile.stream().filter(AssetFile::getIsIshidden).collect(Collectors.toList());
         }
         return listFile;
     }
@@ -124,8 +128,8 @@ public class Search {
      * @param extension type of extension that search.
      * @return a list that is filterd.
      */
-    public List<File> searchByExtention(List<File> listfile, String extension) {
-        return listfile.stream().filter(file -> file.getName().endsWith(extension)).collect(Collectors.toList());
+    public List<AssetFile> searchByExtention(List<AssetFile> listfile, String extension) {
+        return listfile.stream().filter(file -> file.getFileName().endsWith(extension)).collect(Collectors.toList());
     }
 
     /**
@@ -133,9 +137,9 @@ public class Search {
      *
      * @param criteria is a criteria for search.
      */
-    public void searchByCriteria(Criteria criteria) {
+    public List<AssetFile> searchByCriteria(Criteria criteria) {
         if (criteria.getPath() == null) {
-            return;
+            return null;
         }
         fileList = searchByPath(criteria.getPath());
         if (criteria.getFileName() != null) {
@@ -147,16 +151,7 @@ public class Search {
         if (criteria.getIsIshidden()) {
             fileList = searchByHidden(fileList, criteria.getIsIshidden());
         }
-    }
-
-    /**
-     * this method get the result about search.
-     *
-     * @return the list that contains result.
-     */
-    public List<AssetFile> getResult() {
-        return fileList.stream()
-                .map(file -> new AssetFile(file.getPath(), file.getName(), file.length(), file.isHidden()))
-                .collect(Collectors.toList());
+        return fileList;
     }
 }
+
