@@ -54,7 +54,7 @@ public class Search {
                 data = new AssetFile();
                 data.setPath(file.getPath());
                 data.setFileName(file.getName());
-                data.setIshidden(file.isHidden());
+                data.setIsHidden(file.isHidden());
                 data.setSize(file.length());
                 fileList.add(data);
                 if (file.isDirectory()) {
@@ -116,7 +116,7 @@ public class Search {
      */
     public List<AssetFile> searchByHidden(List<AssetFile> listFile, boolean isHidden) {
         if (isHidden) {
-            return listFile.stream().filter(AssetFile::getIsIshidden).collect(Collectors.toList());
+            return listFile.stream().filter(AssetFile::getIsIsHidden).collect(Collectors.toList());
         }
         return listFile;
     }
@@ -153,5 +153,11 @@ public class Search {
         }
         return fileList;
     }
-}
 
+    /**
+     * @return the list of file find.
+     */
+    public List<AssetFile> getResult() {
+        return fileList;
+    }
+}
