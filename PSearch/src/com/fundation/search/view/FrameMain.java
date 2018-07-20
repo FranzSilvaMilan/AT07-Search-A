@@ -18,19 +18,16 @@ public class FrameMain  extends JFrame {
      */
 
     PanelSearch panelSearch;
-    PanelMultimedia panelMultimedia;
     JLabel title;
-    JTabbedPane Tab;// crear una nueva clase
+    Tab tab;
 
     /**
      * this is constructor of class {@link FrameMain}
      */
 
     public FrameMain() {
-
         iniComponent();
         settingFameMain();
-
     }
 
     /**
@@ -47,28 +44,16 @@ public class FrameMain  extends JFrame {
     }
 
     public void iniComponent() {
-        //create panel Search.
-        panelSearch = new PanelSearch();
-        panelSearch.setBackground(Color.CYAN);
-        //create of panel multimedia.
-        panelMultimedia = new PanelMultimedia();
-        //create a JtabbedPane
-        Tab = new JTabbedPane();
-        //position
-        Tab.setBounds(15, 35, 650, 540);
-        //this is title AT07, and setBounds position of the title middle.
+
+        tab = new Tab();
+        tab.iniComponentsTab();
         title = new JLabel("AT07-team-A");
         title.setBounds(300, 10, 300, 30);
-
-        // add a tab of the panel Search.
-        Tab.add("FILE", panelSearch);
-        // add a tab of the panel Multimedia.
-        Tab.addTab("MULTIMEDIA", panelMultimedia);
-        // add the tab that with flange of the searchFile.
-        add(Tab);
-        //add of title AT07-team-A.
+        add(tab);
         add(title);
     }
 
-
+    public PanelSearch getPanelSearch() {
+        return panelSearch;
+    }
 }

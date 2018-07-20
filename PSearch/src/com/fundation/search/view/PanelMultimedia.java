@@ -14,18 +14,14 @@ public class PanelMultimedia extends JPanel {
         setLayout(null);
         setVisible(true);
         contains();
-
     }
 
     /**
      * method of contains, it will contain all of multimedia.
      */
     private void contains() {
-
-
         JLabel et_p2 = new JLabel("this is on the panel two");
         add(et_p2);
-
     }
 
 }

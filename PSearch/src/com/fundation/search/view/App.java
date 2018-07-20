@@ -7,11 +7,8 @@ package com.fundation.search.view;
  */
 public class App {
     public static void main(String[] arg) {
-
-        new FrameMain();
-        System.out.println(new PanelSearch().getOperator());
-
-
+        FrameMain seaMain=new FrameMain();
+        String[]  strings = new String[]{"aaa","123","11111","asdww"};
+        try{seaMain.getPanelSearch().insertRow(strings);}catch (NullPointerException e){}
     }
-
 }
