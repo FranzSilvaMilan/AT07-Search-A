@@ -48,21 +48,6 @@ public class Criteria {
     private int operator;
 
     /**
-     * constructor of class crieria.
-     *
-     * @param path     of where search
-     * @param fileName of file that search
-     * @param size     of file
-     * @param ishidden of file that search
-     */
-    public Criteria(String path, String fileName, long size, boolean ishidden) {
-        this.path = path;
-        this.fileName = fileName;
-        this.size = size;
-        this.ishidden = ishidden;
-    }
-
-    /**
      * method that get operator.
      *
      * @return operator

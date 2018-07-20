@@ -54,6 +54,6 @@ public class FrameMain  extends JFrame {
     }
 
     public PanelSearch getPanelSearch() {
-        return panelSearch;
+        return tab.getPanelSearch();
     }
 }

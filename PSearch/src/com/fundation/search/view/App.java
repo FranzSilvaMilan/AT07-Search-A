@@ -9,6 +9,6 @@ public class App {
     public static void main(String[] arg) {
         FrameMain seaMain=new FrameMain();
         String[]  strings = new String[]{"aaa","123","11111","asdww"};
-        try{seaMain.getPanelSearch().insertRow(strings);}catch (NullPointerException e){}
+
     }
 }
