@@ -45,14 +45,14 @@ public class Criteria {
     /**
      * operator that help search by size.
      */
-    private int operator;
+    private String operator;
 
     /**
      * method that get operator.
      *
      * @return operator
      */
-    public int getOperator() {
+    public String getOperator() {
         return operator;
     }
 
@@ -61,9 +61,16 @@ public class Criteria {
      *
      * @param operator is a new value
      */
-    public void setOperator(int operator) {
+    public void setOperator(String operator) {
         this.operator = operator;
     }
+
+    public Criteria operator(String operator){
+        setOperator(operator);
+        return this;
+    }
+
+
 
     /**
      * get a size of file.
@@ -83,6 +90,11 @@ public class Criteria {
         this.size = size;
     }
 
+    public Criteria size(long size){
+        setSize(size);
+        return this;
+    }
+
     /**
      * set the file name.
      *
@@ -98,7 +110,13 @@ public class Criteria {
      * @param fileName is a new value.
      */
     public void setFileName(String fileName) {
+
         this.fileName = fileName;
+    }
+
+    public  Criteria fileName(String fileName){
+        setFileName(fileName);
+        return this;
     }
 
     /**
@@ -117,6 +135,12 @@ public class Criteria {
      */
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public  Criteria path(String path)
+    {
+        setPath(path);
+        return this;
     }
 
     /**
