@@ -42,27 +42,17 @@ public class AssetFile {
      */
     private String extension;
     /**
-     * data is date of file.
+     * dateCreation is date of file.
      */
-    private String date;
+    private String dateCreation;
     /**
-     * operator select way of search int size.
+     * dateModified is date of file.
      */
-    private int operator;
-
+    private String dateModified;
     /**
-     * @return of operator for to select way search about size.
+     * owner of file.
      */
-    public int getOperator() {
-        return operator;
-    }
-
-    /**
-     * @param operator set for to select way search about size.
-     */
-    public void setOperator(int operator) {
-        this.operator = operator;
-    }
+    private String owner;
 
     /**
      * @return size of search.
@@ -138,14 +128,42 @@ public class AssetFile {
     /**
      * @return date current.
      */
-    public String getDate() {
-        return date;
+    public String getDateCreate() {
+        return dateCreation;
     }
 
     /**
      * @param date set.
      */
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateCreate(String date) {
+        this.dateCreation = date;
+    }
+
+    /**
+     * @return the owner
+     */
+    public String getOwner1() {
+        return owner;
+    }
+
+    /**
+     * @param owner the owner to set
+     */
+    public void setOwner1(String owner) {
+        this.owner = owner;
+    }
+
+    /**
+     * @return the dateModified
+     */
+    public String getDateModified() {
+        return dateModified;
+    }
+
+    /**
+     * @param dateModified the dateModified to set
+     */
+    public void setDateModified(String dateModified) {
+        this.dateModified = dateModified;
     }
 }
