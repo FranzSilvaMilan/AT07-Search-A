@@ -1,44 +1,48 @@
 package com.fundation.search.view;
 
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
 
 import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+
 /**
  * This class Asset can be FileResult SearchFolder.
  *
  * @author ketty camacho Vasquez- AT-[07].
  * @version 1.0.
  */
-
-
 public class PanelSearch extends JPanel {
     private JTextField textFile;
     private JTextField textPath;
-    private JButton buttonSearsh;
-    private JComboBox<String> operator;
+    private JButton buttonSearch;
+
     String[] operatiorOptions;
+    private JComboBox<String> operator;
+
     /**
      * array that contains units of the bytes,kb,Mb and Gb.
      */
     String[] listUnitSize;
-    JComboBox<String> tipeListSize;
+    private JComboBox<String> optionUnitsSize;
 
     JLabel LabelSize;
     JLabel labelFile;
     JLabel labelPhat;
+    JLabel labelHidden;
 
-    //JTable tables;
-    //here look at size the cant.
+    PanelTable panelTable;
+
     JSpinner spinnerSize;
-    private DefaultTableModel model;
-    JTable table;
+    JRadioButton hidden;
+    ButtonGroup radioGruop;
+
 
     /**
      * this is constructor of the class PanelSearch.
@@ -46,8 +50,27 @@ public class PanelSearch extends JPanel {
 
     public PanelSearch() {
         settingPanelSearch();
+        initComponet();
         initComponetTable();
-        initComponetPanel();
+        settingPanel();
+        addComponents();
+    }
+
+    private void initComponet() {
+        listUnitSize = new String[]{"bytes", "kb", "Mb", "Gb"};
+        operatiorOptions = new String[]{">", "<", "="};
+        textFile = new JTextField();
+        labelFile = new JLabel("FILE NAME:");
+        textPath = new JTextField("C:\\");
+        labelPhat = new JLabel("PATH:");
+        buttonSearch = new JButton("SEARCH");
+        LabelSize = new JLabel("SIZE:");
+        labelHidden = new JLabel("HIDDEN");
+        operator = new JComboBox<>(operatiorOptions);
+        optionUnitsSize = new JComboBox<>(listUnitSize);
+        spinnerSize = new JSpinner();
+        hidden = new JRadioButton("hidden");
+        radioGruop = new ButtonGroup();
     }
 
     /**
@@ -56,44 +79,15 @@ public class PanelSearch extends JPanel {
     public void settingPanelSearch() {
         setLayout(null);
         setVisible(true);
-
-
     }
 
     /**
      * this method containTable contain table of information list archive.
      */
     private void initComponetTable() {
-        listUnitSize = new String[]{"bytes", "kb", "Mb", "Gb"};
-        operatiorOptions = new String[]{">", "<", "="};
-        String columnHead[] = {"FILE", "SIZE", "PATH","HIDDEN"};
+        panelTable = new PanelTable();
 
-        Object[][] data = {
-                {"USA", "Washington DC", 280, true},
-                {"Canada", "Ottawa", 32, true},
-                {"United Kingdom", "London", 60, true},
-                {"Germany", "Berlin", 83, true},
-                {"France", "Paris", 60, true},
-                {"Norway", "Oslo", 4.5, true},
-                {"India", "New Delhi", 1046, true}
-        };
 
-        model = new DefaultTableModel(columnHead,0);
-        table = new JTable(model);
-
-        JTableHeader heard = table.getTableHeader();
-        JPanel panel = new JPanel();
-
-        //review on interface the table.
-        panel.setLayout(new BorderLayout());
-        panel.add(heard, BorderLayout.NORTH);
-
-        panel.add(table, BorderLayout.CENTER);
-        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
-        render.setPreferredSize(new Dimension(0, 0));
-        //position of table.
-        panel.setBounds(15, 120, 600, 340);
-        add(panel);
     }
 
     /**
@@ -101,65 +95,66 @@ public class PanelSearch extends JPanel {
      * for look for archive.
      */
 
-    public void initComponetPanel() {
-        textFile = new JTextField(10);
-        textFile.setText("FILE-NAME");
-        textFile.setBounds(90, 20, 100, 30);
-        add(textFile);
-        labelFile = new JLabel("FILE NAME:");
+    public void settingPanel() {
+
         labelFile.setBounds(10, 20, 100, 30);
-        textPath = new JTextField(10);
-        textPath.setText("PATH");
-        textPath.setBounds(90, 50, 100, 30);
-        labelPhat = new JLabel("PATH:");
-        //position.
+        textFile.setBounds(90, 20, 700, 30);
+        textFile.setBackground(new Color(204, 255, 229));
+
         labelPhat.setBounds(10, 50, 100, 30);
-        //create a botton search for search.
-        buttonSearsh = new JButton();
-        //name of botton.
-        buttonSearsh.setText("SEARCH");
-        //position of botton.
-        buttonSearsh.setBounds(500, 20, 100, 30);
-        //bottoSearsh.setIcon(new ImageIcon(Class.class.getResource("/images/lupa.jpg")));
-        buttonSearsh.setBackground(Color.YELLOW);
-        LabelSize = new JLabel("SIZE:");
-        LabelSize.setBounds(320, 50, 100, 30);
-        //dropdown a list that contain =`,`>` and ´<`.
-        operator = new JComboBox<>(operatiorOptions);
-        operator.setBounds(440, 50, 60, 30);
-        //create a size  tipe dropdown.
-        tipeListSize = new JComboBox<>(listUnitSize);
-        //position size.
-        tipeListSize.setBounds(500, 50, 100, 30);
-        //create spinner.
-        spinnerSize = new JSpinner();
-        //on field look ten
-        spinnerSize.setValue(10);
-        //position of spinner Size
-        spinnerSize.setBounds(350, 50, 70, 30);
-        //add the panel is panelSearch.
+        textPath.setBounds(90, 50, 700, 30);
+        textPath.setBackground(new Color(204, 255, 229));
+
+
+
+        LabelSize.setBounds(10, 80, 100, 30);
+        operator.setBounds(230, 80, 50, 30);
+        optionUnitsSize.setBounds(160, 80, 70, 30);
+        spinnerSize.setValue(0);
+        spinnerSize.setBounds(90, 80, 70, 30);
+
+        labelHidden.setBounds(10, 110, 100, 30);
+        hidden.setBounds(90, 110, 70, 30);
+        radioGruop.add(hidden);
+
+        buttonSearch.setBounds(1000, 180, 150, 30);
+        buttonSearch.setBackground(Color.YELLOW);
+
+    }
+
+    /**
+     * this method add all components.
+     */
+    public void addComponents() {
+        add(textFile);
+        add(hidden);
         add(spinnerSize);
         add(textFile);
         add(textPath);
         add(labelFile);
         add(labelPhat);
-        add(buttonSearsh);
+        add(buttonSearch);
         add(LabelSize);
+        add(labelHidden);
         add(operator);
-        add(tipeListSize);
+        add(optionUnitsSize);
         add(textPath);
+        add(panelTable);
+
     }
 
     /**
      * get value that is selected.
+     *
      * @return value that selected
      */
-    public String getTipeListSize() {
-        return tipeListSize.getSelectedItem().toString();
+    public String getOptionUnitsSize() {
+        return optionUnitsSize.getSelectedItem().toString();
     }
 
     /**
      * this method get operatod.
+     *
      * @return operator selected
      */
     public String getOperator() {
@@ -168,6 +163,7 @@ public class PanelSearch extends JPanel {
 
     /**
      * this method get file text.
+     *
      * @return value of file text
      */
     public String getTextFile() {
@@ -176,7 +172,8 @@ public class PanelSearch extends JPanel {
 
     /**
      * this method get path.
-     * @return  value of camp path
+     *
+     * @return value of camp path
      */
     public String getTextPath() {
         return textPath.getText();
@@ -184,12 +181,37 @@ public class PanelSearch extends JPanel {
 
     /**
      * this method get button
+     *
      * @return button
      */
-    public  JButton getButtoSearsh() {
-        return buttonSearsh;
+    public JButton getButtoSearsh() {
+        return buttonSearch;
     }
-    public void addRow(String[] newRow){
-        model.addRow(newRow);
+
+    /**
+     * This method add row in the table.
+     *
+     * @param newRow
+     */
+    public void addRow(String[] newRow) {
+        panelTable.addRow(newRow);
     }
+
+    /**
+     * this method get value of field size.
+     * @return value of size
+     */
+    public String getSizeFile(){
+        return spinnerSize.getValue().toString();
+    }
+
+    /**
+     * this method get value of radio button hidden.
+     * @return true if selected.
+     */
+    public boolean getHidden(){
+        return radioGruop.isSelected(hidden.getModel());
+    }
+
 }
+
