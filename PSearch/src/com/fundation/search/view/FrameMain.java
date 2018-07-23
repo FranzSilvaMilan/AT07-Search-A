@@ -1,8 +1,8 @@
 package com.fundation.search.view;
 
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTabbedPane;
 import java.awt.Color;
 
 /**
@@ -17,7 +17,6 @@ public class FrameMain  extends JFrame {
      * instance the object panelSearch, panelMultimedia, title and tab.
      */
 
-    PanelSearch panelSearch;
     JLabel title;
     Tab tab;
 
@@ -36,10 +35,10 @@ public class FrameMain  extends JFrame {
     public void settingFameMain() {
         setLayout(null);
         setTitle("SEARCH");
-        setSize(700, 600);
+        setSize(1200, 800);
         setLocationRelativeTo(null);
         setLayout(null);
-        this.getContentPane().setBackground(Color.lightGray);
+        this.getContentPane().setBackground(Color.DARK_GRAY);
         setVisible(true);
     }
 
@@ -47,10 +46,7 @@ public class FrameMain  extends JFrame {
 
         tab = new Tab();
         tab.iniComponentsTab();
-        title = new JLabel("AT07-team-A");
-        title.setBounds(300, 10, 300, 30);
         add(tab);
-        add(title);
     }
 
     public PanelSearch getPanelSearch() {
