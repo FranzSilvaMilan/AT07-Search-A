@@ -54,14 +54,14 @@ public class Criteria {
     /**
      * operator that help search by size.
      */
-    private int operator;
+    private String operator;
 
     /**
      * method that get operator.
      *
      * @return operator
      */
-    public int getOperator() {
+    public String getOperator() {
         return operator;
     }
 
@@ -70,7 +70,7 @@ public class Criteria {
      *
      * @param operator is a new value
      */
-    public void setOperator(int operator) {
+    public void setOperator(String operator) {
         this.operator = operator;
     }
 
@@ -155,8 +155,8 @@ public class Criteria {
     public Criteria getSearchCriteria(PanelSearch panelSearch) {
         this.setFileName(panelSearch.getTextFile());
         this.setPath(panelSearch.getTextPath());
-        this.setOperator(convert.convertTOWay(panelSearch.getOperator()));
-        this.setSize(convert.convertTOLong(Long.parseLong(panelSearch.getSpinnerSize().getValue().toString()), panelSearch.getTypeListSize()));
+        this.setOperator(panelSearch.getOperator());
+        this.setSize(convert.convertTOLong(Long.parseLong(panelSearch.getSizeFile()),panelSearch.getOptionUnitsSize()));
 
         return this;
     }
@@ -186,16 +186,11 @@ public class Criteria {
 
     /**
      * This method provide the operator in number, e.g. > has a value 0, = has a value 1, and the < has the value 2
-     * @param operator string value, where its value is > , = or <
-     * @return int value 0,1,2.
+     *
+     * @return int value 0,1,2. operator.
      */
-    private int getSizeOperator(String operator) {
-        if (operator.equalsIgnoreCase(">"))
-            return 0;
-        if (operator.equalsIgnoreCase("="))
-            return 1;
-        if (operator.equalsIgnoreCase("<"))
-            return 2;
-        return -1;
+    private String  getSizeOperator() {
+
+        return operator;
     }
 }
