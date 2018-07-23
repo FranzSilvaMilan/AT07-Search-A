@@ -14,6 +14,8 @@
 
 package com.fundation.search.controller;
 
+import com.fundation.search.view.PanelSearch;
+
 /**
  * This class is a object that have a criterias for search.
  *
@@ -135,5 +137,58 @@ public class Criteria {
      */
     public void setIshidden(boolean ishidden) {
         this.ishidden = ishidden;
+    }
+
+    /**
+     * this method has the function to build the criteria model
+     *
+     * @param panelSearch this is the panel where has the UI components to collect information.
+     * @return Criteria with all information populated.
+     */
+    public Criteria getSearchCriteria(PanelSearch panelSearch) {
+        this.setFileName(panelSearch.getTextFile());
+        this.setPath(panelSearch.getTextPath());
+        this.setOperator(getSizeOperator(panelSearch.getOperator()));
+        this.setSize(getFileSizeByType(panelSearch.getSpinnerSize().getValue().toString(), panelSearch.getTypeListSize()));
+
+        return this;
+    }
+
+    /**
+     * This method hast the function to changes the size in bytes according the selected type.
+     *
+     * @param sizeString   this is the value of the size
+     * @param typeListSize this is the value of the extencion of the size e.g. bytes,kb,mb,gb
+     * @return value in bytes
+     */
+    private long getFileSizeByType(String sizeString, String typeListSize) {
+
+        Long size = Long.parseLong(sizeString);
+
+        if (typeListSize.equalsIgnoreCase("bytes"))
+            return size;
+        if (typeListSize.equalsIgnoreCase("Kb"))
+            return size * 1024;
+        if (typeListSize.equalsIgnoreCase("Mb"))
+            return size * 1024 * 1024;
+        if (typeListSize.equalsIgnoreCase("Gb"))
+            return size * 1024 * 1024 * 1024;
+
+        return -1;
+    }
+
+    /**
+     * This method provide the operator in number, e.g. > has a value 0, = has a value 1, and the < has the value 2
+     * @param operator string value, where its value is > , = or <
+     * @return int value 0,1,2.
+     */
+    private int getSizeOperator(String operator) {
+        if (operator.equalsIgnoreCase(">"))
+            return 0;
+        if (operator.equalsIgnoreCase("="))
+            return 1;
+        if (operator.equalsIgnoreCase("<"))
+            return 2;
+        return -1;
     }
 }
