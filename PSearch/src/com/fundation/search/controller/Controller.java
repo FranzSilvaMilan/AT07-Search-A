@@ -15,6 +15,7 @@ package com.fundation.search.controller;
 
 import com.fundation.search.model.AssetFile;
 import com.fundation.search.model.Search;
+import com.fundation.search.utils.Convert;
 import com.fundation.search.utils.ValidatorData;
 import com.fundation.search.view.FrameMain;
 import com.fundation.search.view.PanelSearch;
@@ -37,6 +38,7 @@ public class Controller {
     ValidatorData validator;
     Criteria criteria;
     Search search;
+    Convert convert;
 
     //List<AssetFile> listResult;
     public Controller() {
@@ -44,6 +46,7 @@ public class Controller {
         criteria = new Criteria();
         search = new Search();
         validator = new ValidatorData();
+        convert =  new Convert();
         actionListener();
 
 
@@ -58,8 +61,9 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
 
                 if (validator.isPathValid(frame.getPanelSearch().getTextPath())) {
+                    getSearchCriteria();
 
-                    search.searchByCriteria(criteria.getSearchCriteria(frame.getPanelSearch()));
+                    search.searchByCriteria(criteria);
                     List<AssetFile> listResult = search.getResult();
 
                     for (AssetFile file : listResult) {
@@ -73,5 +77,14 @@ public class Controller {
                 }
             }
         });
+    }
+
+    public void getSearchCriteria() {
+
+        criteria.setFileName(frame.getPanelSearch().getTextFile());
+        criteria.setPath(frame.getPanelSearch().getTextPath());
+        criteria.setOperator(frame.getPanelSearch().getOperator());
+        criteria.setSize(convert.convertTOLong(Long.parseLong(frame.getPanelSearch().getSizeFile()),frame.getPanelSearch().getOptionUnitsSize()));
+        criteria.setIshidden(frame.getPanelSearch().getHidden());
     }
 }
