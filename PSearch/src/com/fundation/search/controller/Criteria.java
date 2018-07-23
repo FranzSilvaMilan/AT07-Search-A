@@ -14,15 +14,22 @@
 
 package com.fundation.search.controller;
 
+import com.fundation.search.utils.Convert;
 import com.fundation.search.view.PanelSearch;
 
 /**
  * This class is a object that have a criterias for search.
  *
  * @author Franz Silva - AT-[07].
+ * @author ketty Camacho -AT[07].
  * @version 1.0.
  */
 public class Criteria {
+
+    /**
+     * this object has some funtion to convert values.
+     */
+    Convert convert = new Convert();
 
     /**
      * path of criteria.
@@ -148,8 +155,8 @@ public class Criteria {
     public Criteria getSearchCriteria(PanelSearch panelSearch) {
         this.setFileName(panelSearch.getTextFile());
         this.setPath(panelSearch.getTextPath());
-        this.setOperator(getSizeOperator(panelSearch.getOperator()));
-        this.setSize(getFileSizeByType(panelSearch.getSpinnerSize().getValue().toString(), panelSearch.getTypeListSize()));
+        this.setOperator(convert.convertTOWay(panelSearch.getOperator()));
+        this.setSize(convert.convertTOLong(Long.parseLong(panelSearch.getSpinnerSize().getValue().toString()), panelSearch.getTypeListSize()));
 
         return this;
     }
