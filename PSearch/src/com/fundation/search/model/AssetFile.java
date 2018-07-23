@@ -54,6 +54,14 @@ public class AssetFile {
      */
     private String owner;
 
+    public AssetFile(){}
+    public AssetFile(String path,String name,long size,boolean isHidden ){
+        this.path = path;
+        fileName = name;
+        this.size = size;
+        this.isHidden = isHidden;
+    }
+
     /**
      * @return size of search.
      */

@@ -17,15 +17,7 @@ package com.fundation.search.model;
 import com.fundation.search.controller.Criteria;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileTime;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,11 +29,14 @@ import java.util.stream.Collectors;
  * @version 1.0.
  */
 public class Search {
+
+
+
+    private Criteria criteria;
     /**
-     * This variable contens all files searched.
+     * fileList is a file list that save files according to criterias
      */
-    private List<AssetFile> fileList;
-    private AssetFile data;
+    private List<File> fileList;
 
     /**
      * Search Class constructor.
@@ -51,191 +46,114 @@ public class Search {
     }
 
     /**
-     * This method search by path.
-     *
-     * @param path is a String that contains path
+     * @param path .
+     * @return list all the files contained within the path.
      */
-    public void searchByPath(String path) {
+    private List<File> searchByPath(String path) {
         try {
-
             File[] files = new File(path).listFiles();
             for (File file : files) {
-                Path path1 = Paths.get(file.getPath());
-                String owner = Files.getOwner(path1).toString();
-                data = new AssetFile();
-                data.setPath(file.getPath());
-                data.setFileName(file.getName());
-                data.setIsHidden(file.isHidden());
-                data.setSize(file.length());
-                data.setOwner1(owner);
-                data.setDateCreate(dateCreate(file.getPath()));
-                data.setDateModified(dateModified(file.getPath()));
-                fileList.add(data);
+                fileList.add(file);
                 if (file.isDirectory()) {
                     searchByPath(file.getPath());
                 }
             }
-        } catch (NullPointerException | IOException e) {
+        } catch (NullPointerException e) {
         }
+        return fileList;
     }
 
     /**
-     * This method search by Name.
-     *
-     * @param nameFile criteria with file name
+     * @param listFile .
+     * @param nameFile .
+     * @return list all the files that contains the name of a file.
      */
-    public void searchByName(String nameFile) {
-        fileList.stream().filter(file -> file.getFileName().contains(nameFile)).collect(Collectors.toList());
+    private List<File> searchByName(List<File> listFile, String nameFile) {
+        List<File> listFilter = new ArrayList<>();
+        for (File file : listFile) {
+            if (!file.getName().contains(nameFile)) {
+                listFilter.add(file);
+            }
+        }
+        listFile.removeAll(listFilter);
+        return listFile;
     }
 
     /**
-     * This method search by Size.
-     *
-     * @param size     that search
-     * @param operator that have the criteria
+     * @param listFile file list.
+     * @param size     is the file size.
+     * @param operator is "<" or ">" or "=".
+     * @return list all the files minor or major or equal to given size.
      */
-    public void searchBySize(long size, String operator) {
-        List<AssetFile> listFilter = new ArrayList<>();
-        fileList.forEach(file -> {
-            if (operator.equals("=")) {
-                if (file.getSize() == size) {
+    private List<File> searchBySize(List<File> listFile, double size, char operator) {
+
+        List<File> listFilter = new ArrayList<>();
+        for (File file : listFile) {
+            if (operator == '=') {
+                if (file.length() != size) {
                     listFilter.add(file);
                 }
             }
-            if (operator.equals("<")) {
-                if (file.getSize() < size) {
+            if (operator == '>') {
+                if (file.length() < size) {
                     listFilter.add(file);
                 }
             }
-            if (operator.equals(">")) {
-                if (file.getSize() > size) {
+            if (operator == '<') {
+                if (file.length() > size) {
+
                     listFilter.add(file);
                 }
             }
-        });
+        }
+        listFile.removeAll(listFilter);
+        return listFile;
     }
 
     /**
-     * This method search by hidden.
-     *
-     * @param isHidden Criteria is hidden
+     * @param listFile list file
+     * @param isHidden true.
+     * @return list all the files minor or major or equal to given size.
      */
-    public void searchByHidden(boolean isHidden) {
+
+    private List<File> searchHiddenFiles(List<File> listFile, boolean isHidden) {
         if (isHidden) {
-            fileList.stream().filter(AssetFile::getIsIsHidden).collect(Collectors.toList());
+            return listFile.stream().filter(File::isHidden).collect(Collectors.toList());
         }
+        return listFile;
     }
 
     /**
-     * this medthod search extension.
-     *
-     * @param extension type of extension that search.
-     */
-    public void searchByExtention(String extension) {
-        fileList.stream().filter(file -> file.getFileName().endsWith(extension)).collect(Collectors.toList());
-    }
-
-    /**
-     * this medthod search date Creation.
-     *
-     * @param date is date of creation file.
-     */
-    public void searchByDateCreation(String date) {
-        List<AssetFile> listFilter = new ArrayList<>();
-        fileList.forEach(file -> {
-            if (file.getDateCreate().equals(date)) {
-                listFilter.add(file);
-
-            }
-        });
-    }
-
-    /**
-     * this medthod search date Modified.
-     *
-     * @param date is date of modified file.
-     */
-    public void searchByDateModified(String date) {
-        List<AssetFile> listFilter = new ArrayList<>();
-        fileList.forEach(file -> {
-            if (file.getDateModified().equals(date)) {
-                listFilter.add(file);
-
-            }
-        });
-    }
-
-    /**
-     * this method search a object criteria.
-     *
-     * @param criteria
-     *            is a criteria for search.
-     */
-
-    /**
-     * this method search a object criteria.
-     *
-     * @param criteria is a criteria for search.
+     * @param criteria receives Search Criteria object.
+     *                 Is a method that filter a List according that receive of SearchCriteria.
      */
     public void searchByCriteria(Criteria criteria) {
-        if (criteria.getPath() == null) {
-            // return null;
+        fileList =  new ArrayList<>();
+        if (criteria.getPath() != null) {
+            fileList = searchByPath(criteria.getPath());
+            if (criteria.getFileName() != null) {
+                fileList = searchByName(fileList, criteria.getFileName());
+            }
+            if (criteria.getSize() > -1) {
+                fileList = searchBySize(fileList, criteria.getSize(), criteria.getOperator().charAt(0));
+            }
+            if (criteria.getIsIshidden()) {
+                fileList = searchHiddenFiles(fileList, criteria.getIsIshidden());
+            }
         }
-        searchByPath(criteria.getPath());
-        if (criteria.getFileName() != null) {
-            searchByName(criteria.getFileName());
-        }
-        if (criteria.getSize() >= 0) {
-            searchBySize(criteria.getSize(), criteria.getOperator());
-        }
-        if (criteria.getIsIshidden()) {
-            searchByHidden(criteria.getIsIshidden());
-        }
-
     }
 
     /**
-     * @param date is of date of creation.
-     * @return date of creation of file.
-     */
-    public String dateCreate(String date) {
-        String formatted = "";
-        BasicFileAttributes attrs;
-        try {
-            Path path = Paths.get(date);
-            attrs = Files.readAttributes(path, BasicFileAttributes.class);
-            FileTime time = attrs.creationTime();
-            String pattern = "dd/MM/yyyy";
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-            formatted = simpleDateFormat.format(new Date(time.toMillis()));
-            return formatted;
-        } catch (IOException e) {
-        }
-        return formatted;
-    }
-
-    /**
-     * @param date is date of modified.
-     * @return of date of modified of file.
-     */
-    public String dateModified(String date) {
-        String formatted = "";
-        try {
-            Path path = Paths.get(date);
-            FileTime time = Files.getLastModifiedTime(path);
-            String pattern = "dd/MM/yyyy";
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-            formatted = simpleDateFormat.format(new Date(time.toMillis()));
-            return formatted;
-        } catch (IOException e) {
-        }
-        return formatted;
-    }
-
-    /**
-     * @return the list of file find.
+     * this method result of a search by criterias.
+     *@return File Result list with the files already searched
      */
     public List<AssetFile> getResult() {
-        return fileList;
+        List<AssetFile> result = new ArrayList<>();
+        if (!fileList.isEmpty()) {
+            for (File file : fileList) {
+                result.add(new AssetFile(file.getPath(), file.getName(), file.length(), file.isHidden()));
+            }
+        }
+        return result;
     }
 }
