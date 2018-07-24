@@ -1,29 +1,27 @@
-/**
- * @(#)Controller.java Copyright (c) 2018 Jala Foundation.
+/*
+ * @(#)Controller.java
+ *
+ * Copyright (c) 2018 Jala Foundation.
  * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
+ *
  * This software is the confidential and proprietary information of
- * Jala Foundation, ("Confidential Information"). You shall not
+ * Jala Foundation, ("Confidential Information").  You shall not
  * disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license agreement you entered into
  * with Jala Foundation.
  */
 package com.fundation.search.controller;
 
-
-//import com.fundation.search.model.AssetFile;
-
 import com.fundation.search.model.AssetFile;
 import com.fundation.search.model.Search;
 import com.fundation.search.utils.Convert;
 import com.fundation.search.utils.ValidatorData;
 import com.fundation.search.view.FrameMain;
-import com.fundation.search.view.PanelSearch;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-//import java.util.List;
 
 /**
  * This class controller can be FileResult, MultimediaResult and maybe SearchFolder.
@@ -40,7 +38,6 @@ public class Controller {
     Search search;
     Convert convert;
 
-    //List<AssetFile> listResult;
     public Controller() {
         frame = new FrameMain();
         criteria = new Criteria();
@@ -79,6 +76,9 @@ public class Controller {
         });
     }
 
+    /**
+     * this method build object criteria.
+     */
     public void getSearchCriteria() {
 
         criteria.setFileName(frame.getPanelSearch().getTextFile());

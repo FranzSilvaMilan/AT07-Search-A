@@ -1,3 +1,16 @@
+/*
+ * @(#)PanelSearch.java
+ *
+ * Copyright (c) 2018 Jala Foundation.
+ * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * Jala Foundation, ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jala Foundation.
+ */
 package com.fundation.search.view;
 
 import javax.swing.*;
@@ -12,6 +25,7 @@ import java.io.File;
  * This class Asset can be FileResult SearchFolder.
  *
  * @author ketty camacho Vasquez- AT-[07].
+ * @author Franz Elmer Silva Milan.
  * @version 1.0.
  */
 public class PanelSearch extends JPanel {
@@ -38,6 +52,15 @@ public class PanelSearch extends JPanel {
     JSpinner spinnerSize;
     JRadioButton hidden;
     ButtonGroup radioGruop;
+
+    JCheckBox pdf;
+    JCheckBox doc;
+    JCheckBox exe;
+    JCheckBox gif;
+    JCheckBox ppt;
+    JCheckBox zip;
+    JCheckBox xlsx;
+    JCheckBox rar;
 
 
 
@@ -71,6 +94,15 @@ public class PanelSearch extends JPanel {
         radioGruop = new ButtonGroup();
         hiddenCheck = new JCheckBox("Hidden");
         btSelect = new JButton();
+        pdf = new JCheckBox();
+        doc = new JCheckBox();
+        exe = new JCheckBox();
+        gif = new JCheckBox();
+        ppt = new JCheckBox();
+        zip = new JCheckBox();
+        xlsx = new JCheckBox();
+        rar = new JCheckBox();
+
     }
 
     /**
@@ -104,6 +136,7 @@ public class PanelSearch extends JPanel {
         labelPhat.setBounds(10, 50, 100, 30);
         textPath.setBounds(90, 50, 700, 30);
         textPath.setBackground(new Color(204, 255, 229));
+
         btSelect.setText("Select Path");
         btSelect.setBounds(810, 50, 120, 30);
 
@@ -119,16 +152,62 @@ public class PanelSearch extends JPanel {
         //radioGruop.add(hiddenCheck);
 
         buttonSearch.setBounds(1000, 180, 150, 30);
-        buttonSearch.setBackground(Color.YELLOW);
+       // buttonSearch.setBackground(Color);
 
+        pdf.setText(".pdf");
+        pdf.setEnabled(false);
+        pdf.setBounds(950, 20, 70, 23);
+        this.add(pdf);
+
+        doc.setText(".doc");
+        doc.setEnabled(false);
+        doc.setBounds(1080, 20, 70, 23);
+        this.add(doc);
+
+        exe.setText(".exe");
+        exe.setEnabled(false);
+        exe.setBounds(1210, 20, 70, 23);
+        this.add(exe);
+
+        gif.setText(".gif");
+        gif.setEnabled(false);
+        gif.setBounds(950, 50, 70, 23);
+        this.add(gif);
+
+        ppt.setText(".ppt");
+        ppt.setEnabled(false);
+        ppt.setBounds(1080, 50, 70, 23);
+        this.add(ppt);
+
+        zip.setText(".zip");
+        zip.setEnabled(false);
+        zip.setBounds(1210, 50, 70, 23);
+        this.add(zip);
+
+        xlsx.setText(".xlsx");
+        xlsx.setEnabled(false);
+        xlsx.setBounds(950, 80, 70, 23);
+        this.add(xlsx);
+
+        rar.setText(".rar");
+        rar.setEnabled(false);
+        rar.setBounds(1080, 80, 70, 23);
+        this.add(rar);
+
+        acctionButton();
+
+
+    }
+
+    /**
+     * this method run when click on button path.
+     */
+    public void  acctionButton(){
         btSelect.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 btSelectMouseClicked(evt);
             }
         });
-
-
-
     }
 
     /**
@@ -151,8 +230,6 @@ public class PanelSearch extends JPanel {
         add(panelTable);
         add(hiddenCheck);
         add(btSelect);
-
-
     }
 
     /**
@@ -225,10 +302,17 @@ public class PanelSearch extends JPanel {
         return hiddenCheck.isSelected();
     }
 
+    /**
+     * this method clean table.
+     */
     public void cleanTable() {
         panelTable.clean();
     }
 
+    /**
+     * this method
+     * @param evt
+     */
     private void btSelectMouseClicked(MouseEvent evt) {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -238,6 +322,8 @@ public class PanelSearch extends JPanel {
             textPath.setText(selectedFile.getAbsolutePath());
         }
     }
+
+
 
 }
 
