@@ -71,7 +71,7 @@ public class Search {
     private List<File> searchByName(List<File> listFile, String nameFile) {
         List<File> listFilter = new ArrayList<>();
         for (File file : listFile) {
-            if (!file.getName().contains(nameFile)) {
+            if (!file.getName().toLowerCase().contains(nameFile.toLowerCase())) {
                 listFilter.add(file);
             }
         }

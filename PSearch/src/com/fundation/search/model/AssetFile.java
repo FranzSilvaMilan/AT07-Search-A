@@ -18,6 +18,7 @@ package com.fundation.search.model;
  * This class Search for four critearias path, name, size  and hidden.
  *
  * @author Denis Camacho - AT-[07].
+ * @autor Franz Silva Milan - AT[07]
  * @version 1.0.
  */
 public class AssetFile {

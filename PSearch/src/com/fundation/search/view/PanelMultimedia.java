@@ -1,52 +1,61 @@
+/*
+ * @(#)PanelMultimedia.java
+ *
+ * Copyright (c) 2018 Jala Foundation.
+ * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * Jala Foundation, ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jala Foundation.
+ */
 package com.fundation.search.view;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.JSpinner;
-import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 
 import java.awt.Color;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 
 /**
  * This class Asset can be FileResult SearchFolder.
  *
  * @author ketty camacho Vasquez- AT-[07].
+ * @author Franz Elmer Silva Milan.
  * @version 1.0.
  */
 public class PanelMultimedia extends JPanel {
     private JTextField textFile;
     private JTextField textPath;
-    private JButton buttonSearsh;
-
+    private JButton buttonSearch;
+    JCheckBox hiddenCheck;
     String[] operatiorOptions;
     private JComboBox<String> operator;
-
+    private JButton btSelect;
     /**
      * array that contains units of the bytes,kb,Mb and Gb.
      */
     String[] listUnitSize;
-    private JComboBox<String> tipeListSize;
+    private JComboBox<String> optionUnitsSize;
 
     JLabel LabelSize;
     JLabel labelFile;
     JLabel labelPhat;
+    JLabel labelHidden;
 
-    JScrollPane scroll;
+    PanelTable panelTable;
 
-    //JTable tables;
-    //here look at size the cant.
     JSpinner spinnerSize;
-    private DefaultTableModel model;
-    JTable table;
+    JRadioButton hidden;
+    ButtonGroup radioGruop;
+
+
+
 
     /**
      * this is constructor of the class PanelSearch.
@@ -54,24 +63,29 @@ public class PanelMultimedia extends JPanel {
 
     public PanelMultimedia() {
         settingPanelSearch();
-        initComponetTable();
         initComponet();
+        initComponetTable();
         settingPanel();
         addComponents();
     }
 
     private void initComponet() {
-
-
+        listUnitSize = new String[]{"bytes", "Kb", "Mb", "Gb"};
+        operatiorOptions = new String[]{">", "<", "="};
         textFile = new JTextField();
         labelFile = new JLabel("FILE NAME:");
         textPath = new JTextField("C:\\");
         labelPhat = new JLabel("PATH:");
-        buttonSearsh = new JButton("SEARCH");
+        buttonSearch = new JButton("SEARCH");
         LabelSize = new JLabel("SIZE:");
+        labelHidden = new JLabel("HIDDEN");
         operator = new JComboBox<>(operatiorOptions);
-        tipeListSize = new JComboBox<>(listUnitSize);
+        optionUnitsSize = new JComboBox<>(listUnitSize);
         spinnerSize = new JSpinner();
+        hidden = new JRadioButton("hidden");
+        radioGruop = new ButtonGroup();
+        hiddenCheck = new JCheckBox("Hidden");
+        btSelect = new JButton();
     }
 
     /**
@@ -80,34 +94,15 @@ public class PanelMultimedia extends JPanel {
     public void settingPanelSearch() {
         setLayout(null);
         setVisible(true);
-
-
     }
 
     /**
      * this method containTable contain table of information list archive.
      */
     private void initComponetTable() {
-        listUnitSize = new String[]{"bytes", "kb", "Mb", "Gb"};
-        operatiorOptions = new String[]{">", "<", "="};
-        String columnHead[] = {"FILE", "SIZE", "PATH", "HIDDEN"};
+        panelTable = new PanelTable();
 
-        model = new DefaultTableModel(columnHead, 0);
-        table = new JTable(model);
 
-        JTableHeader heard = table.getTableHeader();
-        JPanel panel = new JPanel();
-        //scroll = new JScrollPane(table);
-        panel.setLayout(new BorderLayout());
-        panel.add(heard, BorderLayout.NORTH);
-
-        panel.add(table, BorderLayout.CENTER);
-        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
-        render.setPreferredSize(new Dimension(0, 0));
-        //position of table.
-        panel.setBounds(15, 120, 650, 340);
-        //panel.add(scroll);
-        add(panel);
     }
 
     /**
@@ -116,26 +111,39 @@ public class PanelMultimedia extends JPanel {
      */
 
     public void settingPanel() {
-        textFile.setBounds(90, 20, 100, 30);
 
         labelFile.setBounds(10, 20, 100, 30);
-
-        textPath.setBounds(90, 50, 100, 30);
-        textPath.setBackground(new Color(204, 255, 229));
+        textFile.setBounds(90, 20, 700, 30);
+        textFile.setBackground(new Color(204, 255, 229));
 
         labelPhat.setBounds(10, 50, 100, 30);
+        textPath.setBounds(90, 50, 700, 30);
+        textPath.setBackground(new Color(204, 255, 229));
+        btSelect.setText("Select Path");
+        btSelect.setBounds(810, 50, 120, 30);
 
-        buttonSearsh.setBounds(500, 20, 100, 30);
-        buttonSearsh.setBackground(Color.YELLOW);
 
-        LabelSize.setBounds(320, 50, 100, 30);
+        LabelSize.setBounds(10, 80, 100, 30);
+        operator.setBounds(230, 80, 50, 30);
+        optionUnitsSize.setBounds(160, 80, 70, 30);
+        spinnerSize.setValue(0);
+        spinnerSize.setBounds(90, 80, 70, 30);
 
-        operator.setBounds(440, 50, 60, 30);
+        labelHidden.setBounds(10, 110, 100, 30);
+        hiddenCheck.setBounds(90, 110, 70, 30);
+        //radioGruop.add(hiddenCheck);
 
-        tipeListSize.setBounds(500, 50, 100, 30);
+        buttonSearch.setBounds(1000, 180, 150, 30);
+        //buttonSearch.setBackground(Color.YELLOW);
 
-        spinnerSize.setValue(10);
-        spinnerSize.setBounds(350, 50, 70, 30);
+        btSelect.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                btSelectMouseClicked(evt);
+            }
+        });
+
+
+
     }
 
     /**
@@ -143,16 +151,23 @@ public class PanelMultimedia extends JPanel {
      */
     public void addComponents() {
         add(textFile);
+        add(hidden);
         add(spinnerSize);
         add(textFile);
         add(textPath);
         add(labelFile);
         add(labelPhat);
-        add(buttonSearsh);
+        add(buttonSearch);
         add(LabelSize);
+        add(labelHidden);
         add(operator);
-        add(tipeListSize);
+        add(optionUnitsSize);
         add(textPath);
+        add(panelTable);
+        add(hiddenCheck);
+        add(btSelect);
+
+
     }
 
     /**
@@ -160,8 +175,8 @@ public class PanelMultimedia extends JPanel {
      *
      * @return value that selected
      */
-    public String getTipeListSize() {
-        return tipeListSize.getSelectedItem().toString();
+    public String getOptionUnitsSize() {
+        return optionUnitsSize.getSelectedItem().toString();
     }
 
     /**
@@ -197,7 +212,7 @@ public class PanelMultimedia extends JPanel {
      * @return button
      */
     public JButton getButtoSearsh() {
-        return buttonSearsh;
+        return buttonSearch;
     }
 
     /**
@@ -206,6 +221,37 @@ public class PanelMultimedia extends JPanel {
      * @param newRow
      */
     public void addRow(String[] newRow) {
-        model.addRow(newRow);
+        panelTable.addRow(newRow);
     }
+
+    /**
+     * this method get value of field size.
+     * @return value of size
+     */
+    public String getSizeFile(){
+        return spinnerSize.getValue().toString();
+    }
+
+    /**
+     * this method get value of radio button hidden.
+     * @return true if selected.
+     */
+    public boolean getHidden(){
+        return hiddenCheck.isSelected();
+    }
+
+    public void cleanTable() {
+        panelTable.clean();
+    }
+
+    private void btSelectMouseClicked(MouseEvent evt) {
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnValue = jfc.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            textPath.setText(selectedFile.getAbsolutePath());
+        }
+    }
+
 }
