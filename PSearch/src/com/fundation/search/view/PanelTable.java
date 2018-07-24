@@ -40,5 +40,9 @@ public class PanelTable extends JPanel{
         model.addRow(newRow);
     }
 
+    public void clean(){
+        model.setNumRows(0);
+    }
+
 
 }

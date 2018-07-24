@@ -65,7 +65,7 @@ public class Controller {
 
                     search.searchByCriteria(criteria);
                     List<AssetFile> listResult = search.getResult();
-
+                    frame.getPanelSearch().cleanTable();
                     for (AssetFile file : listResult) {
 
                         String[] row = new String[]{file.getFileName(), Long.toString(file.getSize()), file.getPath(), Boolean.toString(file.getIsIsHidden())};

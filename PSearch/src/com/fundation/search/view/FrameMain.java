@@ -11,7 +11,6 @@ import java.awt.Color;
  * this is class is a Jframe fisrt,it contain panel of.
  * search panel of a archive and path.
  */
-
 public class FrameMain  extends JFrame {
     /**
      * instance the object panelSearch, panelMultimedia, title and tab.

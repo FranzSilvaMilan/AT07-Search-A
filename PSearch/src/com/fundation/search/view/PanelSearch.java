@@ -1,16 +1,12 @@
 package com.fundation.search.view;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JSpinner;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JFileChooser;
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 
 /**
  * This class Asset can be FileResult SearchFolder.
@@ -22,10 +18,10 @@ public class PanelSearch extends JPanel {
     private JTextField textFile;
     private JTextField textPath;
     private JButton buttonSearch;
-
+    JCheckBox hiddenCheck;
     String[] operatiorOptions;
     private JComboBox<String> operator;
-
+    private JButton btSelect;
     /**
      * array that contains units of the bytes,kb,Mb and Gb.
      */
@@ -44,6 +40,8 @@ public class PanelSearch extends JPanel {
     ButtonGroup radioGruop;
 
 
+
+
     /**
      * this is constructor of the class PanelSearch.
      */
@@ -57,7 +55,7 @@ public class PanelSearch extends JPanel {
     }
 
     private void initComponet() {
-        listUnitSize = new String[]{"bytes", "kb", "Mb", "Gb"};
+        listUnitSize = new String[]{"bytes", "Kb", "Mb", "Gb"};
         operatiorOptions = new String[]{">", "<", "="};
         textFile = new JTextField();
         labelFile = new JLabel("FILE NAME:");
@@ -71,6 +69,8 @@ public class PanelSearch extends JPanel {
         spinnerSize = new JSpinner();
         hidden = new JRadioButton("hidden");
         radioGruop = new ButtonGroup();
+        hiddenCheck = new JCheckBox("Hidden");
+        btSelect = new JButton();
     }
 
     /**
@@ -104,7 +104,8 @@ public class PanelSearch extends JPanel {
         labelPhat.setBounds(10, 50, 100, 30);
         textPath.setBounds(90, 50, 700, 30);
         textPath.setBackground(new Color(204, 255, 229));
-
+        btSelect.setText("Select Path");
+        btSelect.setBounds(810, 50, 120, 30);
 
 
         LabelSize.setBounds(10, 80, 100, 30);
@@ -114,11 +115,19 @@ public class PanelSearch extends JPanel {
         spinnerSize.setBounds(90, 80, 70, 30);
 
         labelHidden.setBounds(10, 110, 100, 30);
-        hidden.setBounds(90, 110, 70, 30);
-        radioGruop.add(hidden);
+        hiddenCheck.setBounds(90, 110, 70, 30);
+        //radioGruop.add(hiddenCheck);
 
         buttonSearch.setBounds(1000, 180, 150, 30);
         buttonSearch.setBackground(Color.YELLOW);
+
+        btSelect.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                btSelectMouseClicked(evt);
+            }
+        });
+
+
 
     }
 
@@ -140,6 +149,9 @@ public class PanelSearch extends JPanel {
         add(optionUnitsSize);
         add(textPath);
         add(panelTable);
+        add(hiddenCheck);
+        add(btSelect);
+
 
     }
 
@@ -210,7 +222,21 @@ public class PanelSearch extends JPanel {
      * @return true if selected.
      */
     public boolean getHidden(){
-        return radioGruop.isSelected(hidden.getModel());
+        return hiddenCheck.isSelected();
+    }
+
+    public void cleanTable() {
+        panelTable.clean();
+    }
+
+    private void btSelectMouseClicked(MouseEvent evt) {
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int returnValue = jfc.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = jfc.getSelectedFile();
+            textPath.setText(selectedFile.getAbsolutePath());
+        }
     }
 
 }
