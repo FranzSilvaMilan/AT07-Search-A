@@ -43,7 +43,7 @@ public class Controller {
         criteria = new Criteria();
         search = new Search();
         validator = new ValidatorData();
-        convert =  new Convert();
+        convert = new Convert();
         actionListener();
 
 
@@ -84,7 +84,7 @@ public class Controller {
         criteria.setFileName(frame.getPanelSearch().getTextFile());
         criteria.setPath(frame.getPanelSearch().getTextPath());
         criteria.setOperator(frame.getPanelSearch().getOperator());
-        criteria.setSize(convert.convertTOLong(Long.parseLong(frame.getPanelSearch().getSizeFile()),frame.getPanelSearch().getOptionUnitsSize()));
+        criteria.setSize(convert.convertTOLong(Long.parseLong(frame.getPanelSearch().getSizeFile()), frame.getPanelSearch().getOptionUnitsSize()));
         criteria.setIshidden(frame.getPanelSearch().getHidden());
     }
 }
