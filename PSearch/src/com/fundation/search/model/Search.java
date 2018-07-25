@@ -17,7 +17,15 @@ package com.fundation.search.model;
 import com.fundation.search.controller.Criteria;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,12 +39,12 @@ import java.util.stream.Collectors;
 public class Search {
 
 
-
     private Criteria criteria;
     /**
      * fileList is a file list that save files according to criterias
      */
-    private List<File> fileList;
+    private List<AssetFile> fileList;
+    private AssetFile data;
 
     /**
      * Search Class constructor.
@@ -49,78 +57,132 @@ public class Search {
      * @param path .
      * @return list all the files contained within the path.
      */
-    private List<File> searchByPath(String path) {
+    private void searchByPath(String path) {
         try {
             File[] files = new File(path).listFiles();
             for (File file : files) {
-                fileList.add(file);
+                Path path1 = Paths.get(file.getPath());
+                String owner = Files.getOwner(path1).toString();
+                data = new AssetFile();
+                data.setPath(file.getPath());
+                data.setFileName(file.getName());
+                data.setIsHidden(file.isHidden());
+                data.setSize(file.length());
+                data.setOwner1(owner);
+                data.setDateCreate(dateCreate(file.getPath()));
+                data.setDateModified(dateModified(file.getPath()));
+                fileList.add(data);
                 if (file.isDirectory()) {
                     searchByPath(file.getPath());
                 }
             }
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | IOException e) {
         }
-        return fileList;
     }
 
     /**
-     * @param listFile .
      * @param nameFile .
-     * @return list all the files that contains the name of a file.
      */
-    private List<File> searchByName(List<File> listFile, String nameFile) {
-        List<File> listFilter = new ArrayList<>();
-        for (File file : listFile) {
-            if (!file.getName().toLowerCase().contains(nameFile.toLowerCase())) {
+    private void searchByName(String nameFile) {
+        List<AssetFile> listFilter = new ArrayList<>();
+        for (AssetFile file : fileList) {
+            if (!file.getFileName().contains(nameFile)) {
                 listFilter.add(file);
             }
         }
-        listFile.removeAll(listFilter);
-        return listFile;
+        fileList.removeAll(listFilter);
     }
 
     /**
-     * @param listFile file list.
      * @param size     is the file size.
      * @param operator is "<" or ">" or "=".
-     * @return list all the files minor or major or equal to given size.
      */
-    private List<File> searchBySize(List<File> listFile, double size, char operator) {
+    private void searchBySize(double size, char operator) {
 
-        List<File> listFilter = new ArrayList<>();
-        for (File file : listFile) {
+        List<AssetFile> listFilter = new ArrayList<>();
+        for (AssetFile file : fileList) {
             if (operator == '=') {
-                if (file.length() != size) {
+                if (file.getSize() != size) {
                     listFilter.add(file);
                 }
             }
             if (operator == '>') {
-                if (file.length() < size) {
+                if (file.getSize() < size) {
                     listFilter.add(file);
                 }
             }
             if (operator == '<') {
-                if (file.length() > size) {
+                if (file.getSize() > size) {
 
                     listFilter.add(file);
                 }
             }
         }
-        listFile.removeAll(listFilter);
-        return listFile;
+        fileList.removeAll(listFilter);
     }
 
     /**
-     * @param listFile list file
      * @param isHidden true.
-     * @return list all the files minor or major or equal to given size.
      */
 
-    private List<File> searchHiddenFiles(List<File> listFile, boolean isHidden) {
+    private void searchHiddenFiles(boolean isHidden) {
+        List<AssetFile> listFilter = new ArrayList<>();
         if (isHidden) {
-            return listFile.stream().filter(File::isHidden).collect(Collectors.toList());
+            for (AssetFile file : fileList) {
+                if (!file.getIsIsHidden()) {
+                    listFilter.add(file);
+                }
+            }
+            fileList.removeAll(listFilter);
+
         }
-        return listFile;
+    }
+
+    /**
+     * this medthod search extension.
+     *
+     * @param extension type of extension that search.
+     */
+    public void searchByExtention(String extension) {
+        fileList.stream().filter(file -> file.getFileName().endsWith(extension)).collect(Collectors.toList());
+    }
+
+    /**
+     * @param date is of date of creation.
+     * @return date of creation of file.
+     */
+    public String dateCreate(String date) {
+        String formatted = "";
+        BasicFileAttributes attrs;
+        try {
+            Path path = Paths.get(date);
+            attrs = Files.readAttributes(path, BasicFileAttributes.class);
+            FileTime time = attrs.creationTime();
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            formatted = simpleDateFormat.format(new Date(time.toMillis()));
+            return formatted;
+        } catch (IOException e) {
+        }
+        return formatted;
+    }
+
+    /**
+     * @param date is date of modified.
+     * @return of date of modified of file.
+     */
+    public String dateModified(String date) {
+        String formatted = "";
+        try {
+            Path path = Paths.get(date);
+            FileTime time = Files.getLastModifiedTime(path);
+            String pattern = "dd/MM/yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            formatted = simpleDateFormat.format(new Date(time.toMillis()));
+            return formatted;
+        } catch (IOException e) {
+        }
+        return formatted;
     }
 
     /**
@@ -128,32 +190,28 @@ public class Search {
      *                 Is a method that filter a List according that receive of SearchCriteria.
      */
     public void searchByCriteria(Criteria criteria) {
-        fileList =  new ArrayList<>();
         if (criteria.getPath() != null) {
-            fileList = searchByPath(criteria.getPath());
+            fileList = new ArrayList<>();
+            searchByPath(criteria.getPath());
             if (criteria.getFileName() != null) {
-                fileList = searchByName(fileList, criteria.getFileName());
+                searchByName(criteria.getFileName());
             }
             if (criteria.getSize() > -1) {
-                fileList = searchBySize(fileList, criteria.getSize(), criteria.getOperator().charAt(0));
+                searchBySize(criteria.getSize(), criteria.getOperator().charAt(0));
             }
             if (criteria.getIsIshidden()) {
-                fileList = searchHiddenFiles(fileList, criteria.getIsIshidden());
+                searchHiddenFiles(criteria.getIsIshidden());
             }
         }
     }
 
     /**
      * this method result of a search by criterias.
-     *@return File Result list with the files already searched
+     *
+     * @return File Result list with the files already searched
      */
     public List<AssetFile> getResult() {
-        List<AssetFile> result = new ArrayList<>();
-        if (!fileList.isEmpty()) {
-            for (File file : fileList) {
-                result.add(new AssetFile(file.getPath(), file.getName(), file.length(), file.isHidden()));
-            }
-        }
-        return result;
+
+        return fileList;
     }
 }
