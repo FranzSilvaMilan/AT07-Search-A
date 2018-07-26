@@ -46,6 +46,9 @@ public class PanelSearch extends JPanel {
     JLabel labelFile;
     JLabel labelPhat;
     JLabel labelHidden;
+    JLabel labelOwner;
+    JLabel labelDateCreate;
+    JLabel labelDateModified;
 
     PanelTable panelTable;
 
@@ -54,15 +57,13 @@ public class PanelSearch extends JPanel {
     ButtonGroup radioGruop;
 
     JCheckBox pdf;
-    JCheckBox doc;
+    JCheckBox docx;
     JCheckBox exe;
     JCheckBox gif;
     JCheckBox ppt;
     JCheckBox zip;
     JCheckBox xlsx;
     JCheckBox rar;
-
-
 
 
     /**
@@ -87,6 +88,9 @@ public class PanelSearch extends JPanel {
         buttonSearch = new JButton("SEARCH");
         LabelSize = new JLabel("SIZE:");
         labelHidden = new JLabel("HIDDEN");
+        labelOwner = new JLabel("OWNER");
+        labelDateCreate = new JLabel("DATE_CREATE");
+        labelDateModified = new JLabel("DATE_MODIFIED");
         operator = new JComboBox<>(operatiorOptions);
         optionUnitsSize = new JComboBox<>(listUnitSize);
         spinnerSize = new JSpinner();
@@ -95,7 +99,7 @@ public class PanelSearch extends JPanel {
         hiddenCheck = new JCheckBox("Hidden");
         btSelect = new JButton();
         pdf = new JCheckBox();
-        doc = new JCheckBox();
+        docx = new JCheckBox();
         exe = new JCheckBox();
         gif = new JCheckBox();
         ppt = new JCheckBox();
@@ -130,11 +134,11 @@ public class PanelSearch extends JPanel {
     public void settingPanel() {
 
         labelFile.setBounds(10, 20, 100, 30);
-        textFile.setBounds(90, 20, 700, 30);
+        textFile.setBounds(90, 20, 250, 30);
         textFile.setBackground(new Color(204, 255, 229));
 
         labelPhat.setBounds(10, 50, 100, 30);
-        textPath.setBounds(90, 50, 700, 30);
+        textPath.setBounds(90, 50, 250, 30);
         textPath.setBackground(new Color(204, 255, 229));
 
         btSelect.setText("Select Path");
@@ -152,45 +156,45 @@ public class PanelSearch extends JPanel {
         //radioGruop.add(hiddenCheck);
 
         buttonSearch.setBounds(1000, 180, 150, 30);
-       // buttonSearch.setBackground(Color);
+        // buttonSearch.setBackground(Color);
 
         pdf.setText(".pdf");
-        pdf.setEnabled(false);
+        pdf.setEnabled(true);
         pdf.setBounds(950, 20, 70, 23);
         this.add(pdf);
 
-        doc.setText(".doc");
-        doc.setEnabled(false);
-        doc.setBounds(1080, 20, 70, 23);
-        this.add(doc);
+        docx.setText(".docx");
+        docx.setEnabled(true);
+        docx.setBounds(1080, 20, 70, 23);
+        this.add(docx);
 
         exe.setText(".exe");
-        exe.setEnabled(false);
+        exe.setEnabled(true);
         exe.setBounds(1210, 20, 70, 23);
         this.add(exe);
 
         gif.setText(".gif");
-        gif.setEnabled(false);
+        gif.setEnabled(true);
         gif.setBounds(950, 50, 70, 23);
         this.add(gif);
 
         ppt.setText(".ppt");
-        ppt.setEnabled(false);
+        ppt.setEnabled(true);
         ppt.setBounds(1080, 50, 70, 23);
         this.add(ppt);
 
         zip.setText(".zip");
-        zip.setEnabled(false);
+        zip.setEnabled(true);
         zip.setBounds(1210, 50, 70, 23);
         this.add(zip);
 
         xlsx.setText(".xlsx");
-        xlsx.setEnabled(false);
+        xlsx.setEnabled(true);
         xlsx.setBounds(950, 80, 70, 23);
         this.add(xlsx);
 
         rar.setText(".rar");
-        rar.setEnabled(false);
+        rar.setEnabled(true);
         rar.setBounds(1080, 80, 70, 23);
         this.add(rar);
 
@@ -202,7 +206,7 @@ public class PanelSearch extends JPanel {
     /**
      * this method run when click on button path.
      */
-    public void  acctionButton(){
+    public void acctionButton() {
         btSelect.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 btSelectMouseClicked(evt);
@@ -224,6 +228,9 @@ public class PanelSearch extends JPanel {
         add(buttonSearch);
         add(LabelSize);
         add(labelHidden);
+        add(labelOwner);
+        add(labelDateCreate);
+        add(labelDateModified);
         add(operator);
         add(optionUnitsSize);
         add(textPath);
@@ -288,17 +295,19 @@ public class PanelSearch extends JPanel {
 
     /**
      * this method get value of field size.
+     *
      * @return value of size
      */
-    public String getSizeFile(){
+    public String getSizeFile() {
         return spinnerSize.getValue().toString();
     }
 
     /**
      * this method get value of radio button hidden.
+     *
      * @return true if selected.
      */
-    public boolean getHidden(){
+    public boolean getHidden() {
         return hiddenCheck.isSelected();
     }
 
@@ -311,6 +320,7 @@ public class PanelSearch extends JPanel {
 
     /**
      * this method
+     *
      * @param evt
      */
     private void btSelectMouseClicked(MouseEvent evt) {
@@ -322,7 +332,6 @@ public class PanelSearch extends JPanel {
             textPath.setText(selectedFile.getAbsolutePath());
         }
     }
-
 
 
 }
