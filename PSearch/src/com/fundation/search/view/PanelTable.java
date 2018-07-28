@@ -19,8 +19,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 
 /**
  * This class Search for four critearias path, name, size  and hidden.
@@ -52,6 +51,7 @@ public class PanelTable extends JPanel{
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setPreferredSize(new Dimension(0, 0));
         setBounds(10, 220, 1150, 450);
+        setBackground(new Color(250, 252, 252));
     }
 
     public void addRow(String[] newRow) {

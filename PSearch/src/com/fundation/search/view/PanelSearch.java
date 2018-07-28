@@ -13,17 +13,21 @@
  */
 package com.fundation.search.view;
 
-import com.toedter.calendar.JDateChooser;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.filechooser.FileSystemView;
 
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.filechooser.FileSystemView;
+
+import com.toedter.calendar.JDateChooser;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * This class Asset can be FileResult SearchFolder.
@@ -37,6 +41,7 @@ public class PanelSearch extends JPanel {
     private JTextField textFile;
     private JTextField textPath;
     private JTextField textExtension;
+    private JTextField textOwner;
     private JTextField textContain;
     private JDateChooser dateCreate;
     private JDateChooser dateCreateTo;
@@ -49,9 +54,9 @@ public class PanelSearch extends JPanel {
     private String[] operatorOptions;
     private JComboBox<String> operator;
     private JButton btSelect;
-    /**
-     * array that contains units of the bytes,kb,Mb and Gb.
-     */
+
+    //array that contains units of the bytes,kb,Mb and Gb.
+
     private String[] listUnitSize;
     private JComboBox<String> optionUnitsSize;
 
@@ -62,18 +67,14 @@ public class PanelSearch extends JPanel {
     private JLabel labelOwner;
     private JLabel labelSearchExtension;
     private JLabel labelSearchOthers;
-    private JLabel labelFrom;
     private JLabel labelTo;
-    private JLabel labelFromM;
     private JLabel labelToM;
-    private JLabel labelFromL;
     private JLabel labelToL;
 
-    PanelTable panelTable;
+    private PanelTable panelTable;
 
-    JSpinner spinnerSize;
-    JRadioButton hidden;
-    ButtonGroup radioGruop;
+    private JSpinner spinnerSize;
+    public ButtonGroup radioGruop;
 
     private JCheckBox pdf;
     private JCheckBox docx;
@@ -87,10 +88,12 @@ public class PanelSearch extends JPanel {
     private JCheckBox enableModified;
     private JCheckBox enableLastAccess;
     private JCheckBox enableOnlyRead;
-    private JCheckBox enableSensitiveFile;
+    private JCheckBox enableKeySensitive;
     private Border blacking;
     private Border loweredetched;
-
+    private boolean changeCreate;
+    private boolean changeModified;
+    private boolean changeLastAccess;
 
     /**
      * this is constructor of the class PanelSearch.
@@ -98,13 +101,13 @@ public class PanelSearch extends JPanel {
 
     public PanelSearch() {
         settingPanelSearch();
-        initComponet();
+        initComponent();
         initComponentTable();
         settingPanel();
         addComponents();
     }
 
-    private void initComponet() {
+    private void initComponent() {
         listUnitSize = new String[]{"bytes", "Kb", "Mb", "Gb"};
         operatorOptions = new String[]{">", "<", "="};
         textFile = new JTextField();
@@ -118,23 +121,20 @@ public class PanelSearch extends JPanel {
         textPath = new JTextField("C:\\");
         textExtension = new JTextField();
         textContain = new JTextField();
+        textOwner = new JTextField();
         labelPhat = new JLabel("PATH:");
         buttonSearch = new JButton("SEARCH");
         LabelSize = new JLabel("SIZE:");
         labelHidden = new JLabel("HIDDEN");
         labelOwner = new JLabel("OWNER");
-        labelSearchExtension = new JLabel("SEARCH BY EXTENSION OF FILES");
-        labelSearchOthers = new JLabel("SEARCH BY CONTAIN");
-        labelFrom = new JLabel("FROM:");
+        labelSearchExtension = new JLabel("EXTENSION OF FILE");
+        labelSearchOthers = new JLabel("CONTAIN");
         labelTo = new JLabel("TO:");
-        labelFromM = new JLabel("FROM:");
         labelToM = new JLabel("TO:");
-        labelFromL = new JLabel("FROM:");
         labelToL = new JLabel("TO:");
         operator = new JComboBox<>(operatorOptions);
         optionUnitsSize = new JComboBox<>(listUnitSize);
         spinnerSize = new JSpinner();
-        hidden = new JRadioButton("hidden");
         radioGruop = new ButtonGroup();
         hiddenCheck = new JCheckBox("Hidden");
         btSelect = new JButton();
@@ -150,10 +150,12 @@ public class PanelSearch extends JPanel {
         enableModified = new JCheckBox("Date Modified");
         enableLastAccess = new JCheckBox("Date Last Access");
         enableOnlyRead = new JCheckBox("Only Read");
-        enableSensitiveFile = new JCheckBox("Sensitive File");
+        enableKeySensitive = new JCheckBox("Key Sensitive");
         blacking = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
         loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-
+        changeCreate = false;
+        changeModified = false;
+        changeLastAccess = false;
     }
 
     /**
@@ -175,7 +177,6 @@ public class PanelSearch extends JPanel {
      * this method contain is have the location and other property as color and text
      * for look for archive.
      */
-
     public void settingPanel() {
 
         /**
@@ -183,156 +184,174 @@ public class PanelSearch extends JPanel {
          */
         labelFile.setBounds(10, 20, 100, 30);
         labelFile.setBorder(blacking);
-        textFile.setBounds(90, 20, 300, 30);
-        textFile.setBackground(new Color(204, 255, 229));
+        textFile.setBounds(90, 20, 320, 30);
+        textFile.setBackground(new Color(250, 252, 252));
         textFile.setBorder(blacking);
-        /**
-         * In this field you enter the path of file,
-         */
+
+        //In this field you enter the path of file,
+
         labelPhat.setBounds(10, 50, 80, 30);
         labelPhat.setBorder(blacking);
-        textPath.setBounds(90, 50, 300, 30);
+        textPath.setBounds(90, 50, 320, 30);
         textPath.setBorder(blacking);
-        textPath.setBackground(new Color(204, 255, 229));
+        textPath.setBackground(new Color(250, 252, 252));
 
-        /**
-         * Search by Calendar for date create.
-         */
+        //Search by Calendar for date create.
         enableCreate.setEnabled(true);
-        enableCreate.setBounds(5, 150, 100, 23);
-        this.add(enableCreate);
+        enableCreate.setBounds(235, 140, 100, 20);
+        enableCreate.setBackground(new Color(250, 252, 252));
 
-        labelFrom.setBounds(120, 130, 60, 20);
-        labelFrom.setForeground(new Color(1, 1, 33));
-        labelFrom.setBorder(loweredetched);
-        dateCreate.setBounds(120, 150, 150, 25);
+        dateCreate.setBounds(5, 140, 100, 20);
         dateCreate.setBorder(loweredetched);
-        this.add(dateCreate);
+        dateCreate.setEnabled(false);
 
-        labelTo.setBounds(120, 175, 60, 20);
+        labelTo.setBounds(105, 140, 30, 20);
         labelTo.setForeground(new Color(1, 1, 33));
         labelTo.setBorder(loweredetched);
-        dateCreateTo.setBounds(120, 195, 150, 25);
+
+        dateCreateTo.setBounds(135, 140, 100, 20);
         dateCreateTo.setBorder(loweredetched);
-        this.add(dateCreateTo);
-        /**
-         * Search by Calendar for date modified.
-         */
+        dateCreateTo.setEnabled(false);
+
+        //Search by Calendar for date modified.
+
         enableModified.setEnabled(true);
-        enableModified.setBounds(280, 150, 110, 23);
-        this.add(enableModified);
+        enableModified.setBounds(235, 160, 110, 20);
+        enableModified.setBackground(new Color(250, 252, 252));
 
-        labelFromM.setBounds(400, 130, 60, 20);
-        labelFromM.setForeground(new Color(1, 1, 33));
-        labelFromM.setBorder(loweredetched);
-        dateModified.setBounds(400, 150, 150, 25);
+        dateModified.setBounds(5, 160, 100, 20);
         dateModified.setBorder(loweredetched);
-        this.add(dateModified);
+        dateModified.setEnabled(false);
 
-        labelToM.setBounds(400, 175, 60, 20);
+        labelToM.setBounds(105, 160, 30, 20);
         labelToM.setForeground(new Color(1, 1, 33));
         labelToM.setBorder(loweredetched);
-        dateModifiedTo.setBounds(400, 195, 150, 25);
+
+        dateModifiedTo.setBounds(135, 160, 100, 20);
         dateModifiedTo.setBorder(loweredetched);
-        this.add(dateModifiedTo);
-        /**
-         * Search by Calendar for date last access.
-         */
+        dateModifiedTo.setEnabled(false);
+
+
+        //Search by Calendar for date last access.
+
         enableLastAccess.setEnabled(true);
-        enableLastAccess.setBounds(570, 150, 130, 23);
-        this.add(enableLastAccess);
+        enableLastAccess.setBounds(235, 180, 130, 20);
+        enableLastAccess.setBackground(new Color(250, 252, 252));
 
-        labelFromL.setBounds(720, 130, 60, 20);
-        labelFromL.setForeground(new Color(1, 1, 33));
-        labelFromL.setBorder(loweredetched);
-        dateLastAccess.setBounds(720, 150, 150, 25);
+        dateLastAccess.setBounds(5, 180, 100, 20);
         dateLastAccess.setBorder(loweredetched);
-        this.add(dateLastAccess);
+        dateLastAccess.setEnabled(false);
 
-        labelToL.setBounds(720, 175, 60, 20);
+        labelToL.setBounds(105, 180, 30, 20);
         labelToL.setForeground(new Color(1, 1, 33));
         labelToL.setBorder(loweredetched);
-        dateLastAccessTo.setBounds(720, 195, 150, 25);
+
+        dateLastAccessTo.setBounds(135, 180, 100, 20);
         dateLastAccessTo.setBorder(loweredetched);
-        this.add(dateLastAccessTo);
-        /**
-         * Button and operators.
-         */
+        dateLastAccessTo.setEnabled(false);
+
+        //Button and operators.
+
         btSelect.setText("Select Path");
-        btSelect.setBounds(400, 50, 120, 30);
+        btSelect.setBounds(290, 80, 120, 30);
+        btSelect.setBackground(new Color(250, 252, 252));
+        btSelect.setBorder(blacking);
 
         LabelSize.setBounds(10, 80, 100, 30);
         operator.setBounds(230, 80, 50, 30);
+        operator.setBackground(new Color(250, 252, 252));
+        operator.setBorder(blacking);
         optionUnitsSize.setBounds(160, 80, 70, 30);
+        optionUnitsSize.setBackground(new Color(250, 252, 252));
+        optionUnitsSize.setBorder(blacking);
         spinnerSize.setValue(0);
         spinnerSize.setBounds(90, 80, 70, 30);
+        spinnerSize.setBackground(new Color(250, 252, 252));
+        spinnerSize.setBorder(blacking);
         buttonSearch.setBounds(1000, 180, 150, 30);
+        buttonSearch.setBackground(new Color(250, 252, 252));
+        buttonSearch.setBorder(blacking);
 
-        /**
-         * Search by extension.
-         */
-        labelSearchExtension.setBounds(800, 3, 200, 23);
+        //Search by extension.
+
+        labelSearchExtension.setBounds(910, 3, 140, 20);
         labelSearchExtension.setForeground(new Color(1, 1, 33));
-        textExtension.setBounds(800, 30, 100, 30);
-        textExtension.setBackground(new Color(204, 255, 229));
+        textExtension.setBounds(1050, 30, 100, 30);
+        textExtension.setBackground(new Color(250, 252, 252));
         textExtension.setBorder(blacking);
         labelSearchExtension.setBorder(blacking);
 
         pdf.setEnabled(true);
         pdf.setBounds(910, 40, 60, 23);
-        this.add(pdf);
+        pdf.setBackground(new Color(250, 252, 252));
 
         docx.setEnabled(true);
         docx.setBounds(980, 40, 60, 23);
-        this.add(docx);
+        docx.setBackground(new Color(250, 252, 252));
 
         exe.setEnabled(true);
         exe.setBounds(910, 60, 60, 23);
-        this.add(exe);
+        exe.setBackground(new Color(250, 252, 252));
 
         gif.setEnabled(true);
         gif.setBounds(980, 60, 60, 23);
-        this.add(gif);
+        gif.setBackground(new Color(250, 252, 252));
 
         ppt.setEnabled(true);
         ppt.setBounds(910, 80, 60, 23);
-        this.add(ppt);
+        ppt.setBackground(new Color(250, 252, 252));
 
         zip.setEnabled(true);
         zip.setBounds(980, 80, 60, 23);
-        this.add(zip);
+        zip.setBackground(new Color(250, 252, 252));
 
         xlsx.setEnabled(true);
         xlsx.setBounds(910, 100, 60, 23);
-        this.add(xlsx);
+        xlsx.setBackground(new Color(250, 252, 252));
 
         rar.setEnabled(true);
         rar.setBounds(980, 100, 60, 23);
-        this.add(rar);
-        /**
-         * Search by contain of files.
-         */
-        labelSearchOthers.setBounds(550, 3, 200, 23);
+        rar.setBackground(new Color(250, 252, 252));
+
+        //Search by owner of files.
+
+        labelOwner.setBounds(730, 3, 150, 20);
+        labelOwner.setForeground(new Color(1, 1, 33));
+        labelOwner.setBorder(blacking);
+
+        textOwner.setBounds(730, 30, 150, 30);
+        textOwner.setBackground(new Color(250, 252, 252));
+        textOwner.setBorder(blacking);
+
+        //Search by contain of files.
+
+        labelSearchOthers.setBounds(550, 3, 150, 20);
         labelSearchOthers.setForeground(new Color(1, 1, 33));
         labelSearchOthers.setBorder(blacking);
 
-        textContain.setBounds(550, 30, 200, 30);
-        textContain.setBackground(new Color(204, 255, 229));
+        textContain.setBounds(550, 30, 150, 30);
+        textContain.setBackground(new Color(250, 252, 252));
         textContain.setBorder(blacking);
-        /**
-         * Search by only read,hidden and sensitive file.
-         */
+
+        //Search by only read,hidden and sensitive file.
+
         enableOnlyRead.setEnabled(true);
-        enableOnlyRead.setBounds(550, 80, 100, 23);
-        this.add(enableOnlyRead);
+        enableOnlyRead.setBounds(550, 80, 100, 20);
+        enableOnlyRead.setBackground(new Color(250, 252, 252));
 
-        hiddenCheck.setBounds(680, 80, 70, 23);
+        hiddenCheck.setBounds(550, 100, 70, 20);
+        hiddenCheck.setBackground(new Color(250, 252, 252));
 
-        enableSensitiveFile.setBounds(770, 80, 110, 23);
-        this.add(enableSensitiveFile);
+        enableKeySensitive.setBounds(550, 120, 110, 20);
+        enableKeySensitive.setBackground(new Color(250, 252, 252));
+
         actionBottom();
 
+        //Events of check.
 
+        enableCreate.addChangeListener(evt -> chSearchTextStateChanged(evt));
+        enableModified.addChangeListener(evt -> chSearchTextStateChanged(evt));
+        enableLastAccess.addChangeListener(evt -> chSearchTextStateChanged(evt));
     }
 
     /**
@@ -347,11 +366,32 @@ public class PanelSearch extends JPanel {
     }
 
     /**
+     * @param e is a event.
+     */
+    private void chSearchTextStateChanged(ChangeEvent e) {
+        if (this.changeCreate != enableCreate.isSelected()) {
+            this.changeCreate = enableCreate.isSelected();
+            dateCreate.setEnabled(changeCreate);
+            dateCreateTo.setEnabled(changeCreate);
+        }
+        if (this.changeModified != enableModified.isSelected()) {
+            this.changeModified = enableModified.isSelected();
+            dateModified.setEnabled(changeModified);
+            dateModifiedTo.setEnabled(changeModified);
+        }
+        if (this.changeLastAccess != enableLastAccess.isSelected()) {
+            this.changeLastAccess = enableLastAccess.isSelected();
+            dateLastAccess.setEnabled(changeLastAccess);
+            dateLastAccessTo.setEnabled(changeLastAccess);
+        }
+
+    }
+
+    /**
      * this method add all components.
      */
     public void addComponents() {
         add(textFile);
-        add(hidden);
         add(spinnerSize);
         add(textFile);
         add(textPath);
@@ -371,12 +411,29 @@ public class PanelSearch extends JPanel {
         add(btSelect);
         add(labelSearchExtension);
         add(labelSearchOthers);
-        add(labelFrom);
         add(labelTo);
-        add(labelFromM);
         add(labelToM);
-        add(labelFromL);
         add(labelToL);
+        add(enableCreate);
+        add(enableModified);
+        add(enableLastAccess);
+        add(enableOnlyRead);
+        add(enableKeySensitive);
+        add(dateCreate);
+        add(dateCreateTo);
+        add(dateModified);
+        add(dateModifiedTo);
+        add(dateLastAccess);
+        add(dateLastAccessTo);
+        add(pdf);
+        add(docx);
+        add(exe);
+        add(gif);
+        add(ppt);
+        add(zip);
+        add(xlsx);
+        add(rar);
+        add(textOwner);
     }
 
     /**
@@ -416,11 +473,57 @@ public class PanelSearch extends JPanel {
     }
 
     /**
+     * @return the contain of file.
+     */
+    public String getContain() {
+        return textContain.getText();
+    }
+
+    /**
+     * @return the owner of file.
+     */
+    public String getOwner() {
+        return textOwner.getText();
+    }
+
+    public ArrayList<String> getExtensions() {
+        ArrayList<String> extensions = new ArrayList<>();
+        if (!textContain.getText().isEmpty()) {
+            extensions.add(textContain.getText());
+        }
+        if (pdf.isSelected()) {
+            extensions.add(pdf.getName());
+        }
+        if (docx.isSelected()) {
+            extensions.add(docx.getName());
+        }
+        if (ppt.isSelected()) {
+            extensions.add(ppt.getName());
+        }
+        if (zip.isSelected()) {
+            extensions.add(zip.getName());
+        }
+        if (rar.isSelected()) {
+            extensions.add(rar.getName());
+        }
+        if (xlsx.isSelected()) {
+            extensions.add(xlsx.getName());
+        }
+        if (exe.isSelected()) {
+            extensions.add(exe.getName());
+        }
+        if (gif.isSelected()) {
+            extensions.add(gif.getName());
+        }
+        return extensions;
+    }
+
+    /**
      * this method get button
      *
      * @return button
      */
-    public JButton getButtoSearsh() {
+    public JButton getButtonSearch() {
         return buttonSearch;
     }
 
@@ -452,6 +555,52 @@ public class PanelSearch extends JPanel {
     }
 
     /**
+     * @return true if selected.
+     */
+    public boolean getOnlyRead() {
+        return enableOnlyRead.isSelected();
+    }
+
+    /**
+     * @return true if selected.
+     */
+    public boolean getKeySensitive() {
+        return enableKeySensitive.isSelected();
+    }
+
+    /**
+     * @return
+     */
+    public Date getDateCreate() {
+        return dateCreate.getDate();
+    }
+
+    /**
+     * @return
+     */
+    public Date getDateCreateTo() {
+        return dateCreateTo.getDate();
+    }
+
+    /**
+     * @return
+     */
+    public Date getDateModified() {
+        return dateModified.getDate();
+    }
+
+    /**
+     * @return
+     */
+    public Date getDateModifiedTo() {
+        return dateModifiedTo.getDate();
+    }
+
+    public Date getDateLastAccess() {
+        return dateLastAccess.getDate();
+    }
+
+    /**
      * this method clean table.
      */
     public void cleanTable() {
@@ -464,6 +613,7 @@ public class PanelSearch extends JPanel {
      * @param evt
      */
     private void btSelectMouseClicked(MouseEvent evt) {
+        System.out.println(getDateCreate());
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnValue = jfc.showOpenDialog(null);
@@ -472,5 +622,4 @@ public class PanelSearch extends JPanel {
             textPath.setText(selectedFile.getAbsolutePath());
         }
     }
-
 }

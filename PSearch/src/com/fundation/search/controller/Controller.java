@@ -53,7 +53,7 @@ public class Controller {
      * this method has the accion listeenr of the button.
      */
     public void actionListener() {
-        frame.getPanelSearch().getButtoSearsh().addActionListener(new ActionListener() {
+        frame.getPanelSearch().getButtonSearch().addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
 
