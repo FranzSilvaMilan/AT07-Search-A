@@ -21,56 +21,58 @@ import com.fundation.search.view.FrameMain;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * This class controller can be FileResult, MultimediaResult and maybe SearchFolder.
  *
  * @author Denis Camacho - AT-[07].
- * @author Ketty Camacho- AT -[07].
+ * @author Ketty Camacho - AT -[07].
+ * @author Franz Silva - AT - [07].
  * @version 1.0.
  */
 public class Controller {
-    FrameMain frame;
+    private FrameMain frame;
+    private ValidatorData validator;
+    private Search search;
+    private Convert convert;
+    private CriteriaBuilder criteriaBuilder;
+    private Criteria criteria;
 
-    ValidatorData validator;
-    Criteria criteria;
-    Search search;
-    Convert convert;
-
+    /**
+     * this a constuctor.
+     */
     public Controller() {
         frame = new FrameMain();
-        criteria = new Criteria();
         search = new Search();
         validator = new ValidatorData();
         convert = new Convert();
+        criteria = new Criteria();
         actionListener();
-
-
     }
 
     /**
      * this method has the accion listeenr of the button.
      */
-    public void actionListener() {
-        frame.getPanelSearch().getButtoSearsh().addActionListener(new ActionListener() {
+    private void actionListener() {
+        frame.getPanelSearch().getButtonSearch().addActionListener(new ActionListener() {
+
 
             public void actionPerformed(ActionEvent e) {
-
-                if (validator.isPathValid(frame.getPanelSearch().getTextPath())) {
-                    getSearchCriteria();
-
+                if (validateAllFields()) {
+                    buildCriteria();
                     search.searchByCriteria(criteria);
                     List<AssetFile> listResult = search.getResult();
                     frame.getPanelSearch().cleanTable();
                     for (AssetFile file : listResult) {
-
-                        String[] row = new String[]{file.getFileName(), Long.toString(file.getSize()), file.getPath(), Boolean.toString(file.getIsIsHidden())};
+                        String[] row = new String[]{"",file.getFileName(),
+                                Long.toString(file.getSize()),
+                                file.getPath(),
+                                Boolean.toString(file.getIsIsHidden())};
                         frame.getPanelSearch().addRow(row);
                     }
-
-                } else {
-                    System.out.println("Path no valid");
                 }
             }
         });
@@ -79,12 +81,44 @@ public class Controller {
     /**
      * this method build object criteria.
      */
-    public void getSearchCriteria() {
+    private void buildCriteria() {
+        //values of search basic
+        String path = frame.getPanelSearch().getTextPath();
+        String fileName = frame.getPanelSearch().getTextFile();
+        System.out.println(fileName);
+        String operator = frame.getPanelSearch().getOperator();
+        Long valueOFView = Long.parseLong(frame.getPanelSearch().getSizeFile());
+        String unityForSize = frame.getPanelSearch().getOptionUnitsSize();
+        Long sizeValue = convert.convertTOLong(valueOFView, unityForSize);
+        boolean hidden = frame.getPanelSearch().getHidden();
 
-        criteria.setFileName(frame.getPanelSearch().getTextFile());
-        criteria.setPath(frame.getPanelSearch().getTextPath());
-        criteria.setOperator(frame.getPanelSearch().getOperator());
-        criteria.setSize(convert.convertTOLong(Long.parseLong(frame.getPanelSearch().getSizeFile()), frame.getPanelSearch().getOptionUnitsSize()));
-        criteria.setIshidden(frame.getPanelSearch().getHidden());
+        //values of search advanced
+        boolean readOnly = frame.getPanelSearch().getOnlyRead();
+        boolean keySensitive = frame.getPanelSearch().getKeySensitive();
+        String dateCreateFrom = convert.convertDateToString(frame.getPanelSearch().getDateCreate());
+        String dateCreateTo = convert.convertDateToString(frame.getPanelSearch().getDateCreateTo());
+        String dateModifyFrom = convert.convertDateToString(frame.getPanelSearch().getDateModified());
+        String dateModifyTo = convert.convertDateToString(frame.getPanelSearch().getDateModifiedTo());
+        String dateAccessFrom = convert.convertDateToString(frame.getPanelSearch().getDateLastAccess());
+        String dateAccessTo = convert.convertDateToString(frame.getPanelSearch().getDateLastAccess());
+        String owner = frame.getPanelSearch().getOwner();
+        String contain = frame.getPanelSearch().getContain();
+        ArrayList<String> listExtensions= frame.getPanelSearch().getExtensions();
+
+        CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
+        criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator);
+        criteriaBuilder.buildFileAdvance(true,readOnly,dateModifyFrom,dateModifyTo,dateCreateFrom,
+                dateCreateTo,dateAccessFrom,dateAccessTo,keySensitive,owner,contain,listExtensions);
+        this.criteria = criteriaBuilder.build();
+
+    }
+
+    /**
+     * this method calidate the fields get of UI.
+     *
+     * @return true if all fields is correct.
+     */
+    private boolean validateAllFields() {
+        return validator.isPathValid(frame.getPanelSearch().getTextPath()) && validator.isSizeValid(frame.getPanelSearch().getSizeFile());
     }
 }
