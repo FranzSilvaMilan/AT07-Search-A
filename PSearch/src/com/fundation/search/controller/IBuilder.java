@@ -16,12 +16,15 @@
 
 package com.fundation.search.controller;
 
+import java.util.ArrayList;
+
 public interface IBuilder {
     public void buildFile(String path, String fileName, boolean hidden, Long size, String operator);
 
     public void buildFileAdvance(boolean directory, boolean readOnly,
                                  String dateModifyIni, String dateModifyFin, String dateCreateIni,
-                                 String dateCreateFin, String dateAccessini, String dateAccessFin);
+                                 String dateCreateFin, String dateAccessini, String dateAccessFin,
+                                 boolean keysensitive, String owner, String contain, ArrayList<String> extensions);
 
     public void buildMultimedia();
 

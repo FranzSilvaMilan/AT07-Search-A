@@ -21,6 +21,8 @@ import com.fundation.search.view.FrameMain;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,7 +57,7 @@ public class Controller {
      * this method has the accion listeenr of the button.
      */
     private void actionListener() {
-        frame.getPanelSearch().getButtoSearsh().addActionListener(new ActionListener() {
+        frame.getPanelSearch().getButtonSearch().addActionListener(new ActionListener() {
 
 
             public void actionPerformed(ActionEvent e) {
@@ -65,7 +67,7 @@ public class Controller {
                     List<AssetFile> listResult = search.getResult();
                     frame.getPanelSearch().cleanTable();
                     for (AssetFile file : listResult) {
-                        String[] row = new String[]{file.getFileName(),
+                        String[] row = new String[]{"",file.getFileName(),
                                 Long.toString(file.getSize()),
                                 file.getPath(),
                                 Boolean.toString(file.getIsIsHidden())};
@@ -80,16 +82,33 @@ public class Controller {
      * this method build object criteria.
      */
     private void buildCriteria() {
+        //values of search basic
         String path = frame.getPanelSearch().getTextPath();
-        String fieName = frame.getPanelSearch().getTextFile();
+        String fileName = frame.getPanelSearch().getTextFile();
+        System.out.println(fileName);
         String operator = frame.getPanelSearch().getOperator();
         Long valueOFView = Long.parseLong(frame.getPanelSearch().getSizeFile());
         String unityForSize = frame.getPanelSearch().getOptionUnitsSize();
         Long sizeValue = convert.convertTOLong(valueOFView, unityForSize);
         boolean hidden = frame.getPanelSearch().getHidden();
 
+        //values of search advanced
+        boolean readOnly = frame.getPanelSearch().getOnlyRead();
+        boolean keySensitive = frame.getPanelSearch().getKeySensitive();
+        String dateCreateFrom = convert.convertDateToString(frame.getPanelSearch().getDateCreate());
+        String dateCreateTo = convert.convertDateToString(frame.getPanelSearch().getDateCreateTo());
+        String dateModifyFrom = convert.convertDateToString(frame.getPanelSearch().getDateModified());
+        String dateModifyTo = convert.convertDateToString(frame.getPanelSearch().getDateModifiedTo());
+        String dateAccessFrom = convert.convertDateToString(frame.getPanelSearch().getDateLastAccess());
+        String dateAccessTo = convert.convertDateToString(frame.getPanelSearch().getDateLastAccess());
+        String owner = frame.getPanelSearch().getOwner();
+        String contain = frame.getPanelSearch().getContain();
+        ArrayList<String> listExtensions= frame.getPanelSearch().getExtensions();
+
         CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
-        criteriaBuilder.buildFile(path, fieName, hidden, sizeValue, operator);
+        criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator);
+        criteriaBuilder.buildFileAdvance(true,readOnly,dateModifyFrom,dateModifyTo,dateCreateFrom,
+                dateCreateTo,dateAccessFrom,dateAccessTo,keySensitive,owner,contain,listExtensions);
         this.criteria = criteriaBuilder.build();
 
     }

@@ -16,6 +16,8 @@
 
 package com.fundation.search.controller;
 
+import java.util.ArrayList;
+
 public class CriteriaBuilder implements IBuilder {
     private Criteria criteria;
 
@@ -27,15 +29,12 @@ public class CriteriaBuilder implements IBuilder {
     @Override
     public void buildFile(String path, String fileName, boolean hidden, Long size, String operator) {
         if (!path.isEmpty()) {
-            System.out.println("set Path");
             criteria.setPath(path);
         }
         if (!fileName.isEmpty()) {
-            System.out.println("set file ");
-            criteria.setPath(fileName);
+            criteria.setFileName(fileName);
         }
         if (hidden) {
-            System.out.println("set Hidden");
             criteria.setIshidden(hidden);
         }
         criteria.setSize(size);
@@ -45,32 +44,21 @@ public class CriteriaBuilder implements IBuilder {
     @Override
     public void buildFileAdvance(boolean directory, boolean readOnly,
                                  String dateModifyFrom, String dateModifyTo, String dateCreateFrom,
-                                 String dateCreateTo, String dateAccessFrom, String dateAccessTo) {
+                                 String dateCreateTo, String dateAccessFrom, String dateAccessTo,
+                                 boolean keysensitive, String owner, String contain, ArrayList<String> extensions) {
 
-        if (directory) {
-            criteria.setDirectory(directory);
-        }
-        if (readOnly) {
-            criteria.setReadOny(readOnly);
-        }
-        if (!dateModifyFrom.isEmpty()) {
-            criteria.setDateModificateFrom(dateModifyFrom);
-        }
-        if (!dateModifyTo.isEmpty()) {
-            criteria.setDateModificateTo(dateModifyTo);
-        }
-        if (!dateCreateFrom.isEmpty()) {
-            criteria.setDateCreateFrom(dateCreateFrom);
-        }
-        if (!dateCreateTo.isEmpty()) {
-            criteria.setDateCreateTo(dateCreateTo);
-        }
-        if (!dateAccessFrom.isEmpty()) {
-            criteria.setDateAccessFrom(dateAccessFrom);
-        }
-        if (!dateAccessTo.isEmpty()) {
-            criteria.setDateAccessTo(dateAccessTo);
-        }
+        if (directory) criteria.setDirectory(directory);
+        if (readOnly) criteria.setReadOnly(readOnly);
+        if (!dateModifyFrom.isEmpty()) criteria.setDateModificateFrom(dateModifyFrom);
+        if (!dateModifyTo.isEmpty()) criteria.setDateModificateTo(dateModifyTo);
+        if (!dateCreateFrom.isEmpty()) criteria.setDateCreateFrom(dateCreateFrom);
+        if (!dateCreateTo.isEmpty()) criteria.setDateCreateTo(dateCreateTo);
+        if (!dateAccessFrom.isEmpty()) criteria.setDateAccessFrom(dateAccessFrom);
+        if (!dateAccessTo.isEmpty()) criteria.setDateAccessTo(dateAccessTo);
+        if (keysensitive) criteria.setKeySensitive(keysensitive);
+        if (!owner.isEmpty()) criteria.setOwner(owner);
+        if (!contain.isEmpty()) criteria.setContent(contain);
+        if (!extensions.isEmpty()) criteria.setListExtensions(extensions);
     }
 
     @Override
