@@ -38,7 +38,7 @@ public class ValidatorData {
     public boolean isSizeValid(String size) {
 
         try {
-            return Integer.parseInt(size) > 0;
+            return Integer.parseInt(size) >= 0;
 
         } catch (NumberFormatException excepcion) {
             return false;
