@@ -57,6 +57,7 @@ public class Controller {
     private void actionListener() {
         frame.getPanelSearch().getButtoSearsh().addActionListener(new ActionListener() {
 
+
             public void actionPerformed(ActionEvent e) {
                 if (validateAllFields()) {
                     buildCriteria();
