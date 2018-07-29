@@ -94,7 +94,7 @@ public class Criteria {
     /**
      * this variable contains  is file is redOnly.
      */
-    private boolean readOny;
+    private boolean readOnly;
     /**
      * this variable contains the word if search on into file.
      */
@@ -230,16 +230,16 @@ public class Criteria {
      *
      * @return  true if user selecct.
      */
-    public boolean isReadOny() {
-        return readOny;
+    public boolean getReadOnly() {
+        return readOnly;
     }
     /**
      * set a new value.
      *
-     * @param readOny with a new value.
+     * @param readOnly with a new value.
      */
-    public void setReadOny(boolean readOny) {
-        this.readOny = readOny;
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
     }
 
     /**

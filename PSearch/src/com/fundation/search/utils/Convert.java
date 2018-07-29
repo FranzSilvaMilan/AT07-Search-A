@@ -10,6 +10,10 @@
  */
 package com.fundation.search.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * This class Convert can be FileResult, MultimediaResult and maybe SearchFolder.
  *
@@ -54,5 +58,14 @@ public class Convert {
                 break;
         }
         return wayTake;
+    }
+
+    public String convertDateToString(Date date) {
+        String result = "";
+        if (date != null) {
+            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            result = dateFormat.format(date);
+        }
+        return result;
     }
 }
