@@ -596,8 +596,18 @@ public class PanelSearch extends JPanel {
         return dateModifiedTo.getDate();
     }
 
+    /**
+     * @return
+     */
     public Date getDateLastAccess() {
         return dateLastAccess.getDate();
+    }
+
+    /**
+     * @return
+     */
+    public Date getDateLastAccessTo() {
+        return dateLastAccessTo.getDate();
     }
 
     /**
