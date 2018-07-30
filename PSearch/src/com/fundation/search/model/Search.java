@@ -23,12 +23,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * This class Search for four critearias path, name, size  and hidden.
  *
@@ -69,12 +68,17 @@ public class Search {
                 data.setIsHidden(file.isHidden());
                 data.setSize(file.length());
                 data.setOwner1(owner);
-                data.setDateCreate(dateCreate(file.getPath()));
-                data.setDateModified(dateModified(file.getPath()));
+                data.setDateCreate(fileDateCreate(file.getPath()));
+                data.setFileDateModified(fileDateModified(file.getPath()));
+                data.setReadOnly(!file.canWrite());
+                String[] folders = file.getParent().split("/");
+                System.out.println("Folder path:"+folders.toString());
+                data.setFolderName(folders[folders.length-1]);
                 fileList.add(data);
                 if (file.isDirectory()) {
                     searchByPath(file.getPath());
                 }
+
             }
         } catch (NullPointerException | IOException e) {
         }
@@ -83,14 +87,21 @@ public class Search {
     /**
      * @param nameFile .
      */
-    private void searchByName(String nameFile) {
+    private void searchByName(String nameFile, boolean keysensitive) {
         List<AssetFile> listFilter = new ArrayList<>();
         for (AssetFile file : fileList) {
-            if (!file.getFileName().contains(nameFile)) {
-                listFilter.add(file);
+            if(keysensitive){
+                if(file.getFileName().equals(nameFile)){
+                    listFilter.add(file);
+                }
+            }else {
+                if (file.getFileName().equalsIgnoreCase(nameFile)) {
+                    listFilter.add(file);
+                }
             }
         }
-        fileList.removeAll(listFilter);
+        fileList.clear();
+        fileList.addAll(listFilter);
     }
 
     /**
@@ -143,15 +154,18 @@ public class Search {
      *
      * @param extension type of extension that search.
      */
-    public void searchByExtention(String extension) {
-        fileList.stream().filter(file -> file.getFileName().endsWith(extension)).collect(Collectors.toList());
-    }
+    // public void searchByExtention(String extension) {
+    //   fileList.stream().filter(file -> file.getFileName().endsWith(extension)).collect(Collectors.toList());
+    //}
 
-    /**
+    /**MODIFIC.
+     * modificar los metodo date.
+     * sheardateCrete:
+     * data timpedate.
      * @param date is of date of creation.
      * @return date of creation of file.
      */
-    public String dateCreate(String date) {
+    public Timestamp fileDateCreate(String date) {
         String formatted = "";
         BasicFileAttributes attrs;
         try {
@@ -161,17 +175,18 @@ public class Search {
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             formatted = simpleDateFormat.format(new Date(time.toMillis()));
-            return formatted;
+            //return formatted;
         } catch (IOException e) {
         }
-        return formatted;
+        return null;
     }
 
-    /**
+    /** changeDate
+     * Time stamp
      * @param date is date of modified.
      * @return of date of modified of file.
      */
-    public String dateModified(String date) {
+    public Timestamp fileDateModified(String date) {
         String formatted = "";
         try {
             Path path = Paths.get(date);
@@ -179,10 +194,11 @@ public class Search {
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             formatted = simpleDateFormat.format(new Date(time.toMillis()));
-            return formatted;
+            //return formatted;
+            //return time.
         } catch (IOException e) {
         }
-        return formatted;
+        return null;
     }
 
     /**
@@ -194,7 +210,7 @@ public class Search {
             fileList = new ArrayList<>();
             searchByPath(criteria.getPath());
             if (criteria.getFileName() != null) {
-                searchByName(criteria.getFileName());
+                searchByName(criteria.getFileName(), criteria.isKeySensitive());
             }
             if (criteria.getSize() > -1) {
                 searchBySize(criteria.getSize(), criteria.getOperator().charAt(0));
@@ -202,8 +218,67 @@ public class Search {
             if (criteria.getIsIshidden()) {
                 searchHiddenFiles(criteria.getIsIshidden());
             }
+
+            if(criteria.getReadOnly())
+            {
+                searchByReadOnly(criteria.getReadOnly());
+            }
+
+            /**if (!criteria.getListExtensions().isEmpty()) {
+
+                searchByExtension(criteria.getListExtensions());
+            }**/
+
+            if (!criteria.getListExtensions().isEmpty()) {
+
+                searchByExtension(criteria.getListExtensions());
+            }
+
+
+
         }
     }
+
+    /**
+     *
+     * @param extensions
+     */
+    public void searchByExtension(List<String> extensions) {
+        List<AssetFile> listFilter = new ArrayList<AssetFile>();
+
+        for (AssetFile file : fileList) {
+            for (String fileExt : extensions) {
+                if (file.getFileName().endsWith(fileExt)) {
+                    listFilter.add(file);
+                }
+            }
+        }
+        fileList.clear();
+        fileList.addAll(listFilter);
+    }
+
+    /**
+     *
+     * @param readOnly
+     */
+
+    public void searchByReadOnly(boolean readOnly) {
+        List<AssetFile> listFilter = new ArrayList<>();
+
+        if (readOnly) {
+
+            for (AssetFile file : fileList) {
+
+                if (file.getReadOnly()) {
+                    listFilter.add(file);
+                }
+
+            }
+            fileList.clear();
+            fileList.addAll(listFilter);
+        }
+    }
+
 
     /**
      * this method result of a search by criterias.
