@@ -293,8 +293,8 @@ public class Search {
             }
             // alway is returning TRUE, review
             /**if(criteria.getDirectory()){
-                searchByFolder(criteria.getDirectory());
-            }*/
+             searchByFolder(criteria.getDirectory());
+             }*/
 
         }
     }
