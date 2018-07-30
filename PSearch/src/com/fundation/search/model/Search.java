@@ -80,7 +80,7 @@ public class Search {
                 } else {
                     String[] fileN = file.getName().split("\\.");
                     data.setFileName(fileN[0]);
-                    data.setExtensions(fileN[1]);
+                    data.setExtensions("."+fileN[1]);
                 }
 
             }
@@ -256,7 +256,7 @@ public class Search {
 
         for (AssetFile file : fileList) {
             for (String fileExt : extensions) {
-                if (file.getExtensions().equals(fileExt)) {
+                if (file.getExtensions().endsWith(fileExt)) {
                     listFilter.add(file);
                 }
             }
