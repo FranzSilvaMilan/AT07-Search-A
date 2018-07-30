@@ -288,10 +288,10 @@ public class PanelSearch extends JPanel {
 
         //Search by extension.
 
-        labelSearchExtension.setBounds(415, 80, 80, 30);
+        labelSearchExtension.setBounds(425, 80, 80, 30);
         labelSearchExtension.setForeground(new Color(1, 1, 33));
 
-        textExtension.setBounds(495, 80, 150, 30);
+        textExtension.setBounds(505, 80, 150, 30);
         textExtension.setBackground(new Color(250, 252, 252));
         textExtension.setBorder(blacking);
         labelSearchExtension.setBorder(blacking);
@@ -330,38 +330,38 @@ public class PanelSearch extends JPanel {
 
         //Search by owner of files.
 
-        labelOwner.setBounds(415, 50, 80, 30);
+        labelOwner.setBounds(425, 50, 80, 30);
         labelOwner.setForeground(new Color(1, 1, 33));
         labelOwner.setBorder(blacking);
 
-        textOwner.setBounds(495, 50, 150, 30);
+        textOwner.setBounds(505, 50, 150, 30);
         textOwner.setBackground(new Color(250, 252, 252));
         textOwner.setBorder(blacking);
 
         //Search by contain of files.
 
-        labelSearchOthers.setBounds(415, 20, 80, 30);
+        labelSearchOthers.setBounds(425, 20, 80, 30);
         labelSearchOthers.setForeground(new Color(1, 1, 33));
         labelSearchOthers.setBorder(blacking);
 
-        textContain.setBounds(495, 20, 150, 30);
+        textContain.setBounds(505, 20, 150, 30);
         textContain.setBackground(new Color(250, 252, 252));
         textContain.setBorder(blacking);
 
         //Search by only read,hidden and sensitive file.
 
         enableOnlyRead.setEnabled(true);
-        enableOnlyRead.setBounds(650, 20, 100, 20);
+        enableOnlyRead.setBounds(670, 20, 100, 20);
         enableOnlyRead.setBackground(new Color(250, 252, 252));
 
-        hiddenCheck.setBounds(650, 40, 70, 20);
+        hiddenCheck.setBounds(670, 40, 70, 20);
         hiddenCheck.setBackground(new Color(250, 252, 252));
 
-        enableKeySensitive.setBounds(650, 60, 110, 20);
+        enableKeySensitive.setBounds(670, 60, 110, 20);
         enableKeySensitive.setBackground(new Color(250, 252, 252));
 
         folder.setEnabled(true);
-        folder.setBounds(650, 80, 80, 20);
+        folder.setBounds(670, 80, 80, 20);
         folder.setBackground(new Color(250, 252, 252));
 
         actionBottom();
