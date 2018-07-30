@@ -133,9 +133,9 @@ public class PanelSearch extends JPanel {
         labelPhat = new JLabel("PATH:");
         LabelSize = new JLabel("SIZE:");
         labelHidden = new JLabel("HIDDEN");
-        labelOwner = new JLabel("OWNER");
-        labelSearchExtension = new JLabel("EXTENSION OF FILE");
-        labelSearchOthers = new JLabel("CONTAIN");
+        labelOwner = new JLabel("OWNER:");
+        labelSearchExtension = new JLabel("EXTENSION:");
+        labelSearchOthers = new JLabel("CONTAIN:");
         labelTo = new JLabel("TO:");
         labelToM = new JLabel("TO:");
         labelToL = new JLabel("TO:");
@@ -196,7 +196,7 @@ public class PanelSearch extends JPanel {
         /**
          * In this field you search by file name.
          */
-        labelFile.setBounds(10, 20, 100, 30);
+        labelFile.setBounds(10, 20, 80, 30);
         labelFile.setBorder(blacking);
         textFile.setBounds(90, 20, 320, 30);
         textFile.setBackground(new Color(250, 252, 252));
@@ -288,79 +288,80 @@ public class PanelSearch extends JPanel {
 
         //Search by extension.
 
-        labelSearchExtension.setBounds(910, 3, 140, 20);
+        labelSearchExtension.setBounds(425, 80, 80, 30);
         labelSearchExtension.setForeground(new Color(1, 1, 33));
-        textExtension.setBounds(1050, 30, 100, 30);
+
+        textExtension.setBounds(505, 80, 150, 30);
         textExtension.setBackground(new Color(250, 252, 252));
         textExtension.setBorder(blacking);
         labelSearchExtension.setBorder(blacking);
 
         pdf.setEnabled(true);
-        pdf.setBounds(910, 40, 60, 23);
+        pdf.setBounds(495, 115, 60, 23);
         pdf.setBackground(new Color(250, 252, 252));
 
         docx.setEnabled(true);
-        docx.setBounds(980, 40, 60, 23);
+        docx.setBounds(565, 115, 60, 23);
         docx.setBackground(new Color(250, 252, 252));
 
         exe.setEnabled(true);
-        exe.setBounds(910, 60, 60, 23);
+        exe.setBounds(495, 135, 60, 23);
         exe.setBackground(new Color(250, 252, 252));
 
         gif.setEnabled(true);
-        gif.setBounds(980, 60, 60, 23);
+        gif.setBounds(565, 135, 60, 23);
         gif.setBackground(new Color(250, 252, 252));
 
         ppt.setEnabled(true);
-        ppt.setBounds(910, 80, 60, 23);
+        ppt.setBounds(495, 155, 60, 23);
         ppt.setBackground(new Color(250, 252, 252));
 
         zip.setEnabled(true);
-        zip.setBounds(980, 80, 60, 23);
+        zip.setBounds(565, 155, 60, 23);
         zip.setBackground(new Color(250, 252, 252));
 
         xlsx.setEnabled(true);
-        xlsx.setBounds(910, 100, 60, 23);
+        xlsx.setBounds(495, 175, 60, 23);
         xlsx.setBackground(new Color(250, 252, 252));
 
         rar.setEnabled(true);
-        rar.setBounds(980, 100, 60, 23);
+        rar.setBounds(565, 175, 60, 23);
         rar.setBackground(new Color(250, 252, 252));
 
         //Search by owner of files.
 
-        labelOwner.setBounds(730, 3, 150, 20);
+        labelOwner.setBounds(425, 50, 80, 30);
         labelOwner.setForeground(new Color(1, 1, 33));
         labelOwner.setBorder(blacking);
 
-        textOwner.setBounds(730, 30, 150, 30);
+        textOwner.setBounds(505, 50, 150, 30);
         textOwner.setBackground(new Color(250, 252, 252));
         textOwner.setBorder(blacking);
 
         //Search by contain of files.
 
-        labelSearchOthers.setBounds(550, 3, 150, 20);
+        labelSearchOthers.setBounds(425, 20, 80, 30);
         labelSearchOthers.setForeground(new Color(1, 1, 33));
         labelSearchOthers.setBorder(blacking);
 
-        textContain.setBounds(550, 30, 150, 30);
+        textContain.setBounds(505, 20, 150, 30);
         textContain.setBackground(new Color(250, 252, 252));
         textContain.setBorder(blacking);
 
         //Search by only read,hidden and sensitive file.
 
         enableOnlyRead.setEnabled(true);
-        enableOnlyRead.setBounds(550, 80, 100, 20);
+        enableOnlyRead.setBounds(670, 20, 100, 20);
         enableOnlyRead.setBackground(new Color(250, 252, 252));
 
-        hiddenCheck.setBounds(550, 100, 70, 20);
+        hiddenCheck.setBounds(670, 40, 70, 20);
         hiddenCheck.setBackground(new Color(250, 252, 252));
 
-        enableKeySensitive.setBounds(550, 120, 110, 20);
+        enableKeySensitive.setBounds(670, 60, 110, 20);
         enableKeySensitive.setBackground(new Color(250, 252, 252));
 
         folder.setEnabled(true);
-        folder.setBounds(550, 140, 80, 20);
+        folder.setBounds(670, 80, 80, 20);
         folder.setBackground(new Color(250, 252, 252));
 
         actionBottom();
