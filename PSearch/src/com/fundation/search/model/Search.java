@@ -18,6 +18,7 @@ import com.fundation.search.controller.Criteria;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,8 +27,10 @@ import java.nio.file.attribute.FileTime;
 import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * This class Search for four critearias path, name, size  and hidden.
@@ -79,8 +82,12 @@ public class Search {
                     searchByPath(file.getPath());
                 } else {
                     String[] fileN = file.getName().split("\\.");
-                    data.setFileName(fileN[0]);
-                    data.setExtensions("    ."+fileN[fileN.length-1]);
+                    StringJoiner name = new StringJoiner(".");
+                    for(int i =0; i<fileN.length-1;i++){
+                        name.add(fileN[i]);
+                    }
+                    data.setFileName(name.toString());
+                    data.setExtensions("."+fileN[fileN.length-1]);
                 }
 
             }
