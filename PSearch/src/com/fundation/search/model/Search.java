@@ -244,7 +244,7 @@ public class Search {
                 searchByOwner(criteria.getOwner());
             }
 
-            searchByFolder(false);
+            searchByFolder(criteria.getDirectory());
 
         }
     }
