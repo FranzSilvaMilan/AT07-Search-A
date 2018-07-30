@@ -74,7 +74,7 @@ public class Search {
                 data.setDirectory(file.isDirectory());
                 data.setDateCreateFrom("");
                 data.setDateModificateFrom("");
-                data.setReadOnly(file.canWrite());
+                data.setReadOnly(!file.canWrite());
                 fileList.add(data);
                 if (file.isDirectory()) {
                     data.setFileName(file.getName());
