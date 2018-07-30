@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /**
  * This class Search for four critearias path, name, size  and hidden.
  *
@@ -72,8 +73,7 @@ public class Search {
                 data.setFileDateModified(fileDateModified(file.getPath()));
                 data.setReadOnly(!file.canWrite());
                 String[] folders = file.getParent().split("/");
-                System.out.println("Folder path:"+folders.toString());
-                data.setFolderName(folders[folders.length-1]);
+                data.setFolderName(folders[folders.length - 1]);
                 fileList.add(data);
                 if (file.isDirectory()) {
                     searchByPath(file.getPath());
@@ -90,11 +90,11 @@ public class Search {
     private void searchByName(String nameFile, boolean keysensitive) {
         List<AssetFile> listFilter = new ArrayList<>();
         for (AssetFile file : fileList) {
-            if(keysensitive){
-                if(file.getFileName().equals(nameFile)){
+            if (keysensitive) {
+                if (file.getFileName().equals(nameFile)) {
                     listFilter.add(file);
                 }
-            }else {
+            } else {
                 if (file.getFileName().equalsIgnoreCase(nameFile)) {
                     listFilter.add(file);
                 }
@@ -158,10 +158,12 @@ public class Search {
     //   fileList.stream().filter(file -> file.getFileName().endsWith(extension)).collect(Collectors.toList());
     //}
 
-    /**MODIFIC.
+    /**
+     * MODIFIC.
      * modificar los metodo date.
      * sheardateCrete:
      * data timpedate.
+     *
      * @param date is of date of creation.
      * @return date of creation of file.
      */
@@ -181,8 +183,10 @@ public class Search {
         return null;
     }
 
-    /** changeDate
+    /**
+     * changeDate
      * Time stamp
+     *
      * @param date is date of modified.
      * @return of date of modified of file.
      */
@@ -219,15 +223,14 @@ public class Search {
                 searchHiddenFiles(criteria.getIsIshidden());
             }
 
-            if(criteria.getReadOnly())
-            {
+            if (criteria.getReadOnly()) {
                 searchByReadOnly(criteria.getReadOnly());
             }
 
             /**if (!criteria.getListExtensions().isEmpty()) {
 
-                searchByExtension(criteria.getListExtensions());
-            }**/
+             searchByExtension(criteria.getListExtensions());
+             }**/
 
             if (!criteria.getListExtensions().isEmpty()) {
 
@@ -235,12 +238,10 @@ public class Search {
             }
 
 
-
         }
     }
 
     /**
-     *
      * @param extensions
      */
     public void searchByExtension(List<String> extensions) {
@@ -258,7 +259,6 @@ public class Search {
     }
 
     /**
-     *
      * @param readOnly
      */
 
