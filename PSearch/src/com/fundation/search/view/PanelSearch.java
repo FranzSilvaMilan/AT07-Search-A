@@ -91,6 +91,7 @@ public class PanelSearch extends JPanel {
     private JCheckBox enableLastAccess;
     private JCheckBox enableOnlyRead;
     private JCheckBox enableKeySensitive;
+    private JCheckBox folder;
 
     private Border blacking;
     private Border loweredetched;
@@ -114,20 +115,22 @@ public class PanelSearch extends JPanel {
     private void initComponent() {
         listUnitSize = new String[]{"bytes", "Kb", "Mb", "Gb"};
         operatorOptions = new String[]{">", "<", "="};
-        textFile = new JTextField();
+
         dateCreate = new JDateChooser(null, "dd/MM/yyyy");
         dateCreateTo = new JDateChooser(null, "dd/MM/yyyy");
         dateModified = new JDateChooser(null, "dd/MM/yyyy");
         dateModifiedTo = new JDateChooser(null, "dd/MM/yyyy");
         dateLastAccess = new JDateChooser(null, "dd/MM/yyyy");
         dateLastAccessTo = new JDateChooser(null, "dd/MM/yyyy");
+
         labelFile = new JLabel("FILE NAME:");
+        textFile = new JTextField();
         textPath = new JTextField("C:\\");
         textExtension = new JTextField();
         textContain = new JTextField();
         textOwner = new JTextField();
+
         labelPhat = new JLabel("PATH:");
-        buttonSearch = new JButton("SEARCH");
         LabelSize = new JLabel("SIZE:");
         labelHidden = new JLabel("HIDDEN");
         labelOwner = new JLabel("OWNER");
@@ -136,12 +139,17 @@ public class PanelSearch extends JPanel {
         labelTo = new JLabel("TO:");
         labelToM = new JLabel("TO:");
         labelToL = new JLabel("TO:");
+
         operator = new JComboBox<>(operatorOptions);
         optionUnitsSize = new JComboBox<>(listUnitSize);
         spinnerSize = new JSpinner();
+
         radioGruop = new ButtonGroup();
-        hiddenCheck = new JCheckBox("Hidden");
         btSelect = new JButton();
+        buttonSearch = new JButton("SEARCH");
+
+        hiddenCheck = new JCheckBox("Hidden");
+        folder = new JCheckBox("Folder");
         pdf = new JCheckBox(".pdf");
         docx = new JCheckBox(".docx");
         exe = new JCheckBox(".exe");
@@ -155,8 +163,10 @@ public class PanelSearch extends JPanel {
         enableLastAccess = new JCheckBox("Date Last Access");
         enableOnlyRead = new JCheckBox("Only Read");
         enableKeySensitive = new JCheckBox("Key Sensitive");
+
         blacking = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
         loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+
         changeCreate = false;
         changeModified = false;
         changeLastAccess = false;
@@ -349,6 +359,10 @@ public class PanelSearch extends JPanel {
         enableKeySensitive.setBounds(550, 120, 110, 20);
         enableKeySensitive.setBackground(new Color(250, 252, 252));
 
+        folder.setEnabled(true);
+        folder.setBounds(550, 140, 80, 20);
+        folder.setBackground(new Color(250, 252, 252));
+
         actionBottom();
 
         //Events of check.
@@ -438,6 +452,7 @@ public class PanelSearch extends JPanel {
         add(xlsx);
         add(rar);
         add(textOwner);
+        add(folder);
     }
 
     /**
@@ -566,6 +581,13 @@ public class PanelSearch extends JPanel {
      */
     public boolean getOnlyRead() {
         return enableOnlyRead.isSelected();
+    }
+
+    /**
+     * @return if the search is by folder.
+     */
+    public boolean getSearchFolder() {
+        return folder.isSelected();
     }
 
     /**
