@@ -268,7 +268,7 @@ public class PanelSearch extends JPanel {
 
         btSelect.setText("Select Path");
         btSelect.setBounds(290, 80, 120, 30);
-        btSelect.setBackground(new Color(250, 252, 252));
+        btSelect.setBackground(new Color(9, 244, 184));
         btSelect.setBorder(blacking);
 
         LabelSize.setBounds(10, 80, 100, 30);
@@ -283,7 +283,7 @@ public class PanelSearch extends JPanel {
         spinnerSize.setBackground(new Color(250, 252, 252));
         spinnerSize.setBorder(blacking);
         buttonSearch.setBounds(1000, 180, 150, 30);
-        buttonSearch.setBackground(new Color(250, 252, 252));
+        buttonSearch.setBackground(new Color(9, 244, 184));
         buttonSearch.setBorder(blacking);
 
         //Search by extension.
