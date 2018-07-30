@@ -81,7 +81,7 @@ public class PanelSearch extends JPanel {
     private JCheckBox pdf;
     private JCheckBox docx;
     private JCheckBox exe;
-    private JCheckBox gif;
+    private JCheckBox txt;
     private JCheckBox ppt;
     private JCheckBox zip;
     private JCheckBox xlsx;
@@ -153,15 +153,15 @@ public class PanelSearch extends JPanel {
         pdf = new JCheckBox(".pdf");
         docx = new JCheckBox(".docx");
         exe = new JCheckBox(".exe");
-        gif = new JCheckBox(".gif");
-        ppt = new JCheckBox(".ppt");
+        txt = new JCheckBox(".txt");
+        ppt = new JCheckBox(".pptx");
         zip = new JCheckBox(".zip");
         xlsx = new JCheckBox(".xlsx");
         rar = new JCheckBox(".rar");
         enableCreate = new JCheckBox("Date Create");
         enableModified = new JCheckBox("Date Modified");
         enableLastAccess = new JCheckBox("Date Last Access");
-        enableOnlyRead = new JCheckBox("Only Read");
+        enableOnlyRead = new JCheckBox("ReadOnly");
         enableKeySensitive = new JCheckBox("Key Sensitive");
 
         blacking = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
@@ -308,9 +308,9 @@ public class PanelSearch extends JPanel {
         exe.setBounds(495, 135, 60, 23);
         exe.setBackground(new Color(250, 252, 252));
 
-        gif.setEnabled(true);
-        gif.setBounds(565, 135, 60, 23);
-        gif.setBackground(new Color(250, 252, 252));
+        txt.setEnabled(true);
+        txt.setBounds(565, 135, 60, 23);
+        txt.setBackground(new Color(250, 252, 252));
 
         ppt.setEnabled(true);
         ppt.setBounds(495, 155, 60, 23);
@@ -447,7 +447,7 @@ public class PanelSearch extends JPanel {
         add(pdf);
         add(docx);
         add(exe);
-        add(gif);
+        add(txt);
         add(ppt);
         add(zip);
         add(xlsx);
@@ -535,8 +535,8 @@ public class PanelSearch extends JPanel {
         if (exe.isSelected()) {
             extensions.add(exe.getText());
         }
-        if (gif.isSelected()) {
-            extensions.add(gif.getText());
+        if (txt.isSelected()) {
+            extensions.add(txt.getText());
         }
         return extensions;
     }

@@ -80,7 +80,7 @@ public class Search {
                 } else {
                     String[] fileN = file.getName().split("\\.");
                     data.setFileName(fileN[0]);
-                    data.setExtensions("."+fileN[1]);
+                    data.setExtensions("    ."+fileN[fileN.length-1]);
                 }
 
             }
