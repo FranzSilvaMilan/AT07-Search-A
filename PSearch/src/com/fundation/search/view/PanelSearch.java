@@ -491,7 +491,6 @@ public class PanelSearch extends JPanel {
     }
 
     /**
-     *
      * @return the list od extension of the files.
      */
     public ArrayList<String> getExtensions() {
@@ -631,10 +630,6 @@ public class PanelSearch extends JPanel {
      * @param evt
      */
     private void btSelectMouseClicked(MouseEvent evt) {
-        for (String ext:getExtensions()
-             ) {
-            System.out.println(ext);
-        }
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnValue = jfc.showOpenDialog(null);
