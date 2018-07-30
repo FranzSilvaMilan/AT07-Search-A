@@ -69,6 +69,7 @@ public class Search {
                 data.setIsHidden(file.isHidden());
                 data.setSize(file.length());
                 data.setOwner1(owner);
+                data.setFolder(file.isDirectory());
                 data.setDateCreate(fileDateCreate(file.getPath()));
                 data.setFileDateModified(fileDateModified(file.getPath()));
                 data.setReadOnly(!file.canWrite());
@@ -133,7 +134,8 @@ public class Search {
     }
 
     /**
-     * @param isHidden true.
+     * This method has the function to filter file by hidden
+     * @param isHidden has the value true or false to display the hidden files.
      */
 
     private void searchHiddenFiles(boolean isHidden) {
@@ -206,6 +208,7 @@ public class Search {
     }
 
     /**
+     * This method has the function to filter files by all setted parameters
      * @param criteria receives Search Criteria object.
      *                 Is a method that filter a List according that receive of SearchCriteria.
      */
@@ -237,12 +240,18 @@ public class Search {
                 searchByExtension(criteria.getListExtensions());
             }
 
+            if(criteria.getOwner()!=null){
+                searchByOwner(criteria.getOwner());
+            }
+
+            searchByFolder(false);
 
         }
     }
 
     /**
-     * @param extensions
+     * This Method has the function to filter by extension e.g. exe, pdf, txt.
+     * @param extensions content the extensions tha must be filter.
      */
     public void searchByExtension(List<String> extensions) {
         List<AssetFile> listFilter = new ArrayList<AssetFile>();
@@ -259,7 +268,8 @@ public class Search {
     }
 
     /**
-     * @param readOnly
+     * This method has the function to filter by privilege
+     * @param readOnly has the value true o false to display the file with privilege read only.
      */
 
     public void searchByReadOnly(boolean readOnly) {
@@ -279,6 +289,36 @@ public class Search {
         }
     }
 
+    /**
+     * This metho has the function to filter by owner.
+     * @param owner is the name of the owner of the file
+     */
+    public  void searchByOwner(String owner) {
+        List<AssetFile> listFilter = new ArrayList<AssetFile>();
+        for (AssetFile file:fileList){
+            if(file.getOwner().equalsIgnoreCase(owner)){
+                listFilter.add(file);
+            }
+        }
+        fileList.clear();
+        fileList.addAll(listFilter);
+    }
+
+
+    /**
+     * This metho has the function to filter the folders
+     * @param isFolder has the value true or false if the folder is going to display.
+     */
+    public void searchByFolder(boolean isFolder){
+        List<AssetFile> listFilter = new ArrayList<AssetFile>();
+        for (AssetFile file:fileList){
+            if(file.isFolder()==isFolder) {
+                listFilter.add(file);
+            }
+        }
+        fileList.clear();
+        fileList.addAll(listFilter);
+    }
 
     /**
      * this method result of a search by criterias.

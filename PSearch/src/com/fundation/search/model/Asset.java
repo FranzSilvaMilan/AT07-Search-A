@@ -3,6 +3,7 @@ package com.fundation.search.model;
 import java.security.Timestamp;
 
 public class Asset {
+
     private String path;
     private String fileName;
     private long size;
@@ -32,6 +33,8 @@ public class Asset {
 
     private String owner;
     private boolean readOnly;
+
+
 
     public Asset() {
 
