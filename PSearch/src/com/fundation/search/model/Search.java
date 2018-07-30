@@ -65,19 +65,22 @@ public class Search {
                 String owner = Files.getOwner(path1).toString();
                 data = new AssetFile();
                 data.setPath(file.getPath());
-                data.setFileName(file.getName());
-                data.setIsHidden(file.isHidden());
+                data.setIshidden(file.isHidden());
                 data.setSize(file.length());
-                data.setOwner1(owner);
-                data.setFolder(file.isDirectory());
-                data.setDateCreate(fileDateCreate(file.getPath()));
-                data.setFileDateModified(fileDateModified(file.getPath()));
+                data.setOwner(owner);
+                data.setDirectory(file.isDirectory());
+                data.setDateCreateFrom("");
+                data.setDateModificateFrom("");
                 data.setReadOnly(!file.canWrite());
-                String[] folders = file.getParent().split("/");
-                data.setFolderName(folders[folders.length - 1]);
                 fileList.add(data);
                 if (file.isDirectory()) {
+                    data.setFileName(file.getName());
+                    data.setExtensions("");
                     searchByPath(file.getPath());
+                } else {
+                    String[] fileN = file.getName().split("\\.");
+                    data.setFileName(fileN[0]);
+                    data.setExtensions(fileN[1]);
                 }
 
             }
@@ -96,7 +99,7 @@ public class Search {
                     listFilter.add(file);
                 }
             } else {
-                if (file.getFileName().equalsIgnoreCase(nameFile)) {
+                if (file.getFileName().toUpperCase().contains(nameFile.toUpperCase())) {
                     listFilter.add(file);
                 }
             }
@@ -135,6 +138,7 @@ public class Search {
 
     /**
      * This method has the function to filter file by hidden
+     *
      * @param isHidden has the value true or false to display the hidden files.
      */
 
@@ -142,7 +146,7 @@ public class Search {
         List<AssetFile> listFilter = new ArrayList<>();
         if (isHidden) {
             for (AssetFile file : fileList) {
-                if (!file.getIsIsHidden()) {
+                if (!file.getIsIshidden()) {
                     listFilter.add(file);
                 }
             }
@@ -209,6 +213,7 @@ public class Search {
 
     /**
      * This method has the function to filter files by all setted parameters
+     *
      * @param criteria receives Search Criteria object.
      *                 Is a method that filter a List according that receive of SearchCriteria.
      */
@@ -225,32 +230,25 @@ public class Search {
             if (criteria.getIsIshidden()) {
                 searchHiddenFiles(criteria.getIsIshidden());
             }
-
             if (criteria.getReadOnly()) {
                 searchByReadOnly(criteria.getReadOnly());
             }
-
-            /**if (!criteria.getListExtensions().isEmpty()) {
-
-             searchByExtension(criteria.getListExtensions());
-             }**/
-
             if (!criteria.getListExtensions().isEmpty()) {
 
                 searchByExtension(criteria.getListExtensions());
             }
-
-            if(criteria.getOwner()!=null){
+            if (criteria.getOwner() != null) {
                 searchByOwner(criteria.getOwner());
             }
-
-            searchByFolder(false);
-
+            if (criteria.getDirectory()) {
+                searchByFolder(criteria.getDirectory());
+            }
         }
     }
 
     /**
      * This Method has the function to filter by extension e.g. exe, pdf, txt.
+     *
      * @param extensions content the extensions tha must be filter.
      */
     public void searchByExtension(List<String> extensions) {
@@ -258,7 +256,7 @@ public class Search {
 
         for (AssetFile file : fileList) {
             for (String fileExt : extensions) {
-                if (file.getFileName().endsWith(fileExt)) {
+                if (file.getExtensions().equals(fileExt)) {
                     listFilter.add(file);
                 }
             }
@@ -269,6 +267,7 @@ public class Search {
 
     /**
      * This method has the function to filter by privilege
+     *
      * @param readOnly has the value true o false to display the file with privilege read only.
      */
 
@@ -291,12 +290,13 @@ public class Search {
 
     /**
      * This metho has the function to filter by owner.
+     *
      * @param owner is the name of the owner of the file
      */
-    public  void searchByOwner(String owner) {
+    public void searchByOwner(String owner) {
         List<AssetFile> listFilter = new ArrayList<AssetFile>();
-        for (AssetFile file:fileList){
-            if(file.getOwner().equalsIgnoreCase(owner)){
+        for (AssetFile file : fileList) {
+            if (file.getOwner().equalsIgnoreCase(owner)) {
                 listFilter.add(file);
             }
         }
@@ -307,12 +307,13 @@ public class Search {
 
     /**
      * This metho has the function to filter the folders
+     *
      * @param isFolder has the value true or false if the folder is going to display.
      */
-    public void searchByFolder(boolean isFolder){
+    public void searchByFolder(boolean isFolder) {
         List<AssetFile> listFilter = new ArrayList<AssetFile>();
-        for (AssetFile file:fileList){
-            if(file.isFolder()==isFolder) {
+        for (AssetFile file : fileList) {
+            if (file.getDirectory() == isFolder) {
                 listFilter.add(file);
             }
         }
