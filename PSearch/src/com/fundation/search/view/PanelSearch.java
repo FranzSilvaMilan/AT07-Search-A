@@ -38,25 +38,26 @@ import java.util.Date;
  * @version 1.0.
  */
 public class PanelSearch extends JPanel {
+    //these variables are for text fields.
     private JTextField textFile;
     private JTextField textPath;
     private JTextField textExtension;
     private JTextField textOwner;
     private JTextField textContain;
+    //these variables are for the dates.
     private JDateChooser dateCreate;
     private JDateChooser dateCreateTo;
     private JDateChooser dateModified;
     private JDateChooser dateModifiedTo;
     private JDateChooser dateLastAccess;
     private JDateChooser dateLastAccessTo;
+    //these variables are for button of select path and search.
     private JButton buttonSearch;
-    private JCheckBox hiddenCheck;
+    private JButton btSelect;
+    //these variables are for text fields.
     private String[] operatorOptions;
     private JComboBox<String> operator;
-    private JButton btSelect;
-
     //array that contains units of the bytes,kb,Mb and Gb.
-
     private String[] listUnitSize;
     private JComboBox<String> optionUnitsSize;
 
@@ -76,6 +77,7 @@ public class PanelSearch extends JPanel {
     private JSpinner spinnerSize;
     public ButtonGroup radioGruop;
 
+    private JCheckBox hiddenCheck;
     private JCheckBox pdf;
     private JCheckBox docx;
     private JCheckBox exe;
@@ -89,8 +91,10 @@ public class PanelSearch extends JPanel {
     private JCheckBox enableLastAccess;
     private JCheckBox enableOnlyRead;
     private JCheckBox enableKeySensitive;
+
     private Border blacking;
     private Border loweredetched;
+
     private boolean changeCreate;
     private boolean changeModified;
     private boolean changeLastAccess;
@@ -486,34 +490,37 @@ public class PanelSearch extends JPanel {
         return textOwner.getText();
     }
 
+    /**
+     * @return the list od extension of the files.
+     */
     public ArrayList<String> getExtensions() {
         ArrayList<String> extensions = new ArrayList<>();
-        if (!textContain.getText().isEmpty()) {
-            extensions.add(textContain.getText());
+        if (!textExtension.getText().isEmpty()) {
+            extensions.add(textExtension.getText());
         }
         if (pdf.isSelected()) {
-            extensions.add(pdf.getName());
+            extensions.add(pdf.getText());
         }
         if (docx.isSelected()) {
-            extensions.add(docx.getName());
+            extensions.add(docx.getText());
         }
         if (ppt.isSelected()) {
-            extensions.add(ppt.getName());
+            extensions.add(ppt.getText());
         }
         if (zip.isSelected()) {
-            extensions.add(zip.getName());
+            extensions.add(zip.getText());
         }
         if (rar.isSelected()) {
-            extensions.add(rar.getName());
+            extensions.add(rar.getText());
         }
         if (xlsx.isSelected()) {
-            extensions.add(xlsx.getName());
+            extensions.add(xlsx.getText());
         }
         if (exe.isSelected()) {
-            extensions.add(exe.getName());
+            extensions.add(exe.getText());
         }
         if (gif.isSelected()) {
-            extensions.add(gif.getName());
+            extensions.add(gif.getText());
         }
         return extensions;
     }
@@ -623,7 +630,6 @@ public class PanelSearch extends JPanel {
      * @param evt
      */
     private void btSelectMouseClicked(MouseEvent evt) {
-        System.out.println(getDateCreate());
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int returnValue = jfc.showOpenDialog(null);
