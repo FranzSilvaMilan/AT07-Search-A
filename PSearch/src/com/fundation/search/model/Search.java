@@ -80,7 +80,7 @@ public class Search {
                 } else {
                     String[] fileN = file.getName().split("\\.");
                     data.setFileName(fileN[0]);
-                    data.setExtensions(fileN[1]);
+                    data.setExtensions("    ."+fileN[fileN.length-1]);
                 }
 
             }
@@ -95,7 +95,7 @@ public class Search {
         List<AssetFile> listFilter = new ArrayList<>();
         for (AssetFile file : fileList) {
             if (keysensitive) {
-                if (file.getFileName().equals(nameFile)) {
+                if (file.getFileName().contains(nameFile)) {
                     listFilter.add(file);
                 }
             } else {
@@ -256,7 +256,7 @@ public class Search {
 
         for (AssetFile file : fileList) {
             for (String fileExt : extensions) {
-                if (file.getExtensions().equals(fileExt)) {
+                if (file.getExtensions().endsWith(fileExt)) {
                     listFilter.add(file);
                 }
             }
