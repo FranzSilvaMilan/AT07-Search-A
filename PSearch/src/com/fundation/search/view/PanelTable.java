@@ -38,7 +38,7 @@ public class PanelTable extends JPanel{
     }
 
     private void initTable() {
-        String columnHead[] = {"FOLDER","FILE", "SIZE", "PATH", "HIDDEN","EXTENSION","OWNER","DATE_CREATE","DATE_MODIFIED"};
+        String columnHead[] = {"FOLDER","FILE", "SIZE", "PATH", "HIDDEN","EXTENSION","OWNER","READ_ONLY","DATE_CREATE","DATE_MODIFIED"};
         scrollPane = new JScrollPane();
         model = new DefaultTableModel(columnHead, 0);
         table = new JTable(model);
