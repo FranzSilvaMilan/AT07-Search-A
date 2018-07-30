@@ -91,13 +91,61 @@ public class Search {
     private void searchByName(String nameFile, boolean keysensitive) {
         List<AssetFile> listFilter = new ArrayList<>();
         for (AssetFile file : fileList) {
-            if (keysensitive) {
-                if (file.getFileName().equals(nameFile)) {
+            if(keysensitive) {
+                if (!file.getFileName().contains(nameFile)) {
                     listFilter.add(file);
                 }
+
             } else {
-                if (file.getFileName().equalsIgnoreCase(nameFile)) {
+                if (!file.getFileName().toLowerCase().contains(nameFile.toLowerCase())) {
                     listFilter.add(file);
+                }
+            }
+        }
+        fileList.removeAll(listFilter);
+    }
+
+
+    /** this method is search for name of archive and case sensitive and for start letter and last letter
+     * @param nameFile . archives
+     * @param keysensitive lowercase (true ,false ).
+     *
+     */
+    private void searchByNameExt(String nameFile, boolean keysensitive, boolean start, boolean end ) {
+        List<AssetFile> listFilter = new ArrayList<>();
+        for (AssetFile file : fileList) {
+            if(keysensitive) {
+
+                if(start){
+                    if(file.getFileName().startsWith(nameFile)) {
+                        listFilter.add(file);
+                    }
+                }
+                else if(end){
+                    if(file.getFileName().endsWith(nameFile)){
+                        listFilter.add(file);
+                    }
+                }
+                else{
+                    if (!file.getFileName().contains(nameFile)) {
+                        listFilter.add(file);
+                    }
+                }
+            } else {
+                if(start){
+                    if(file.getFileName().toLowerCase().startsWith(nameFile.toLowerCase())){
+                        listFilter.add(file);
+                    }
+                }
+                else if(end){
+                    if(file.getFileName().toLowerCase().endsWith(nameFile.toLowerCase())){
+                        listFilter.add(file);
+                    }
+                }
+                else{
+                    if (file.getFileName().toLowerCase().contains(nameFile.toLowerCase())) {
+                        listFilter.add(file);
+                    }
                 }
             }
         }
@@ -217,7 +265,7 @@ public class Search {
             fileList = new ArrayList<>();
             searchByPath(criteria.getPath());
             if (criteria.getFileName() != null) {
-                searchByName(criteria.getFileName(), criteria.isKeySensitive());
+                searchByNameExt(criteria.getFileName(), criteria.isKeySensitive(), false, false);
             }
             if (criteria.getSize() > -1) {
                 searchBySize(criteria.getSize(), criteria.getOperator().charAt(0));
@@ -243,8 +291,10 @@ public class Search {
             if(criteria.getOwner()!=null){
                 searchByOwner(criteria.getOwner());
             }
-
-            searchByFolder(criteria.getDirectory());
+            // alway is returning TRUE, review
+            /**if(criteria.getDirectory()){
+                searchByFolder(criteria.getDirectory());
+            }*/
 
         }
     }
