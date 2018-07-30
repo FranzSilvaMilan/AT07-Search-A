@@ -67,10 +67,11 @@ public class Controller {
                     List<AssetFile> listResult = search.getResult();
                     frame.getPanelSearch().cleanTable();
                     for (AssetFile file : listResult) {
-                        String[] row = new String[]{"",file.getFileName(),
+                        String[] row = new String[]{Boolean.toString(file.getDirectory()),file.getFileName(),
                                 Long.toString(file.getSize()),
                                 file.getPath(),
-                                Boolean.toString(file.getIsIsHidden())};
+                                Boolean.toString(file.getIsIshidden()),file.getExtensions(),file.getOwner(),Boolean.toString(file.getReadOnly()),
+                        file.getDateCreateFrom(),file.getDateCreateFrom()};
                         frame.getPanelSearch().addRow(row);
                     }
                 }
@@ -103,11 +104,12 @@ public class Controller {
         String dateAccessTo = convert.convertDateToString(frame.getPanelSearch().getDateLastAccess());
         String owner = frame.getPanelSearch().getOwner();
         String contain = frame.getPanelSearch().getContain();
+        boolean folder = frame.getPanelSearch().getSearchFolder();
         ArrayList<String> listExtensions= frame.getPanelSearch().getExtensions();
 
         CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
         criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator);
-        criteriaBuilder.buildFileAdvance(true,readOnly,dateModifyFrom,dateModifyTo,dateCreateFrom,
+        criteriaBuilder.buildFileAdvance(folder,readOnly,dateModifyFrom,dateModifyTo,dateCreateFrom,
                 dateCreateTo,dateAccessFrom,dateAccessTo,keySensitive,owner,contain,listExtensions);
         this.criteria = criteriaBuilder.build();
 
