@@ -95,7 +95,7 @@ public class Search {
         List<AssetFile> listFilter = new ArrayList<>();
         for (AssetFile file : fileList) {
             if (keysensitive) {
-                if (file.getFileName().equals(nameFile)) {
+                if (file.getFileName().contains(nameFile)) {
                     listFilter.add(file);
                 }
             } else {
