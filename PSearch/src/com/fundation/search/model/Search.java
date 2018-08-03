@@ -15,7 +15,6 @@
 package com.fundation.search.model;
 
 import com.fundation.search.controller.Criteria;
-import com.fundation.search.utils.LoggerSearch;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,7 +46,6 @@ public class Search {
      */
     private List<AssetFile> fileList;
     private AssetFile data;
-    private static final org.apache.log4j.Logger PATH = LoggerSearch.getInstance().getLogger();
 
     /**
      * Search Class constructor.
@@ -61,7 +59,6 @@ public class Search {
      * @return list all the files contained within the path.
      */
     private void searchByPath(String path) {
-        PATH.info("searchPath :Enter");
 
         try {
             File[] files = new File(path).listFiles();
@@ -95,7 +92,6 @@ public class Search {
             }
         } catch (NullPointerException | IOException e) {
         }
-        PATH.info("searchPath: Exit");
     }
 
     /**
