@@ -18,7 +18,6 @@ import com.fundation.search.controller.Criteria;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,7 +26,6 @@ import java.nio.file.attribute.FileTime;
 import java.security.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.StringJoiner;
@@ -61,6 +59,7 @@ public class Search {
      * @return list all the files contained within the path.
      */
     private void searchByPath(String path) {
+
         try {
             File[] files = new File(path).listFiles();
             for (File file : files) {
@@ -74,7 +73,7 @@ public class Search {
                 data.setDirectory(file.isDirectory());
                 data.setDateCreateFrom("");
                 data.setDateModificateFrom("");
-                data.setReadOnly(!file.canWrite());
+                data.setReadOnly(file.canWrite());
                 fileList.add(data);
                 if (file.isDirectory()) {
                     data.setFileName(file.getName());
@@ -83,11 +82,11 @@ public class Search {
                 } else {
                     String[] fileN = file.getName().split("\\.");
                     StringJoiner name = new StringJoiner(".");
-                    for(int i =0; i<fileN.length-1;i++){
+                    for (int i = 0; i < fileN.length - 1; i++) {
                         name.add(fileN[i]);
                     }
                     data.setFileName(name.toString());
-                    data.setExtensions("."+fileN[fileN.length-1]);
+                    data.setExtensions("." + fileN[fileN.length - 1]);
                 }
 
             }
