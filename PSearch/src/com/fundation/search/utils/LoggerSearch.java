@@ -39,7 +39,7 @@ public class LoggerSearch {
     }
 
     /**
-     * @return logSearch init.
+     * @return logSearch  init.
      */
     public static LoggerSearch getInstance() {
         if (logSearch == null) {
