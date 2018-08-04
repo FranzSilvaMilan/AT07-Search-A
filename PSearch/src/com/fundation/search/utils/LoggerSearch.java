@@ -20,9 +20,6 @@ import org.apache.log4j.PropertyConfigurator;
  * @version 1.0.
  */
 
-/**
- *
- */
 public class LoggerSearch {
     // logSearch is the instance of the class LoggerSearch.
     private static LoggerSearch logSearch;
