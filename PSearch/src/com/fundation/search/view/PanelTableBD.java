@@ -20,6 +20,10 @@ public class PanelTableBD extends JPanel{
         private JTable table;
         private JScrollPane scrollPane;
 
+    /**
+     * Panel DATA base.
+     */
+
     public PanelTableBD (){
 
         tableBD();
