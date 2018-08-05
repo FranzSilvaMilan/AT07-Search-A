@@ -204,9 +204,9 @@ public class PanelSearch extends JPanel {
 
         //In this field you enter the path of file,
 
-        labelPhat.setBounds(10, 50, 80, 30);
+        labelPhat.setBounds(10, 70, 80, 30);
         labelPhat.setBorder(blacking);
-        textPath.setBounds(90, 50, 320, 30);
+        textPath.setBounds(90, 70, 320, 30);
         textPath.setBorder(blacking);
         textPath.setBackground(new Color(250, 252, 252));
 
@@ -267,19 +267,23 @@ public class PanelSearch extends JPanel {
         //Button and operators.
 
         btSelect.setText("Select Path");
-        btSelect.setBounds(290, 80, 120, 30);
-        btSelect.setBackground(new Color(9, 244, 184));
+        btSelect.setBounds(290, 100, 120, 30);
+        //btSelect.setBackground(Color.blue);
+        btSelect.setForeground(Color.blue);
+
+
+        //btSelect.setBackground(new Color(9, 244, 184));
         btSelect.setBorder(blacking);
 
-        LabelSize.setBounds(10, 80, 100, 30);
-        operator.setBounds(230, 80, 50, 30);
+        LabelSize.setBounds(10, 100, 100, 30);
+        operator.setBounds(230, 100, 50, 30);
         operator.setBackground(new Color(250, 252, 252));
         operator.setBorder(blacking);
-        optionUnitsSize.setBounds(160, 80, 70, 30);
+        optionUnitsSize.setBounds(160, 100, 70, 30);
         optionUnitsSize.setBackground(new Color(250, 252, 252));
         optionUnitsSize.setBorder(blacking);
         spinnerSize.setValue(0);
-        spinnerSize.setBounds(90, 80, 70, 30);
+        spinnerSize.setBounds(90, 100, 70, 30);
         spinnerSize.setBackground(new Color(250, 252, 252));
         spinnerSize.setBorder(blacking);
         buttonSearch.setBounds(1000, 180, 150, 30);
@@ -351,17 +355,17 @@ public class PanelSearch extends JPanel {
         //Search by only read,hidden and sensitive file.
 
         enableOnlyRead.setEnabled(true);
-        enableOnlyRead.setBounds(670, 20, 100, 20);
+        enableOnlyRead.setBounds(10, 50, 100, 20);
         enableOnlyRead.setBackground(new Color(250, 252, 252));
 
-        hiddenCheck.setBounds(670, 40, 70, 20);
+        hiddenCheck.setBounds(100, 50, 80, 20);
         hiddenCheck.setBackground(new Color(250, 252, 252));
 
-        enableKeySensitive.setBounds(670, 60, 110, 20);
+        enableKeySensitive.setBounds(190, 50, 120, 20);
         enableKeySensitive.setBackground(new Color(250, 252, 252));
 
         folder.setEnabled(true);
-        folder.setBounds(670, 80, 80, 20);
+        folder.setBounds(300, 50, 80, 20);
         folder.setBackground(new Color(250, 252, 252));
 
         actionBottom();

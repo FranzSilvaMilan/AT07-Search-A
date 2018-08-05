@@ -46,13 +46,14 @@ public class PanelTable extends JPanel{
         int horizontal = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
         scrollPane = new JScrollPane(table,vertical,horizontal);
         setLayout(new BorderLayout());
-
         add(scrollPane);
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setPreferredSize(new Dimension(0, 0));
         setBounds(10, 220, 1150, 450);
         setBackground(new Color(250, 252, 252));
     }
+
+
 
     public void addRow(String[] newRow) {
         model.addRow(newRow);
