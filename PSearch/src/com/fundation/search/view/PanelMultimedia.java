@@ -455,13 +455,6 @@ public class PanelMultimedia extends JPanel {
             cp.setEnabled(false);
         }*/
 
-
-
-
-
-
-
-
         //setupLayout.addLayoutComponent(labelAudioCodec);
 
 
@@ -605,7 +598,7 @@ public class PanelMultimedia extends JPanel {
 
 
     /**
-     * this method get file text.
+     *
      *
      * @return value of file text
      */
