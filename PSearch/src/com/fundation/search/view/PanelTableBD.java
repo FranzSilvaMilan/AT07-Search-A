@@ -30,6 +30,7 @@ public class PanelTableBD extends JPanel{
     }
         private void tableBD(){
         String columnHeadBD[] = {"Nro","NAMES"};
+
         scrollPane = new JScrollPane();
         modelDB = new DefaultTableModel(columnHeadBD, 0);
         table = new JTable(modelDB);
