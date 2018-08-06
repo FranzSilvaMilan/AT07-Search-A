@@ -68,24 +68,24 @@ public class Controller {
                     List<Asset> listResult = search.getResult();
                     frame.getPanelSearch().cleanTable();
                     for (Asset file : listResult) {
+                        String[] row;
                         if (file instanceof AssetFile) {
-                            AssetFile file2 = (AssetFile) file;
-                            String[] row = new String[]{Boolean.toString(file2.getDirectory()), file.getFileName(),
-                                    Long.toString(file.getSize()),
-                                    file.getPath(),
-                                    Boolean.toString(file.getIsIshidden()), file.getExtensions(), file.getOwner(), Boolean.toString(file.getReadOnly()),
-                                    convert.convertDateToString(file.getDateCreate()), convert.convertDateToString(file.getDateModificate()),
-                                    convert.convertDateToString(file.getDateAccess())};
-                            frame.getPanelSearch().addRow(row);
+                            AssetFile assetFile = (AssetFile) file;
+                            row = new String[]{Boolean.toString(assetFile.getDirectory()), assetFile.getFileName(),
+                                    Long.toString(assetFile.getSize()), assetFile.getPath(),
+                                    Boolean.toString(assetFile.getIsIshidden()), assetFile.getExtensions(), assetFile.getOwner(), Boolean.toString(assetFile.getReadOnly()),
+                                    convert.convertDateToString(assetFile.getDateCreate()), convert.convertDateToString(assetFile.getDateModificate()),
+                                    convert.convertDateToString(assetFile.getDateAccess())};
+                                    frame.getPanelSearch().addRow(row);
+
                         } else {
-                            AssetMultimedia file2 = (AssetMultimedia) file;
-                            String[] row = new String[]{Boolean.toString(false), file.getFileName(),
-                                    Long.toString(file.getSize()),
-                                    file.getPath(),
-                                    Boolean.toString(file.getIsIshidden()), file.getExtensions(), file.getOwner(), Boolean.toString(file.getReadOnly()),
-                                    convert.convertDateToString(file.getDateCreate()), convert.convertDateToString(file.getDateModificate()),
-                                    convert.convertDateToString(file.getDateAccess())};
-                            frame.getPanelSearch().addRow(row);
+                            AssetMultimedia assetMultimedia = (AssetMultimedia) file;
+                            row = new String[]{Boolean.toString(false), assetMultimedia.getFileName(),
+                                    Long.toString(assetMultimedia.getSize()), assetMultimedia.getPath(),
+                                    Boolean.toString(assetMultimedia.getIsIshidden()), assetMultimedia.getExtensions(), assetMultimedia.getOwner(), Boolean.toString(assetMultimedia.getReadOnly()),
+                                    convert.convertDateToString(assetMultimedia.getDateCreate()), convert.convertDateToString(assetMultimedia.getDateModificate()),
+                                    convert.convertDateToString(assetMultimedia.getDateAccess())};
+                                    frame.getPanelSearch().addRow(row);
                         }
                     }
                 }
@@ -119,24 +119,24 @@ public class Controller {
         String contain = frame.getPanelSearch().getContain();
         boolean folder = frame.getPanelSearch().getSearchFolder();
         ArrayList<String> listExtensions = frame.getPanelSearch().getExtensions();
-        boolean multimediaSelected = true;
+        boolean multimediaSelected = frame.getPanelMultimedia().getenableMediaSetup();
 
-        //multimedia
-        String frameRate = "24 fps";
-        String videoCode = "h264";
-        String audioCode = "aac";
-        String resolution = "16:9 1280x720";
-        String unitDuration = "";
-        double duration = 10.0;
-        String operatorDurationTime = "";
-        ArrayList<String> extensionsMultimedia = new ArrayList<String>();
-        extensionsMultimedia.add("mp4");
+
         //builder criteria
         CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
         criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator);
         criteriaBuilder.buildFileAdvance(folder, readOnly, dateModifyFrom, dateModifyTo, dateCreateFrom,
                 dateCreateTo, dateAccessFrom, dateAccessTo, keySensitive, owner, contain, listExtensions, multimediaSelected);
         if (multimediaSelected) {
+            //multimedia
+            String frameRate = frame.getPanelMultimedia().getOptionFrameRate();
+            String videoCode = frame.getPanelMultimedia().getOptionVideoCode();
+            String audioCode = frame.getPanelMultimedia().getOptionAudioCodec();
+            String resolution = frame.getPanelMultimedia().getOptionUnitsResolution();
+            String unitDuration = frame.getPanelMultimedia().getOperator();
+            double duration = Double.parseDouble(frame.getPanelMultimedia().getDuration());
+            String operatorDurationTime = frame.getPanelMultimedia().getOperationTime();
+            ArrayList<String> extensionsMultimedia = frame.getPanelMultimedia().getOtherExtensions();
             criteriaBuilder.buildMultimedia(frameRate, videoCode, audioCode, resolution, duration, operatorDurationTime, extensionsMultimedia);
         }
         this.criteria = criteriaBuilder.build();
