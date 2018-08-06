@@ -16,6 +16,7 @@ package com.fundation.search.controller;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * This class is a object that have a criterias for search.
@@ -66,27 +67,27 @@ public class Criteria {
     /**
      * this variable is a date Craete From.
      */
-    private String dateCreateFrom;
+    private Date dateCreateFrom;
     /**
      * this variable contains date Create TO.
      */
-    private String dateCreateTo;
+    private Date dateCreateTo;
     /**
      * this variable contains date Modificate From.
      */
-    private String dateModificateFrom;
+    private Date dateModificateFrom;
     /**
      * this varaible contains date Modificate To.
      */
-    private String dateModificateTo;
+    private Date dateModificateTo;
     /**
      * this variable contains date Access From.
      */
-    private String dateAccessFrom;
+    private Date dateAccessFrom;
     /**
      * this variable contains date Access To.
      */
-    private String dateAccessTo;
+    private Date dateAccessTo;
     /**
      * this cariable contains if is keySensitive.
      */
@@ -100,11 +101,92 @@ public class Criteria {
      */
     private String content;
 
+    private String frameRate;
+    private String videoCode;
+    private String audioCode;
+    private String resolution;
+    private double duration;
+    private String operatorDurationTime;
+    private ArrayList<String> extensionVideo;
+    private boolean isMultimediaSelected;
+
+    public boolean getIsMultimediaSelected() {
+        return isMultimediaSelected;
+    }
+
+    public void setMultimediaSelected(boolean multimediaSelected) {
+        isMultimediaSelected = multimediaSelected;
+    }
+
+    public String getFrameRate() {
+        return frameRate;
+    }
+
+    public void setFrameRate(String frameRate) {
+        this.frameRate = frameRate;
+    }
+
+
+
+    public String getVideoCode() {
+        return videoCode;
+    }
+
+    public void setVideoCode(String videoCode) {
+        this.videoCode = videoCode;
+    }
+
+    public String getAudioCode() {
+        return audioCode;
+    }
+
+    public void setAudioCode(String audioCode) {
+        this.audioCode = audioCode;
+    }
+
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
+    public double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
+    }
+
+
+    public ArrayList<String> getExtensionVideo() {
+        return extensionVideo;
+    }
+
+    public void setExtensionVideo(ArrayList<String> extensionVideo) {
+        this.extensionVideo = extensionVideo;
+    }
+
+    public String getOperatorDurationTime() {
+        return operatorDurationTime;
+    }
+
+    public void setOperatorDurationTime(String operatorDurationTime) {
+        this.operatorDurationTime = operatorDurationTime;
+    }
+
+
+
+
+
     /**
      * this  is a constuctot.
      */
     Criteria() {
         listExtensions = new ArrayList<>();
+        extensionVideo =  new ArrayList<>();
     }
 
     /**
@@ -112,7 +194,7 @@ public class Criteria {
      *
      * @return vauel of variable
      */
-    public String getDateCreateFrom() {
+    public Date getDateCreateFrom() {
         return dateCreateFrom;
     }
     /**
@@ -120,7 +202,7 @@ public class Criteria {
      *
      * @param dateCreateFrom with a new value.
      */
-    public void setDateCreateFrom(String dateCreateFrom) {
+    public void setDateCreateFrom(Date dateCreateFrom) {
         this.dateCreateFrom = dateCreateFrom;
     }
 
@@ -129,7 +211,7 @@ public class Criteria {
      *
      * @return value of variable
      */
-    public String getDateCreateTo() {
+    public Date getDateCreateTo() {
         return dateCreateTo;
     }
     /**
@@ -137,7 +219,7 @@ public class Criteria {
      *
      * @param dateCreateTo with a new value.
      */
-    public void setDateCreateTo(String dateCreateTo) {
+    public void setDateCreateTo(Date dateCreateTo) {
         this.dateCreateTo = dateCreateTo;
     }
 
@@ -146,7 +228,7 @@ public class Criteria {
      *
      * @return valueof variable
      */
-    public String getDateModificateFrom() {
+    public Date getDateModificateFrom() {
         return dateModificateFrom;
     }
     /**
@@ -154,7 +236,7 @@ public class Criteria {
      *
      * @param dateModificateFrom with a new value.
      */
-    public void setDateModificateFrom(String dateModificateFrom) {
+    public void setDateModificateFrom(Date dateModificateFrom) {
         this.dateModificateFrom = dateModificateFrom;
     }
 
@@ -163,7 +245,7 @@ public class Criteria {
      *
      * @return value of variable
      */
-    public String getDateModificateTo() {
+    public Date getDateModificateTo() {
         return dateModificateTo;
     }
     /**
@@ -171,7 +253,7 @@ public class Criteria {
      *
      * @param dateModificateTo with a new value.
      */
-    public void setDateModificateTo(String dateModificateTo) {
+    public void setDateModificateTo(Date dateModificateTo) {
         this.dateModificateTo = dateModificateTo;
     }
 
@@ -180,14 +262,14 @@ public class Criteria {
      *
      * @return value of variable
      */
-    public String getDateAccessFrom() {
+    public Date getDateAccessFrom() {
         return dateAccessFrom;
     }
     /**
      * set a new value.
      * @param dateAccessFrom with a new value.
      */
-    public void setDateAccessFrom(String dateAccessFrom) {
+    public void setDateAccessFrom(Date dateAccessFrom) {
         this.dateAccessFrom = dateAccessFrom;
     }
 
@@ -196,7 +278,7 @@ public class Criteria {
      *
      * @return value of variable
      */
-    public String getDateAccessTo() {
+    public Date getDateAccessTo() {
         return dateAccessTo;
     }
     /**
@@ -204,7 +286,7 @@ public class Criteria {
      *
      * @param dateAccessTo with a new value.
      */
-    public void setDateAccessTo(String dateAccessTo) {
+    public void setDateAccessTo(Date dateAccessTo) {
         this.dateAccessTo = dateAccessTo;
     }
 
@@ -400,5 +482,6 @@ public class Criteria {
     public void setIshidden(boolean ishidden) {
         this.ishidden = ishidden;
     }
+
 
 }

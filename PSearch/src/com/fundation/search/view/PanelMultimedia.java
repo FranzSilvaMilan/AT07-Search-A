@@ -14,12 +14,18 @@
 package com.fundation.search.view;
 
 
+import javafx.scene.image.Image;
+import sun.plugin2.util.ColorUtil;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -38,6 +44,8 @@ public class PanelMultimedia extends JPanel {
     private JPanel containerFileSetup;
     private JPanel containerFileExtensions;
     private JPanel containerFileDateBase;
+
+    private JCheckBox enableMediaSetup;
 
 
 
@@ -109,12 +117,32 @@ public class PanelMultimedia extends JPanel {
         settingPanel();
         addComponents();
     }
+    public void stateChanged(ChangeEvent e){
 
+    }
     private void initComponet() {
 
         containerFileSetup = new JPanel();
         containerFileExtensions = new JPanel();
         containerFileDateBase = new JPanel();
+
+        enableMediaSetup = new JCheckBox("Enable Multimedia");
+
+        enableMediaSetup.setBounds(10,10, 210,30);
+        enableMediaSetup.setSelected(false);
+
+        enableMediaSetup.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                JCheckBox cb = (JCheckBox) event.getSource();
+                if (cb.isSelected()) {
+                    enableSetupContainer(true);
+                }
+                else {
+                    enableSetupContainer(false);
+                }
+            }
+        });
 
 
         //labelFile = new JLabel("FILE NAME:");
@@ -124,6 +152,7 @@ public class PanelMultimedia extends JPanel {
         labelCriteria = new JLabel("CRITERIA:");
         buttonLoad = new JButton("LOAD");
         buttonSave = new JButton("SAVE");
+
 
         //labelHidden = new JLabel("HIDDEN");
 
@@ -142,12 +171,12 @@ public class PanelMultimedia extends JPanel {
         labelAudioCodec = new JLabel("AUDIO CODEC:");
         LabelResolution = new JLabel("RESOLUTION:");
         labelVideoCode = new JLabel("VIDEO CODE:");
-        listResolution = new String[]{"320 X 240", "480 X 360", "128 X 720"};
+        listResolution = new String[]{"None ","320 X 240", "480 X 360", "128 X 720"};
         operatiorOptions = new String[]{">", "<", "="};
-        listTime = new String [] {"second","minutes","hours"};
-        listVideoCode = new String [] {"H264","H263","MPEG4","WNV1"};
-        listFrameRate = new String[] {"24 fps","25 fps","30 fps","60 fps"};
-        listAduioCodec = new String[] {"DoD RELP","DoD CELP","DoD VSELP","DoD RPE-LTP"};
+        listTime = new String [] {"None","second","minutes","hours"};
+        listVideoCode = new String [] {"None","H264","H263","MPEG4","WNV1"};
+        listFrameRate = new String[] {"None","24 fps","25 fps","30 fps","60 fps"};
+        listAduioCodec = new String[] {"None","DoD RELP","DoD CELP","DoD VSELP","DoD RPE-LTP"};
         operator = new JComboBox<>(operatiorOptions);
         optionUnitsResolution = new JComboBox<>(listResolution);
         operationTime = new JComboBox<>(listTime);
@@ -175,6 +204,18 @@ public class PanelMultimedia extends JPanel {
 
     }
 
+    private void enableSetupContainer(boolean b) {
+        containerFileExtensions.setEnabled(b);
+        for (Component cp : containerFileExtensions.getComponents() ){
+            cp.setEnabled(b);
+        }
+
+       containerFileSetup.setEnabled(b);
+        for (Component cp : containerFileSetup.getComponents() ){
+            cp.setEnabled(b);
+        }
+    }
+
     /**
      * it is method contain configuration.
      */
@@ -199,97 +240,17 @@ public class PanelMultimedia extends JPanel {
      */
 
     public void settingPanel() {
-
-       // labelFile.setBounds(10, 20, 100, 30);
-        //
-       // timeDuration.setBounds(100, 170, 50, 30);
-        //timeDuration.setBackground(new Color(204, 255, 229));
-        
-
-        //labelPhat.setBounds(10, 50, 100, 30);
-        //textPath.setBounds(90, 50, 700, 30);
-        //textPath.setBackground(new Color(204, 255, 229));
-        //btSelect.setText("Select Path");
-        //btSelect.setBounds(810, 50, 120, 30);
-        textCriteria.setBounds(0,0,200,30);
-        /**
-        LabelResolution.setBounds(40, 100, 500, 40);
-        textCriteria.setBounds(770,50,200,30);
-        textOtherExtension.setBounds(540,170,100,30);
-
-        labelDataBase.setBounds(850,20,100,30);
-
-        labelCriteria.setBounds(700,47,100,30);
-        //labelCriteria.setBorder(blacking);
-        labelVideoCode.setBounds(40,78,100,30);
-        //labelVideoCode.setBorder(blacking);
-        labelFrameRate.setBounds(40,50,100,30);
-        //labelFrameRate.setBorder(blacking);
-        labelAudioCodec.setBounds(40,20,100,30);
-
-        operator.setBounds(40, 170, 60, 30);
-        optionUnitsResolution.setBounds(120, 105, 150, 30);
-        operationTime.setBounds(180,170,100,30);
-        optionVideoCode.setBounds(120,80,100,30);
-        optionFrameRate.setBounds(120,50,100,30);
-        optionAudioCodec.setBounds(132,20,150,30);
-
-
-        labelDuration.setBounds(130,140,100,30);
-        labelOtherExtension.setBounds(410,170,200,30);
-
-        buttonLoad.setBounds(990, 50, 150, 35);
-        buttonSave.setBounds(990,20,150,33);
-
-        mp4.setEnabled(true);
-        mp4.setBounds(400, 50, 100, 23);
-        mp4.setBackground(new Color(250, 252, 252));
-
-        wmv.setEnabled(true);
-        wmv.setBounds(460, 50, 100, 23);
-        wmv.setBackground(new Color(250, 252, 252));
-
-        mpeg.setEnabled(true);
-        mpeg.setBounds(520, 50, 100, 23);
-        mpeg.setBackground(new Color(250, 252, 252));
-
-        mov.setEnabled(true);
-        mov.setBounds(400, 90, 100, 23);
-        mov.setBackground(new Color(250, 252, 252));
-
-        avi.setEnabled(true);
-        avi.setBounds(460, 90, 100, 23);
-        avi.setBackground(new Color(250, 252, 252));
-
-        xvidi.setEnabled(true);
-        xvidi.setBounds(520,90,100,23);
-        xvidi.setBackground(new Color(250,252,252));
-
-        mpg.setEnabled(true);
-        mpg.setBounds(400, 130, 100, 23);
-        mpg.setBackground(new Color(250, 252, 252));
-
-        flv.setEnabled(true);
-        flv.setBounds(460,130,100,23);
-        flv.setBackground(new Color(250,252,252));
-
-        spinnerDuration.setValue(0);
-        spinnerDuration.setBounds(100, 170, 70, 30);*/
-
-        //
+        //textCriteria.setBounds(0,0,200,30);
 
         GridBagLayout gblsetup=new GridBagLayout();
         GridBagConstraints gbcsetup=new GridBagConstraints();
-        containerFileSetup.setBounds(10,10,300,200);
+        containerFileSetup.setBounds(10,50,300,200);
         containerFileSetup.setVisible(true);
 
-
-
+        containerFileSetup.setBackground(new java.awt.Color(201, 222, 244));
 
         containerFileSetup.setLayout(gblsetup);
         containerFileSetup.setBorder(BorderFactory.createTitledBorder("Multimedia Setup"));
-
-
 
         gbcsetup.gridx=0;
         gbcsetup.gridy=0;
@@ -354,7 +315,6 @@ public class PanelMultimedia extends JPanel {
         gbcsetup.fill=GridBagConstraints.HORIZONTAL;
         containerFileSetup.add(labelDuration, gbcsetup);
 
-
         gbcsetup.gridx=0;
         gbcsetup.gridy=5;
         gbcsetup.gridwidth=1;
@@ -377,17 +337,11 @@ public class PanelMultimedia extends JPanel {
         gbcsetup.fill=GridBagConstraints.HORIZONTAL;
         containerFileSetup.add(operationTime, gbcsetup);
 
-
-
-
-
-
-
-
         GridLayout extensionsLayout = new GridLayout(0,3);
-        containerFileExtensions.setBounds(310,10,300,200);
+        containerFileExtensions.setBounds(310,50,300,200);
         containerFileExtensions.setVisible(true);
 
+        containerFileExtensions.setBackground(new java.awt.Color(201, 222, 244));
         containerFileExtensions.setLayout(extensionsLayout);
         containerFileExtensions.setBorder(BorderFactory.createTitledBorder("Multimedia extensions"));
 
@@ -402,11 +356,10 @@ public class PanelMultimedia extends JPanel {
         containerFileExtensions.add(labelOtherExtension);
         containerFileExtensions.add(textOtherExtension);
 
-
         GridBagLayout gbl=new GridBagLayout();
         GridBagConstraints gbc=new GridBagConstraints();
 
-        containerFileDateBase.setBounds(620,10,530,200);
+        containerFileDateBase.setBounds(620,50,530,200);
         containerFileDateBase.setVisible(true);
 
         containerFileDateBase.setLayout(gbl);
@@ -448,6 +401,7 @@ public class PanelMultimedia extends JPanel {
         gbc.weightx=1.0;
         gbc.fill=GridBagConstraints.BOTH;
         containerFileDateBase.add(panelTableBD, gbc);
+        enableSetupContainer(false);
 
         /**containerFileDateBase.setEnabled(false);
 
@@ -474,50 +428,8 @@ public class PanelMultimedia extends JPanel {
      * this method add all components.
      */
     public void addComponents() {
-        //add(timeDuration);
-        /**add(hidden);
-        add(spinnerSize);
-        //add(timeDuration);
 
-        add(buttonLoad);
-        add(buttonSave);
-        add(LabelResolution);
-//        add(labelHidden);
-        add(operator);
-        add(optionUnitsResolution);
-        add(optionVideoCode);
-        add(optionFrameRate);
-
-        add(panelTable);
-        add(panelTableBD);
-        add(hiddenCheck);
-
-        add(labelDuration);
-        add(operationTime);
-        add(labelDataBase);
-        add(labelCriteria);
-        add(labelVideoCode);
-        add(labelFrameRate);
-        add(textCriteria);
-
-        add(mpeg);
-        add(wmv);
-        add(mp4);
-        add(flv);
-        add(xvidi);
-        add(mpg);
-        add(avi);
-        add(mov);
-        add(labelOtherExtension);
-        add(textOtherExtension);
-        add(optionAudioCodec);
-        add(labelAudioCodec);*/
-
-
-
-
-        //add(spinnerDuration);
-
+        add(enableMediaSetup);
         add(containerFileSetup);
         add(containerFileExtensions);
         add(containerFileDateBase);
@@ -526,6 +438,10 @@ public class PanelMultimedia extends JPanel {
 
     }
 
+    /**
+     *  this method get the extensions of multimedia
+     * @return list of multimedia
+     */
 
     public ArrayList<String> getOtherExtensions() {
         ArrayList<String> extensions = new ArrayList<>();
@@ -567,32 +483,84 @@ public class PanelMultimedia extends JPanel {
         return operator.getSelectedItem().toString();
     }
 
+    /**
+     * this method of video code.
+     * @return a string of video code.
+     */
     public String getOptionVideoCode(){
         return optionVideoCode.getSelectedItem().toString();
     }
+
+    /**
+     *
+     * @return String selected of Resolution.
+     */
     public String getOptionUnitsResolution(){
         return optionUnitsResolution.getSelectedItem().toString();
     }
+
+    /**
+     *
+     * @return String selected of Operation Time.
+     */
     public String getOperationTime(){
         return operationTime.getSelectedItem().toString();
     }
+
+    /**
+     *
+     * @return String Option of frame selected
+     */
     public String getOptionFrameRate(){
         return optionFrameRate.getSelectedItem().toString();
     }
+
+    /**
+     *
+     * @return string when selected of audio.
+     */
     public String getOptionAudioCodec(){
         return optionAudioCodec.getSelectedItem().toString();
     }
+
+    /**
+     *
+     * @return criteria.
+     */
     public String getTextCriteria(){
         return textCriteria.getText();
     }
+
+    /**
+     *
+     * @return button of load.
+     */
     public JButton getButtonLoad() {
         return buttonLoad;
     }
+
+    /**
+     *
+     * @return button save.
+     */
     public JButton getButtonSave() {
         return buttonSave;
     }
+
+    /**
+     *
+     * @return value of duration.
+     */
     public String getDuration(){
         return spinnerDuration.getValue().toString();
+    }
+
+    /**
+     *
+     * @return boolean of active multimedia.
+     */
+    public boolean getenableMediaSetup() {
+        return enableMediaSetup.isSelected();
     }
 
 
