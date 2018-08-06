@@ -14,13 +14,21 @@
 package com.fundation.search.view;
 
 
-import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
+import javafx.scene.image.Image;
+import sun.plugin2.util.ColorUtil;
 
-import java.awt.Color;
-import java.awt.event.MouseAdapter;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * This class Asset can be FileResult SearchFolder.
@@ -30,9 +38,22 @@ import java.io.File;
  * @version 1.0.
  */
 public class PanelMultimedia extends JPanel {
-    private JTextField textFile;
-    private JTextField textPath;
-    private JButton buttonSearch;
+
+    // private JTextField timeDuration;
+
+    private JPanel containerFileSetup;
+    private JPanel containerFileExtensions;
+    private JPanel containerFileDateBase;
+
+    private JCheckBox enableMediaSetup;
+
+
+
+    private JTextField textCriteria;
+    private  JTextField textOtherExtension;
+    private JButton buttonLoad;
+    private JButton buttonSave;
+    //private JTextField textDuration;
     JCheckBox hiddenCheck;
     String[] operatiorOptions;
     private JComboBox<String> operator;
@@ -40,20 +61,48 @@ public class PanelMultimedia extends JPanel {
     /**
      * array that contains units of the bytes,kb,Mb and Gb.
      */
-    String[] listUnitSize;
-    private JComboBox<String> optionUnitsSize;
+    String[] listResolution;
+    String[] listTime;
+    String[] listVideoCode;
+    String[] listFrameRate;
+    String[] listAduioCodec;
 
-    JLabel LabelSize;
-    JLabel labelFile;
-    JLabel labelPhat;
+    private JComboBox<String> optionUnitsResolution;
+    private JComboBox<String> operationTime;
+    private JComboBox<String> optionVideoCode;
+    private JComboBox<String> optionFrameRate;
+    private JComboBox<String> optionAudioCodec;
+
+    JLabel LabelResolution;
+    JLabel labelDataBase;
+    //JLabel labelFile;
+    JLabel labelCriteria;
     JLabel labelHidden;
+    JLabel labelDuration;
+    JLabel labelVideoCode;
+    JLabel labelFrameRate;
+    JLabel labelOtherExtension;
+    JLabel labelAudioCodec;
+
 
     PanelTable panelTable;
+    PanelTableBD panelTableBD;
 
     JSpinner spinnerSize;
     JRadioButton hidden;
     ButtonGroup radioGruop;
+    private Border blacking;
 
+    private JCheckBox mp4;
+    private JCheckBox mpeg;
+    private JCheckBox mov;
+    private JCheckBox wmv;
+    private JCheckBox avi;
+    private JCheckBox xvidi;
+    private JCheckBox mpg;
+    private JCheckBox flv;
+
+    private JSpinner spinnerDuration;
 
 
 
@@ -68,24 +117,103 @@ public class PanelMultimedia extends JPanel {
         settingPanel();
         addComponents();
     }
+    public void stateChanged(ChangeEvent e){
 
+    }
     private void initComponet() {
-        listUnitSize = new String[]{"bytes", "Kb", "Mb", "Gb"};
-        operatiorOptions = new String[]{">", "<", "="};
-        textFile = new JTextField();
-        labelFile = new JLabel("FILE NAME:");
-        textPath = new JTextField("C:\\");
-        labelPhat = new JLabel("PATH:");
-        buttonSearch = new JButton("SEARCH");
-        LabelSize = new JLabel("SIZE:");
-        labelHidden = new JLabel("HIDDEN");
-        operator = new JComboBox<>(operatiorOptions);
-        optionUnitsSize = new JComboBox<>(listUnitSize);
+
+        containerFileSetup = new JPanel();
+        containerFileExtensions = new JPanel();
+        containerFileDateBase = new JPanel();
+
+        enableMediaSetup = new JCheckBox("Enable Multimedia");
+
+        enableMediaSetup.setBounds(10,10, 210,30);
+        enableMediaSetup.setSelected(false);
+
+        enableMediaSetup.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                JCheckBox cb = (JCheckBox) event.getSource();
+                if (cb.isSelected()) {
+                    enableSetupContainer(true);
+                }
+                else {
+                    enableSetupContainer(false);
+                }
+            }
+        });
+
+
+        //labelFile = new JLabel("FILE NAME:");
+       //textPath = new JTextField("C:\\");
+        labelDataBase = new JLabel("DATA BASE");
+        textCriteria = new JTextField(50);
+        labelCriteria = new JLabel("CRITERIA:");
+        buttonLoad = new JButton("LOAD");
+        buttonSave = new JButton("SAVE");
+
+
+        //labelHidden = new JLabel("HIDDEN");
+
+
+
+
         spinnerSize = new JSpinner();
         hidden = new JRadioButton("hidden");
         radioGruop = new ButtonGroup();
         hiddenCheck = new JCheckBox("Hidden");
         btSelect = new JButton();
+
+
+        labelDuration = new JLabel("DURATION: ");
+        labelFrameRate = new JLabel("FRAME RATE:");
+        labelAudioCodec = new JLabel("AUDIO CODEC:");
+        LabelResolution = new JLabel("RESOLUTION:");
+        labelVideoCode = new JLabel("VIDEO CODE:");
+        listResolution = new String[]{"None ","320 X 240", "480 X 360", "128 X 720"};
+        operatiorOptions = new String[]{">", "<", "="};
+        listTime = new String [] {"None","second","minutes","hours"};
+        listVideoCode = new String [] {"None","H264","H263","MPEG4","WNV1"};
+        listFrameRate = new String[] {"None","24 fps","25 fps","30 fps","60 fps"};
+        listAduioCodec = new String[] {"None","DoD RELP","DoD CELP","DoD VSELP","DoD RPE-LTP"};
+        operator = new JComboBox<>(operatiorOptions);
+        optionUnitsResolution = new JComboBox<>(listResolution);
+        operationTime = new JComboBox<>(listTime);
+        optionVideoCode = new JComboBox<>(listVideoCode);
+        optionFrameRate = new JComboBox<>(listFrameRate);
+        optionAudioCodec = new JComboBox<>(listAduioCodec);
+        spinnerDuration = new JSpinner();
+
+        //textDuration = new JTextField("Duration");
+
+        textOtherExtension = new JTextField();
+        labelOtherExtension = new JLabel("OTHER EXTENSION:");
+        mp4 = new  JCheckBox (".MP4");
+        mpeg = new JCheckBox (".MPEG");
+        mov = new JCheckBox (".MOV");
+        wmv = new JCheckBox (".WMV");
+        avi = new  JCheckBox (".AVI");
+        xvidi = new  JCheckBox (".XVIDI");
+        mpg = new  JCheckBox (".MPG");
+        flv= new JCheckBox (".FLV");
+
+
+
+        blacking = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+
+    }
+
+    private void enableSetupContainer(boolean b) {
+        containerFileExtensions.setEnabled(b);
+        for (Component cp : containerFileExtensions.getComponents() ){
+            cp.setEnabled(b);
+        }
+
+       containerFileSetup.setEnabled(b);
+        for (Component cp : containerFileSetup.getComponents() ){
+            cp.setEnabled(b);
+        }
     }
 
     /**
@@ -100,7 +228,8 @@ public class PanelMultimedia extends JPanel {
      * this method containTable contain table of information list archive.
      */
     private void initComponetTable() {
-        panelTable = new PanelTable();
+       panelTable = new PanelTable();
+        panelTableBD = new PanelTableBD();
 
 
     }
@@ -111,38 +240,187 @@ public class PanelMultimedia extends JPanel {
      */
 
     public void settingPanel() {
+        //textCriteria.setBounds(0,0,200,30);
 
-        labelFile.setBounds(10, 20, 100, 30);
-        textFile.setBounds(90, 20, 700, 30);
-        textFile.setBackground(new Color(204, 255, 229));
+        GridBagLayout gblsetup=new GridBagLayout();
+        GridBagConstraints gbcsetup=new GridBagConstraints();
+        containerFileSetup.setBounds(10,50,300,200);
+        containerFileSetup.setVisible(true);
 
-        labelPhat.setBounds(10, 50, 100, 30);
-        textPath.setBounds(90, 50, 700, 30);
-        textPath.setBackground(new Color(204, 255, 229));
-        btSelect.setText("Select Path");
-        btSelect.setBounds(810, 50, 120, 30);
+        containerFileSetup.setBackground(new java.awt.Color(201, 222, 244));
+
+        containerFileSetup.setLayout(gblsetup);
+        containerFileSetup.setBorder(BorderFactory.createTitledBorder("Multimedia Setup"));
+
+        gbcsetup.gridx=0;
+        gbcsetup.gridy=0;
+        gbcsetup.gridwidth=1;
+        gbcsetup.gridheight=1;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(labelAudioCodec, gbcsetup);
+
+        gbcsetup.gridx=1;
+        gbcsetup.gridy=0;
+        gbcsetup.gridwidth=2;
+        gbcsetup.gridheight=1;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(optionAudioCodec, gbcsetup);
+
+        gbcsetup.gridx=0;
+        gbcsetup.gridy=1;
+        gbcsetup.gridwidth=1;
+        gbcsetup.gridheight=1;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(labelVideoCode, gbcsetup);
+
+        gbcsetup.gridx=1;
+        gbcsetup.gridy=1;
+        gbcsetup.gridwidth=2;
+        gbcsetup.gridheight=1;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(optionVideoCode, gbcsetup);
+
+        gbcsetup.gridx=0;
+        gbcsetup.gridy=2;
+        gbcsetup.gridwidth=1;
+        gbcsetup.gridheight=1;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(labelFrameRate, gbcsetup);
+
+        gbcsetup.gridx=1;
+        gbcsetup.gridy=2;
+        gbcsetup.gridwidth=2;
+        gbcsetup.gridheight=1;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(optionFrameRate, gbcsetup);
+
+        gbcsetup.gridx=0;
+        gbcsetup.gridy=3;
+        gbcsetup.gridwidth=1;
+        gbcsetup.gridheight=1;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(LabelResolution, gbcsetup);
+
+        gbcsetup.gridx=1;
+        gbcsetup.gridy=3;
+        gbcsetup.gridwidth=2;
+        gbcsetup.gridheight=1;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(optionUnitsResolution, gbcsetup);
+
+        gbcsetup.gridx=1;
+        gbcsetup.gridy=4;
+        gbcsetup.gridwidth=2;
+        gbcsetup.gridheight=1;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(labelDuration, gbcsetup);
+
+        gbcsetup.gridx=0;
+        gbcsetup.gridy=5;
+        gbcsetup.gridwidth=1;
+        gbcsetup.gridheight=1;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(operator, gbcsetup);
+
+        gbcsetup.gridx=1;
+        gbcsetup.gridy=5;
+        gbcsetup.gridwidth=1;
+        gbcsetup.gridheight=1;
+        gbcsetup.weightx=1.0;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(spinnerDuration, gbcsetup);
+
+        gbcsetup.gridx=2;
+        gbcsetup.gridy=5;
+        gbcsetup.gridwidth=1;
+        gbcsetup.gridheight=1;
+        gbcsetup.fill=GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(operationTime, gbcsetup);
+
+        GridLayout extensionsLayout = new GridLayout(0,3);
+        containerFileExtensions.setBounds(310,50,300,200);
+        containerFileExtensions.setVisible(true);
+
+        containerFileExtensions.setBackground(new java.awt.Color(201, 222, 244));
+        containerFileExtensions.setLayout(extensionsLayout);
+        containerFileExtensions.setBorder(BorderFactory.createTitledBorder("Multimedia extensions"));
+
+        containerFileExtensions.add(mp4);
+        containerFileExtensions.add(wmv);
+        containerFileExtensions.add(mpg);
+        containerFileExtensions.add(mov);
+        containerFileExtensions.add(avi);
+        containerFileExtensions.add(xvidi);
+        containerFileExtensions.add(mpg);
+        containerFileExtensions.add(flv);
+        containerFileExtensions.add(labelOtherExtension);
+        containerFileExtensions.add(textOtherExtension);
+
+        GridBagLayout gbl=new GridBagLayout();
+        GridBagConstraints gbc=new GridBagConstraints();
+
+        containerFileDateBase.setBounds(620,50,530,200);
+        containerFileDateBase.setVisible(true);
+
+        containerFileDateBase.setLayout(gbl);
+        containerFileDateBase.setBorder(BorderFactory.createTitledBorder("Data Base"));
+
+        gbc.gridx=0;
+        gbc.gridy=0;
+        gbc.gridwidth=1;
+        gbc.gridheight=1;
+
+        gbc.fill=GridBagConstraints.HORIZONTAL;
+        containerFileDateBase.add(labelCriteria, gbc);
+
+        gbc.gridx=1;
+        gbc.gridy=0;
+        gbc.gridwidth=3;
+        gbc.gridheight=1;
+        gbc.weightx=1.0;
+        gbc.fill=GridBagConstraints.HORIZONTAL;
+        containerFileDateBase.add(textCriteria, gbc);
+
+        gbc.gridx=1;
+        gbc.gridy=1;
+        gbc.gridwidth=1;
+        gbc.gridheight=1;
+        containerFileDateBase.add(buttonSave, gbc);
+
+        gbc.gridx=2;
+        gbc.gridy=1;
+        gbc.gridwidth=1;
+        gbc.gridheight=1;
+        containerFileDateBase.add(buttonLoad, gbc);
+
+        gbc.gridx=0;
+        gbc.gridy=2;
+        gbc.gridwidth=3;
+        gbc.gridheight=2;
+        gbc.weighty=1.0;
+        gbc.weightx=1.0;
+        gbc.fill=GridBagConstraints.BOTH;
+        containerFileDateBase.add(panelTableBD, gbc);
+        enableSetupContainer(false);
+
+        /**containerFileDateBase.setEnabled(false);
+
+        for (Component cp : containerFileDateBase.getComponents() ){
+            cp.setEnabled(false);
+        }*/
+
+        //setupLayout.addLayoutComponent(labelAudioCodec);
 
 
-        LabelSize.setBounds(10, 80, 100, 30);
-        operator.setBounds(230, 80, 50, 30);
-        optionUnitsSize.setBounds(160, 80, 70, 30);
-        spinnerSize.setValue(0);
-        spinnerSize.setBounds(90, 80, 70, 30);
-
-        labelHidden.setBounds(10, 110, 100, 30);
-        hiddenCheck.setBounds(90, 110, 70, 30);
-        //radioGruop.add(hiddenCheck);
-
-        buttonSearch.setBounds(1000, 180, 150, 30);
         //buttonSearch.setBackground(Color.YELLOW);
 
-        btSelect.addMouseListener(new MouseAdapter() {
+       /* btSelect.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 btSelectMouseClicked(evt);
             }
         });
 
-
+*/
 
     }
 
@@ -150,70 +428,164 @@ public class PanelMultimedia extends JPanel {
      * this method add all components.
      */
     public void addComponents() {
-        add(textFile);
-        add(hidden);
-        add(spinnerSize);
-        add(textFile);
-        add(textPath);
-        add(labelFile);
-        add(labelPhat);
-        add(buttonSearch);
-        add(LabelSize);
-        add(labelHidden);
-        add(operator);
-        add(optionUnitsSize);
-        add(textPath);
-        add(panelTable);
-        add(hiddenCheck);
-        add(btSelect);
 
+        add(enableMediaSetup);
+        add(containerFileSetup);
+        add(containerFileExtensions);
+        add(containerFileDateBase);
+
+        add(panelTable);
 
     }
 
     /**
-     * get value that is selected.
-     *
-     * @return value that selected
+     *  this method get the extensions of multimedia
+     * @return list of multimedia
      */
-    public String getOptionUnitsSize() {
-        return optionUnitsSize.getSelectedItem().toString();
-    }
 
+    public ArrayList<String> getOtherExtensions() {
+        ArrayList<String> extensions = new ArrayList<>();
+        if (!textOtherExtension.getText().isEmpty()) {
+            extensions.add(textOtherExtension.getText());
+        }
+        if (mp4.isSelected()) {
+            extensions.add(mp4.getText());
+        }
+        if (mov.isSelected()) {
+            extensions.add(mov.getText());
+        }
+        if (mpg.isSelected()) {
+            extensions.add(mpg.getText());
+        }
+        if (wmv.isSelected()) {
+            extensions.add(wmv.getText());
+        }
+        if (avi.isSelected()) {
+            extensions.add(avi.getText());
+        }
+        if (flv.isSelected()) {
+            extensions.add(flv.getText());
+        }
+        if (mpeg.isSelected()) {
+            extensions.add(mpeg.getText());
+        }
+        if (xvidi.isSelected()) {
+            extensions.add(xvidi.getText());
+        }
+        return extensions;
+    }
     /**
      * this method get operatod.
      *
      * @return operator selected
      */
-    public String getOperator() {
+    public String getOperator(){
         return operator.getSelectedItem().toString();
     }
 
     /**
-     * this method get file text.
+     * this method of video code.
+     * @return a string of video code.
+     */
+    public String getOptionVideoCode(){
+        return optionVideoCode.getSelectedItem().toString();
+    }
+
+    /**
+     *
+     * @return String selected of Resolution.
+     */
+    public String getOptionUnitsResolution(){
+        return optionUnitsResolution.getSelectedItem().toString();
+    }
+
+    /**
+     *
+     * @return String selected of Operation Time.
+     */
+    public String getOperationTime(){
+        return operationTime.getSelectedItem().toString();
+    }
+
+    /**
+     *
+     * @return String Option of frame selected
+     */
+    public String getOptionFrameRate(){
+        return optionFrameRate.getSelectedItem().toString();
+    }
+
+    /**
+     *
+     * @return string when selected of audio.
+     */
+    public String getOptionAudioCodec(){
+        return optionAudioCodec.getSelectedItem().toString();
+    }
+
+    /**
+     *
+     * @return criteria.
+     */
+    public String getTextCriteria(){
+        return textCriteria.getText();
+    }
+
+    /**
+     *
+     * @return button of load.
+     */
+    public JButton getButtonLoad() {
+        return buttonLoad;
+    }
+
+    /**
+     *
+     * @return button save.
+     */
+    public JButton getButtonSave() {
+        return buttonSave;
+    }
+
+    /**
+     *
+     * @return value of duration.
+     */
+    public String getDuration(){
+        return spinnerDuration.getValue().toString();
+    }
+
+    /**
+     *
+     * @return boolean of active multimedia.
+     */
+    public boolean getenableMediaSetup() {
+        return enableMediaSetup.isSelected();
+    }
+
+
+
+    /**
+     *
      *
      * @return value of file text
      */
+    /*
     public String getTextFile() {
-        return textFile.getText();
-    }
+        return timeDuration.getText();
+    }*/
 
     /**
      * this method get path.
      *
      * @return value of camp path
      */
+    /*
     public String getTextPath() {
         return textPath.getText();
-    }
+    }*/
 
-    /**
-     * this method get button
-     *
-     * @return button
-     */
-    public JButton getButtoSearsh() {
-        return buttonSearch;
-    }
+
 
     /**
      * This method add row in the table.
@@ -222,36 +594,13 @@ public class PanelMultimedia extends JPanel {
      */
     public void addRow(String[] newRow) {
         panelTable.addRow(newRow);
-    }
-
-    /**
-     * this method get value of field size.
-     * @return value of size
-     */
-    public String getSizeFile(){
-        return spinnerSize.getValue().toString();
-    }
-
-    /**
-     * this method get value of radio button hidden.
-     * @return true if selected.
-     */
-    public boolean getHidden(){
-        return hiddenCheck.isSelected();
+        panelTableBD.addRow(newRow);
     }
 
     public void cleanTable() {
         panelTable.clean();
+        panelTableBD.clean();
     }
 
-    private void btSelectMouseClicked(MouseEvent evt) {
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-        jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int returnValue = jfc.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = jfc.getSelectedFile();
-            textPath.setText(selectedFile.getAbsolutePath());
-        }
-    }
 
 }

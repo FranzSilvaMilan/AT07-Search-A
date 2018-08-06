@@ -38,7 +38,7 @@ public class PanelTable extends JPanel{
     }
 
     private void initTable() {
-        String columnHead[] = {"FOLDER","FILE", "SIZE", "PATH", "HIDDEN","EXTENSION","OWNER","READ_ONLY","DATE_CREATE","DATE_MODIFIED"};
+        String columnHead[] = {"FOLDER","FILE", "SIZE", "PATH", "HIDDEN","EXTENSION","OWNER","READ_ONLY","DATE_CREATE","DATE_MODIFIED","DATA_LAST_ACCESS"};
         scrollPane = new JScrollPane();
         model = new DefaultTableModel(columnHead, 0);
         table = new JTable(model);
@@ -46,13 +46,14 @@ public class PanelTable extends JPanel{
         int horizontal = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
         scrollPane = new JScrollPane(table,vertical,horizontal);
         setLayout(new BorderLayout());
-
         add(scrollPane);
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setPreferredSize(new Dimension(0, 0));
-        setBounds(10, 220, 1150, 450);
+        setBounds(10, 270, 1150, 450);
         setBackground(new Color(250, 252, 252));
     }
+
+
 
     public void addRow(String[] newRow) {
         model.addRow(newRow);
