@@ -165,12 +165,12 @@ public class PanelMultimedia extends JPanel {
         labelAudioCodec = new JLabel("AUDIO CODEC:");
         LabelResolution = new JLabel("RESOLUTION:");
         labelVideoCode = new JLabel("VIDEO CODE:");
-        listResolution = new String[]{"all","320 X 240", "480 X 360", "128 X 720"};
+        listResolution = new String[]{"None ","all","320 X 240", "480 X 360", "128 X 720"};
         operatiorOptions = new String[]{">", "<", "="};
-        listTime = new String [] {"all","second","minutes","hours"};
-        listVideoCode = new String [] {"all","H264","H263","MPEG4","WNV1"};
-        listFrameRate = new String[] {"all","24 fps","25 fps","30 fps","60 fps"};
-        listAduioCodec = new String[] {"all","DoD RELP","DoD CELP","DoD VSELP","DoD RPE-LTP"};
+        listTime = new String [] {"None","all","second","minutes","hours"};
+        listVideoCode = new String [] {"None","all","H264","H263","MPEG4","WNV1"};
+        listFrameRate = new String[] {"None","all","24 fps","25 fps","30 fps","60 fps"};
+        listAduioCodec = new String[] {"None","all","DoD RELP","DoD CELP","DoD VSELP","DoD RPE-LTP"};
         operator = new JComboBox<>(operatiorOptions);
         optionUnitsResolution = new JComboBox<>(listResolution);
         operationTime = new JComboBox<>(listTime);
@@ -495,6 +495,9 @@ public class PanelMultimedia extends JPanel {
     }
     public String getDuration(){
         return spinnerDuration.getValue().toString();
+    }
+    public boolean getenableMediaSetup() {
+        return enableMediaSetup.isSelected();
     }
 
 
