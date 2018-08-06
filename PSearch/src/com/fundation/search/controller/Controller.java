@@ -13,7 +13,9 @@
  */
 package com.fundation.search.controller;
 
+import com.fundation.search.model.Asset;
 import com.fundation.search.model.AssetFile;
+import com.fundation.search.model.AssetMultimedia;
 import com.fundation.search.model.Search;
 import com.fundation.search.utils.Convert;
 import com.fundation.search.utils.ValidatorData;
@@ -38,7 +40,6 @@ public class Controller {
     private ValidatorData validator;
     private Search search;
     private Convert convert;
-    private CriteriaBuilder criteriaBuilder;
     private Criteria criteria;
 
     /**
@@ -58,21 +59,34 @@ public class Controller {
      */
     private void actionListener() {
         frame.getPanelSearch().getButtonSearch().addActionListener(new ActionListener() {
-
-
             public void actionPerformed(ActionEvent e) {
                 if (validateAllFields()) {
+                    criteria = new Criteria();
                     buildCriteria();
+                    search.setCriteria(criteria);
                     search.searchByCriteria(criteria);
-                    List<AssetFile> listResult = search.getResult();
+                    List<Asset> listResult = search.getResult();
                     frame.getPanelSearch().cleanTable();
-                    for (AssetFile file : listResult) {
-                        String[] row = new String[]{Boolean.toString(file.getDirectory()),file.getFileName(),
-                                Long.toString(file.getSize()),
-                                file.getPath(),
-                                Boolean.toString(file.getIsIshidden()),file.getExtensions(),file.getOwner(),Boolean.toString(file.getReadOnly()),
-                        file.getDateCreateFrom(),file.getDateCreateFrom()};
-                        frame.getPanelSearch().addRow(row);
+                    for (Asset file : listResult) {
+                        if (file instanceof AssetFile) {
+                            AssetFile file2 = (AssetFile) file;
+                            String[] row = new String[]{Boolean.toString(file2.getDirectory()), file.getFileName(),
+                                    Long.toString(file.getSize()),
+                                    file.getPath(),
+                                    Boolean.toString(file.getIsIshidden()), file.getExtensions(), file.getOwner(), Boolean.toString(file.getReadOnly()),
+                                    convert.convertDateToString(file.getDateCreate()), convert.convertDateToString(file.getDateModificate()),
+                                    convert.convertDateToString(file.getDateAccess())};
+                            frame.getPanelSearch().addRow(row);
+                        } else {
+                            AssetMultimedia file2 = (AssetMultimedia) file;
+                            String[] row = new String[]{Boolean.toString(false), file.getFileName(),
+                                    Long.toString(file.getSize()),
+                                    file.getPath(),
+                                    Boolean.toString(file.getIsIshidden()), file.getExtensions(), file.getOwner(), Boolean.toString(file.getReadOnly()),
+                                    convert.convertDateToString(file.getDateCreate()), convert.convertDateToString(file.getDateModificate()),
+                                    convert.convertDateToString(file.getDateAccess())};
+                            frame.getPanelSearch().addRow(row);
+                        }
                     }
                 }
             }
@@ -86,7 +100,6 @@ public class Controller {
         //values of search basic
         String path = frame.getPanelSearch().getTextPath();
         String fileName = frame.getPanelSearch().getTextFile();
-        System.out.println(fileName);
         String operator = frame.getPanelSearch().getOperator();
         Long valueOFView = Long.parseLong(frame.getPanelSearch().getSizeFile());
         String unityForSize = frame.getPanelSearch().getOptionUnitsSize();
@@ -96,21 +109,36 @@ public class Controller {
         //values of search advanced
         boolean readOnly = frame.getPanelSearch().getOnlyRead();
         boolean keySensitive = frame.getPanelSearch().getKeySensitive();
-        String dateCreateFrom = convert.convertDateToString(frame.getPanelSearch().getDateCreate());
-        String dateCreateTo = convert.convertDateToString(frame.getPanelSearch().getDateCreateTo());
-        String dateModifyFrom = convert.convertDateToString(frame.getPanelSearch().getDateModified());
-        String dateModifyTo = convert.convertDateToString(frame.getPanelSearch().getDateModifiedTo());
-        String dateAccessFrom = convert.convertDateToString(frame.getPanelSearch().getDateLastAccess());
-        String dateAccessTo = convert.convertDateToString(frame.getPanelSearch().getDateLastAccess());
+        Date dateCreateFrom = frame.getPanelSearch().getDateCreate();
+        Date dateCreateTo = frame.getPanelSearch().getDateCreateTo();
+        Date dateModifyFrom = frame.getPanelSearch().getDateModified();
+        Date dateModifyTo = frame.getPanelSearch().getDateModifiedTo();
+        Date dateAccessFrom = frame.getPanelSearch().getDateLastAccess();
+        Date dateAccessTo = frame.getPanelSearch().getDateLastAccessTo();
         String owner = frame.getPanelSearch().getOwner();
         String contain = frame.getPanelSearch().getContain();
         boolean folder = frame.getPanelSearch().getSearchFolder();
-        ArrayList<String> listExtensions= frame.getPanelSearch().getExtensions();
+        ArrayList<String> listExtensions = frame.getPanelSearch().getExtensions();
+        boolean multimediaSelected = true;
 
+        //multimedia
+        String frameRate = "24 fps";
+        String videoCode = "h264";
+        String audioCode = "aac";
+        String resolution = "16:9 1280x720";
+        String unitDuration = "";
+        double duration = 10.0;
+        String operatorDurationTime = "";
+        ArrayList<String> extensionsMultimedia = new ArrayList<String>();
+        extensionsMultimedia.add("mp4");
+        //builder criteria
         CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
         criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator);
-        criteriaBuilder.buildFileAdvance(folder,readOnly,dateModifyFrom,dateModifyTo,dateCreateFrom,
-                dateCreateTo,dateAccessFrom,dateAccessTo,keySensitive,owner,contain,listExtensions);
+        criteriaBuilder.buildFileAdvance(folder, readOnly, dateModifyFrom, dateModifyTo, dateCreateFrom,
+                dateCreateTo, dateAccessFrom, dateAccessTo, keySensitive, owner, contain, listExtensions, multimediaSelected);
+        if (multimediaSelected) {
+            criteriaBuilder.buildMultimedia(frameRate, videoCode, audioCode, resolution, duration, operatorDurationTime, extensionsMultimedia);
+        }
         this.criteria = criteriaBuilder.build();
 
     }

@@ -17,6 +17,7 @@
 package com.fundation.search.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CriteriaBuilder implements IBuilder {
     private Criteria criteria;
@@ -43,27 +44,60 @@ public class CriteriaBuilder implements IBuilder {
 
     @Override
     public void buildFileAdvance(boolean directory, boolean readOnly,
-                                 String dateModifyFrom, String dateModifyTo, String dateCreateFrom,
-                                 String dateCreateTo, String dateAccessFrom, String dateAccessTo,
-                                 boolean keysensitive, String owner, String contain, ArrayList<String> extensions) {
+                                 Date dateModifyFrom, Date dateModifyTo, Date dateCreateFrom,
+                                 Date dateCreateTo, Date dateAccessFrom, Date dateAccessTo,
+                                 boolean keysensitive, String owner, String contain, ArrayList<String> extensions, boolean multimediaSelected) {
 
         if (directory) criteria.setDirectory(directory);
         if (readOnly) criteria.setReadOnly(readOnly);
-        if (!dateModifyFrom.isEmpty()) criteria.setDateModificateFrom(dateModifyFrom);
-        if (!dateModifyTo.isEmpty()) criteria.setDateModificateTo(dateModifyTo);
-        if (!dateCreateFrom.isEmpty()) criteria.setDateCreateFrom(dateCreateFrom);
-        if (!dateCreateTo.isEmpty()) criteria.setDateCreateTo(dateCreateTo);
-        if (!dateAccessFrom.isEmpty()) criteria.setDateAccessFrom(dateAccessFrom);
-        if (!dateAccessTo.isEmpty()) criteria.setDateAccessTo(dateAccessTo);
+        if (dateModifyFrom != null) criteria.setDateModificateFrom(dateModifyFrom);
+        if (dateModifyTo != null) criteria.setDateModificateTo(dateModifyTo);
+        if (dateCreateFrom != null) criteria.setDateCreateFrom(dateCreateFrom);
+        if (dateCreateTo != null) criteria.setDateCreateTo(dateCreateTo);
+        if (dateAccessFrom != null) criteria.setDateAccessFrom(dateAccessFrom);
+        if (dateAccessTo != null) criteria.setDateAccessTo(dateAccessTo);
         if (keysensitive) criteria.setKeySensitive(keysensitive);
         if (!owner.isEmpty()) criteria.setOwner(owner);
         if (!contain.isEmpty()) criteria.setContent(contain);
         if (!extensions.isEmpty()) criteria.setListExtensions(extensions);
+        if (multimediaSelected) {
+            criteria.setMultimediaSelected(multimediaSelected);
+        }
+
     }
 
-    @Override
-    public void buildMultimedia() {
+    private String videoCode;
+    private String audioCode;
+    private String resolution;
+    private long duration;
+    private String operatorDurationTime;
+    private ArrayList<String> extensionVideo;
+    private boolean isMultimediaSelected;
 
+    @Override
+    public void buildMultimedia(String frameRare, String videoCode, String audioCode, String resolution, double duration, String operatorDurationTime,
+                                ArrayList<String> extensionVideo) {
+        if (!frameRare.isEmpty()) {
+            criteria.setFrameRate(frameRare);
+        }
+        if (!videoCode.isEmpty()) {
+            criteria.setVideoCode(videoCode);
+        }
+        if (!audioCode.isEmpty()) {
+            criteria.setAudioCode(audioCode);
+        }
+        if(!resolution.isEmpty()){
+            criteria.setResolution(resolution);
+        }
+        if(criteria.getDuration()>=0){
+            criteria.setDuration(duration);
+        }
+        if(!operatorDurationTime.isEmpty()){
+            criteria.setOperatorDurationTime(operatorDurationTime);
+        }
+        if(!extensionVideo.isEmpty()){
+            criteria.setExtensionVideo(extensionVideo);
+        }
     }
 
     @Override

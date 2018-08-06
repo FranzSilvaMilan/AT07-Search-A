@@ -17,16 +17,18 @@
 package com.fundation.search.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public interface IBuilder {
     public void buildFile(String path, String fileName, boolean hidden, Long size, String operator);
 
     public void buildFileAdvance(boolean directory, boolean readOnly,
-                                 String dateModifyIni, String dateModifyFin, String dateCreateIni,
-                                 String dateCreateFin, String dateAccessini, String dateAccessFin,
-                                 boolean keysensitive, String owner, String contain, ArrayList<String> extensions);
+                                 Date dateModifyIni, Date dateModifyFin, Date dateCreateIni,
+                                 Date dateCreateFin, Date dateAccessini, Date dateAccessFin,
+                                 boolean keysensitive, String owner, String contain, ArrayList<String> extensions,boolean multimediaSelected);
 
-    public void buildMultimedia();
+    public void buildMultimedia(String frameRare,String videoCode,String audioCode,String resolution,double duration,String operatorDurationTime,
+                                ArrayList<String> extensionVideo);
 
     public Criteria build();
 }

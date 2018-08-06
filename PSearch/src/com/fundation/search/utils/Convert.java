@@ -11,6 +11,7 @@
 package com.fundation.search.utils;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -63,9 +64,29 @@ public class Convert {
     public String convertDateToString(Date date) {
         String result = "";
         if (date != null) {
-            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             result = dateFormat.format(date);
         }
         return result;
+    }
+
+    /**
+     * @param time     on seconds of a multimedia file.
+     * @param unitTime the unit second, minute, hour.
+     * @return The duration converted.
+     */
+    public String convertTimeUnit(double time, String unitTime) {
+        StringBuilder buildResult = new StringBuilder();
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        if (unitTime.equalsIgnoreCase("second")) {
+            return buildResult.append(String.valueOf(decimalFormat.format(time))).append(" " + unitTime).toString();
+        }
+        if (unitTime.equalsIgnoreCase("minute")) {
+            return buildResult.append(String.valueOf(decimalFormat.format(time / 60.0))).append(" " + unitTime).toString();
+        }
+        if (unitTime.equalsIgnoreCase("hour")) {
+            return buildResult.append(String.valueOf(decimalFormat.format(time / 3600.0))).append(" " + unitTime).toString();
+        }
+        return String.valueOf(time);
     }
 }
