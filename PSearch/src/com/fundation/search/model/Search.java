@@ -239,7 +239,11 @@ public class Search {
                     searchByAudioCodec(criteria.getAudioCode());
                 }
                 if (!criteria.getExtensionVideo().isEmpty()) {
+                    System.out.println("busca por extensiones en search");
                     searchByExtension(criteria.getExtensionVideo());
+                }
+                if(criteria.getDuration()>=0 && criteria.getOperatorDurationTime()!=null){
+                    searchByDuration(criteria.getDuration(),criteria.getOperatorDurationTime());
                 }
 
             }
@@ -256,7 +260,7 @@ public class Search {
 
         for (Asset file : fileList) {
             for (String fileExt : extensions) {
-                if (file.getExtensions().endsWith(fileExt)) {
+                if (file.getExtensions().toLowerCase().endsWith(fileExt.toLowerCase())) {
                     listFilter.add(file);
                 }
             }
@@ -378,7 +382,7 @@ public class Search {
                             System.out.println("no windows");
                         }
 
-                        //System.out.println(file.getName() + " nombre del archivo");
+                        System.out.println(file.getName() + " nombre del archivo");
                         //values multimedia
                         ffprobe = new FFprobe(ffprobePath);
 
@@ -480,10 +484,10 @@ public class Search {
 
     private void searchByDuration(Double time, String operator) {
         if (operator.equalsIgnoreCase(">")) {
-            fileList.removeIf(file -> !(((AssetMultimedia) file).getDuration() < time));
+            fileList.removeIf(file -> !(((AssetMultimedia) file).getDuration() > time));
         }
         if (operator.equalsIgnoreCase("<")) {
-            fileList.removeIf(file -> !(((AssetMultimedia) file).getDuration() > time));
+            fileList.removeIf(file -> !(((AssetMultimedia) file).getDuration() < time));
         }
         if (operator.equalsIgnoreCase("=")) {
             fileList.removeIf(file -> !(((AssetMultimedia) file).getDuration() == time));
