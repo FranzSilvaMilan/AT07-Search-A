@@ -13,6 +13,9 @@
  */
 package com.fundation.search.view;
 
+import com.fundation.search.utils.LoggerSearch;
+import org.apache.log4j.Logger;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
@@ -31,6 +34,7 @@ public class PanelTable extends JPanel{
     private DefaultTableModel model;
     private JTable table;
     private JScrollPane scrollPane;
+    private static final Logger LOGGER = LoggerSearch.getInstance().getLogger();
 
 
     public PanelTable(){
@@ -41,7 +45,10 @@ public class PanelTable extends JPanel{
     //}
 
     private void initTable() {
-        String columnHead[] = {"FOLDER","FILE", "SIZE", "PATH", "HIDDEN","EXTENSION","OWNER","READ_ONLY","DATE_CREATE","DATE_MODIFIED","DATA_LAST_ACCESS"};
+        LOGGER.info("initTable: enter");
+        String columnHead[] = {"FOLDER","FILE", "SIZE", "PATH", "HIDDEN","EXTENSION",
+                "OWNER","READ_ONLY","DATE_CREATE","DATE_MODIFIED","DATA_LAST_ACCESS",
+                "FRAME_RATE","RESOLUTION","VIDEO_CODE","AUDIO_CODE","DURATION"};
         scrollPane = new JScrollPane();
         model = new DefaultTableModel(columnHead, 0);
         table = new JTable(model);
@@ -54,6 +61,7 @@ public class PanelTable extends JPanel{
         render.setPreferredSize(new Dimension(0, 0));
         setBounds(10, 270, 1150, 450);
         setBackground(new Color(250, 252, 252));
+        LOGGER.info("initTable: exit");
     }
 
 
