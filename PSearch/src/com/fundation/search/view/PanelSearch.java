@@ -14,18 +14,19 @@
 package com.fundation.search.view;
 
 
-import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
+import com.fundation.search.utils.LoggerSearch;
+import com.toedter.calendar.JDateChooser;
+import org.apache.log4j.Logger;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileSystemView;
-
-import com.toedter.calendar.JDateChooser;
-
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -106,20 +107,25 @@ public class PanelSearch extends JPanel {
     private boolean changeCreate;
     private boolean changeModified;
     private boolean changeLastAccess;
+    //Logger
+    private static final Logger LOGGER = LoggerSearch.getInstance().getLogger();
 
     /**
      * this is constructor of the class PanelSearch.
      */
 
     public PanelSearch() {
+        LOGGER.info("PanelSearch : enter");
         settingPanelSearch();
         initComponent();
         initComponentTable();
         settingPanel();
         addComponents();
+        LOGGER.info("PanelSearch : exit");
     }
 
     private void initComponent() {
+        LOGGER.info("initComponent : enter");
         listUnitSize = new String[]{"bytes", "Kb", "Mb", "Gb"};
         operatorOptions = new String[]{">", "<", "="};
 
@@ -136,8 +142,8 @@ public class PanelSearch extends JPanel {
         textExtension = new JTextField();
         textContain = new JTextField();
         textOwner = new JTextField();
-        textEndWith=new JTextField();
-        textStartWith=new JTextField();
+        textEndWith = new JTextField();
+        textStartWith = new JTextField();
 
         labelPhat = new JLabel("PATH:");
         LabelSize = new JLabel("SIZE:");
@@ -182,14 +188,17 @@ public class PanelSearch extends JPanel {
         changeCreate = false;
         changeModified = false;
         changeLastAccess = false;
+        LOGGER.info("initComponent : exit");
     }
 
     /**
      * it is method contain configuration.
      */
     public void settingPanelSearch() {
+        LOGGER.info("settingPanelSearch : enter");
         setLayout(null);
         setVisible(true);
+        LOGGER.info("settingPanelSearch : exit");
     }
 
     /**
@@ -204,6 +213,7 @@ public class PanelSearch extends JPanel {
      * for look for archive.
      */
     public void settingPanel() {
+        LOGGER.info("settingPanel : enter");
 
         /**
          * In this field you search by file name.
@@ -364,10 +374,10 @@ public class PanelSearch extends JPanel {
         textContain.setBackground(new Color(250, 252, 252));
         textContain.setBorder(blacking);
 
-        textEndWith.setBounds(670,20,150,30);
-        textStartWith.setBounds(670,50,150,30);
-        endWith.setBounds(820,20,120,30);
-        startWith.setBounds(820,50,120,30);
+        textEndWith.setBounds(670, 20, 150, 30);
+        textStartWith.setBounds(670, 50, 150, 30);
+        endWith.setBounds(820, 20, 120, 30);
+        startWith.setBounds(820, 50, 120, 30);
 
         //Search by only read,hidden and sensitive file.
 
@@ -392,6 +402,7 @@ public class PanelSearch extends JPanel {
         enableCreate.addChangeListener(evt -> chSearchTextStateChanged(evt));
         enableModified.addChangeListener(evt -> chSearchTextStateChanged(evt));
         enableLastAccess.addChangeListener(evt -> chSearchTextStateChanged(evt));
+        LOGGER.info("settingPanel : exit");
     }
 
     /**
@@ -409,6 +420,7 @@ public class PanelSearch extends JPanel {
      * @param e is a event.
      */
     private void chSearchTextStateChanged(ChangeEvent e) {
+        LOGGER.info("chSearchTextStateChanged : enter");
         if (this.changeCreate != enableCreate.isSelected()) {
             this.changeCreate = enableCreate.isSelected();
             dateCreate.setCalendar(null);
@@ -431,13 +443,14 @@ public class PanelSearch extends JPanel {
             dateLastAccess.setEnabled(changeLastAccess);
             dateLastAccessTo.setEnabled(changeLastAccess);
         }
-
+        LOGGER.info("chSearchTextStateChanged : exit");
     }
 
     /**
      * this method add all components.
      */
     public void addComponents() {
+        LOGGER.info("addComponents : enter");
         add(textFile);
         add(spinnerSize);
         add(textFile);
@@ -486,6 +499,7 @@ public class PanelSearch extends JPanel {
         add(textStartWith);
         add(endWith);
         add(startWith);
+        LOGGER.info("addComponents : exit");
     }
 
     /**
@@ -601,7 +615,6 @@ public class PanelSearch extends JPanel {
     }
 
     /**
-     *
      * @return
      */
     public String getTextEndWith() {
@@ -609,14 +622,13 @@ public class PanelSearch extends JPanel {
     }
 
     /**
-     *
      * @return
      */
     public String getTextStartWith() {
         return textStartWith.getText();
     }
+
     /**
-     *
      * @return
      */
     public boolean getEndWith() {
@@ -624,12 +636,12 @@ public class PanelSearch extends JPanel {
     }
 
     /**
-     *
      * @return
      */
     public boolean getStartWith() {
         return startWith.isSelected();
     }
+
     /**
      * this method get value of radio button hidden.
      *
