@@ -28,12 +28,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 
 /**
  * This class Search for four critearias path, name, size  and hidden.
@@ -225,7 +225,7 @@ public class Search {
                 searchByLastDateAccess(criteria.getDateAccessFrom(), criteria.getDateAccessTo());
             }
             if (criteria.getIsMultimediaSelected()) {
-                if (criteria.getFrameRate() !=null) {
+                if (criteria.getFrameRate() != null) {
                     searchByFrameRate(criteria.getFrameRate());
                 }
                 if (criteria.getVideoCode() != null) {
@@ -435,8 +435,6 @@ public class Search {
                         long audioMaxBitRate = stream.max_bit_rate;
                         long audioNbFrame = stream.nb_frames;
                         data.setAudioCodecName(audioCodecName);
-
-
                         System.out.println("---------------0audio------------------");
                         System.out.println("audioCodec: " + audioCodecName);
                         System.out.println("audicoCodecLong: " + audioCodecNameLong);
@@ -448,8 +446,6 @@ public class Search {
                         System.out.println("audioBitRate: " + audioBitRate);
                         System.out.println("audioMaxBitRate: " + audioMaxBitRate);
                         System.out.println("audioNbFrame: " + audioNbFrame);
-
-
                         fileList.add(data);
                     } catch (IOException | NullPointerException exception) {
 
