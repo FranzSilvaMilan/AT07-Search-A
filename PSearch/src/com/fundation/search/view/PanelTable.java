@@ -36,6 +36,9 @@ public class PanelTable extends JPanel{
     public PanelTable(){
         initTable();
     }
+    //public void getPanelTable(){
+
+    //}
 
     private void initTable() {
         String columnHead[] = {"FOLDER","FILE", "SIZE", "PATH", "HIDDEN","EXTENSION","OWNER","READ_ONLY","DATE_CREATE","DATE_MODIFIED","DATA_LAST_ACCESS"};
