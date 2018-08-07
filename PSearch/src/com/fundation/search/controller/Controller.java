@@ -18,8 +18,10 @@ import com.fundation.search.model.AssetFile;
 import com.fundation.search.model.AssetMultimedia;
 import com.fundation.search.model.Search;
 import com.fundation.search.utils.Convert;
+import com.fundation.search.utils.LoggerSearch;
 import com.fundation.search.utils.ValidatorData;
 import com.fundation.search.view.FrameMain;
+import org.apache.log4j.Logger;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,29 +38,54 @@ import java.util.List;
  * @version 1.0.
  */
 public class Controller {
+    /**
+     *variable that contains frame
+     */
     private FrameMain frame;
+    /**
+     *varaible that contains validator
+     */
     private ValidatorData validator;
+    /**
+     *variable that contains search.
+     */
     private Search search;
+    /**
+     * variable that contains converts.
+     */
     private Convert convert;
+    /**
+     *varaible that contains criteria.
+     */
     private Criteria criteria;
-    String unityForSize;
+    /**
+     *variablbe that contains unityForSize
+     */
+    private String unityForSize;
+    /**
+     *lOGGER
+     */
+    private static final Logger LOGGER = LoggerSearch.getInstance().getLogger();
 
     /**
      * this a constuctor.
      */
     public Controller() {
+        LOGGER.info("Constructor Controller : into");
         frame = new FrameMain();
         search = new Search();
         validator = new ValidatorData();
         convert = new Convert();
         criteria = new Criteria();
         actionListener();
+        LOGGER.info("Constructor Controller : exit");
     }
 
     /**
      * this method has the accion listeenr of the button.
      */
     private void actionListener() {
+        LOGGER.info("actionListener: into");
         frame.getPanelSearch().getButtonSearch().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (validateAllFields()) {
@@ -73,31 +100,36 @@ public class Controller {
                         if (file instanceof AssetFile) {
                             AssetFile assetFile = (AssetFile) file;
                             row = new String[]{Boolean.toString(assetFile.getDirectory()), assetFile.getFileName(),
-                                    String.format("%.3f", convert.convertTOLongShow(assetFile.getSize(),unityForSize)).concat(" ").concat(unityForSize), assetFile.getPath(),
+                                    String.format("%.3f", convert.convertTOLongShow(assetFile.getSize(), unityForSize)).concat(" ").concat(unityForSize), assetFile.getPath(),
                                     Boolean.toString(assetFile.getIsIshidden()), assetFile.getExtensions(), assetFile.getOwner(), Boolean.toString(assetFile.getReadOnly()),
                                     convert.convertDateToString(assetFile.getDateCreate()), convert.convertDateToString(assetFile.getDateModificate()),
                                     convert.convertDateToString(assetFile.getDateAccess())};
-                                    frame.getPanelSearch().addRow(row);
+                            frame.getPanelSearch().addRow(row);
 
                         } else {
                             AssetMultimedia assetMultimedia = (AssetMultimedia) file;
+                            String resolution = assetMultimedia.getDisplayAspect() + " "
+                                    + assetMultimedia.getWidth() + "x" + assetMultimedia.getHeight();
                             row = new String[]{Boolean.toString(false), assetMultimedia.getFileName(),
-                                    String.format("%.3f", convert.convertTOLongShow(assetMultimedia.getSize(),unityForSize)).concat(" ").concat(unityForSize), assetMultimedia.getPath(),
+                                    String.format("%.3f", convert.convertTOLongShow(assetMultimedia.getSize(), unityForSize)).concat(" ").concat(unityForSize), assetMultimedia.getPath(),
                                     Boolean.toString(assetMultimedia.getIsIshidden()), assetMultimedia.getExtensions(), assetMultimedia.getOwner(), Boolean.toString(assetMultimedia.getReadOnly()),
                                     convert.convertDateToString(assetMultimedia.getDateCreate()), convert.convertDateToString(assetMultimedia.getDateModificate()),
-                                    convert.convertDateToString(assetMultimedia.getDateAccess())};
-                                    frame.getPanelSearch().addRow(row);
+                                    convert.convertDateToString(assetMultimedia.getDateAccess()), assetMultimedia.getrFrameRate().toString(),
+                                    resolution, assetMultimedia.getCodecName(), assetMultimedia.getAudioCodecName(), Double.toString(assetMultimedia.getDuration())};
+                            frame.getPanelSearch().addRow(row);
                         }
                     }
                 }
             }
         });
+        LOGGER.info("actionListener : exit");
     }
 
     /**
      * this method build object criteria.
      */
     private void buildCriteria() {
+        LOGGER.info("buildCriteria : into");
         //values of search basic
         String path = frame.getPanelSearch().getTextPath();
         String fileName = frame.getPanelSearch().getTextFile();
@@ -136,12 +168,12 @@ public class Controller {
             String resolution = frame.getPanelMultimedia().getOptionUnitsResolution();
             String operatorDurationTime = frame.getPanelMultimedia().getOperator();// < > =
             String unitDuration = frame.getPanelMultimedia().getOperationTime();//e.g. second
-            double duration = convert.convertTimeDurationToDouble(frame.getPanelMultimedia().getDuration(),unitDuration );
+            double duration = convert.convertTimeDurationToDouble(frame.getPanelMultimedia().getDuration(), unitDuration);
             ArrayList<String> extensionsMultimedia = frame.getPanelMultimedia().getOtherExtensions();
             criteriaBuilder.buildMultimedia(frameRate, videoCode, audioCode, resolution, duration, operatorDurationTime, extensionsMultimedia);
         }
         this.criteria = criteriaBuilder.build();
-
+        LOGGER.info("buildCriteria: exit");
     }
 
     /**
@@ -150,6 +182,9 @@ public class Controller {
      * @return true if all fields is correct.
      */
     private boolean validateAllFields() {
+        LOGGER.info("validateAllFields : into");
+        LOGGER.info("validateAllFields : exit");
         return validator.isPathValid(frame.getPanelSearch().getTextPath()) && validator.isSizeValid(frame.getPanelSearch().getSizeFile());
+
     }
 }
