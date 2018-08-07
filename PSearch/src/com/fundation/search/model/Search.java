@@ -16,12 +16,16 @@ package com.fundation.search.model;
 
 import com.fundation.search.controller.Criteria;
 import com.fundation.search.utils.Convert;
+import com.fundation.search.utils.LoggerSearch;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import net.bramp.ffmpeg.probe.FFmpegStream;
 import org.apache.commons.lang3.math.Fraction;
+import org.apache.log4j.Logger;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,10 +35,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 /**
  * This class Search for four critearias path, name, size  and hidden.
  *
@@ -46,6 +50,8 @@ public class Search {
     /**
 
      **/
+    private static final Logger LOGGER = LoggerSearch.getInstance().getLogger();
+
     Convert convert;
     private Criteria criteria;
     /**
@@ -64,7 +70,9 @@ public class Search {
      * Search Class constructor.
      */
     public Search() {
+        LOGGER.info("Constructor Search : into");
         fileList = new ArrayList<>();
+        LOGGER.info("Consturctor search : exit");
     }
 
     /**
@@ -73,6 +81,7 @@ public class Search {
      */
     //add the asset multimedia
     private void searchByPath(String path) {
+        LOGGER.info("searchByPath: into");
         if (!criteria.getIsMultimediaSelected()) {
             try {
                 File[] files = new File(path).listFiles();
@@ -90,6 +99,7 @@ public class Search {
                     data.setDateCreate(new Date(fileBasicAttributes.creationTime().toMillis()));
                     data.setDateModificate(new Date(file.lastModified()));
                     data.setReadOnly(!file.canWrite());
+                    data.setFileNameExt(file.getName());
                     fileList.add(data);
                     if (file.isDirectory()) {
                         data.setFileName(file.getName());
@@ -111,7 +121,7 @@ public class Search {
         } else {
             addMultimediaAttributes(path);
         }
-
+        LOGGER.info("searchByPath : exit");
 
     }
 
@@ -119,6 +129,7 @@ public class Search {
      * @param nameFile .
      */
     private void searchByName(String nameFile, boolean keysensitive) {
+        LOGGER.info("searchByName: into");
         List<Asset> listFilter = new ArrayList<>();
         fileList.forEach(file -> {
             if (keysensitive) {
@@ -133,6 +144,7 @@ public class Search {
         });
         fileList.clear();
         fileList.addAll(listFilter);
+        LOGGER.info("searchByName: exit");
     }
 
     /**
@@ -140,7 +152,7 @@ public class Search {
      * @param operator is "<" or ">" or "=".
      */
     private void searchBySize(double size, char operator) {
-
+        LOGGER.info("seachBySize: into");
         List<Asset> listFilter = new ArrayList<>();
         for (Asset file : fileList) {
             if (operator == '=') {
@@ -161,6 +173,7 @@ public class Search {
             }
         }
         fileList.removeAll(listFilter);
+        LOGGER.info("searchBySize: exit");
     }
 
     /**
@@ -170,6 +183,7 @@ public class Search {
      */
 
     private void searchHiddenFiles(boolean isHidden) {
+        LOGGER.info("seachHiddenfiles: into");
         List<Asset> listFilter = new ArrayList<>();
         if (isHidden) {
             for (Asset file : fileList) {
@@ -180,6 +194,7 @@ public class Search {
             fileList.removeAll(listFilter);
 
         }
+        LOGGER.info("searchHiddenFiles: exit");
     }
 
     /**
@@ -189,6 +204,7 @@ public class Search {
      *                 Is a method that filter a List according that receive of SearchCriteria.
      */
     public void searchByCriteria(Criteria criteria) {
+        LOGGER.info("searchByCriteria: into");
         fileList.clear();
         if (criteria.getPath() != null) {
 
@@ -224,6 +240,9 @@ public class Search {
             if (criteria.getDateAccessFrom() != null && criteria.getDateAccessTo() != null) {
                 searchByLastDateAccess(criteria.getDateAccessFrom(), criteria.getDateAccessTo());
             }
+            if(criteria.getContent() != null){
+                searchIntoFile(criteria.getContent());
+            }
             if (criteria.getIsMultimediaSelected()) {
                 if (criteria.getFrameRate() != null) {
                     searchByFrameRate(criteria.getFrameRate());
@@ -239,7 +258,6 @@ public class Search {
                     searchByAudioCodec(criteria.getAudioCode());
                 }
                 if (!criteria.getExtensionVideo().isEmpty()) {
-                    System.out.println("busca por extensiones en search");
                     searchByExtension(criteria.getExtensionVideo());
                 }
                 if(criteria.getDuration()>=0 && criteria.getOperatorDurationTime()!=null){
@@ -248,6 +266,50 @@ public class Search {
 
             }
         }
+        LOGGER.info("searchByPath: exit");
+    }
+
+    /**
+     * This method is for search text inside of file.
+     *
+     * @param pharse The text for search into files.
+     */
+    private void searchIntoFile(String pharse) {
+        LOGGER.info(" searchIntofile: enter");
+
+        fileList.removeIf(file -> {
+            Scanner scanner;
+            if (file instanceof AssetFile) {
+                if (((AssetFile) file).getFileNameExt().endsWith(".txt")) {
+                    try {
+                        scanner = new Scanner(new FileReader(new File(file.getPath())));
+                        while (scanner.hasNextLine()) {
+                            if (scanner.nextLine().toLowerCase().contains(pharse.toLowerCase())) {
+                                return false;
+                            }
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+                /**if (((AssetFile) file).getFileNameExt().endsWith(".docx")) {
+
+                    try {
+                        FileInputStream fis = new FileInputStream(file.getPath());
+                        XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
+                        XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
+                        if (extractor.getText().toLowerCase().contains(pharse.toLowerCase())) {
+                            return false;
+                        }
+                    } catch (Exception ex) {
+                        return true;
+                    }
+                }**/
+            }
+            return true;
+
+        });
+        LOGGER.info(" searchIntofile: exit");
     }
 
     /**
@@ -256,6 +318,7 @@ public class Search {
      * @param extensions content the extensions tha must be filter.
      */
     public void searchByExtension(List<String> extensions) {
+        LOGGER.info("searchByExtension: into");
         List<Asset> listFilter = new ArrayList<>();
 
         for (Asset file : fileList) {
@@ -267,6 +330,7 @@ public class Search {
         }
         fileList.clear();
         fileList.addAll(listFilter);
+        LOGGER.info("searachByExtension: exit");
     }
 
     /**
@@ -276,12 +340,14 @@ public class Search {
      */
 
     public void searchByReadOnly(boolean readOnly) {
+        LOGGER.info("searchByReadOnly: into");
         List<Asset> listFilter;
         if (readOnly) {
             listFilter = fileList.stream().filter(Asset::getReadOnly).collect(Collectors.toList());
             fileList.clear();
             fileList.addAll(listFilter);
         }
+        LOGGER.info("searchByReadOnly: exit");
     }
 
     /**
@@ -290,10 +356,12 @@ public class Search {
      * @param owner is the name of the owner of the file
      */
     public void searchByOwner(String owner) {
+        LOGGER.info("searchByOwner: into");
         List<Asset> listFilter = fileList.stream().filter(file -> file.getOwner().equalsIgnoreCase(owner))
                 .collect(Collectors.toList());
         fileList.clear();
         fileList.addAll(listFilter);
+        LOGGER.info("searchByOwner: exit");
     }
 
 
@@ -303,12 +371,14 @@ public class Search {
      * @param isFolder has the value true or false if the folder is going to display.
      */
     public void searchByFolder(boolean isFolder) {
+        LOGGER.info("searchByFolder: into");
         List<Asset> listFilter = fileList.stream().filter(file -> {
             AssetFile assetFile = (AssetFile) file;
             return assetFile.getDirectory();
         }).collect(Collectors.toList());
         fileList.clear();
         fileList.addAll(listFilter);
+        LOGGER.info("searchByFoler: into");
     }
 
     /**
@@ -318,10 +388,12 @@ public class Search {
      * @param dateCreateFin Is the end date for lastAccessTime time on a file.
      */
     private void searchByDateCreate(Date dateCreateIni, Date dateCreateFin) {
+        LOGGER.info("searchByDateCreate: into");
         List<Asset> listFilter = IntStream.range(0, fileList.size()).filter(i -> fileList.get(i).getDateCreate().after(dateCreateIni) &&
                 fileList.get(i).getDateCreate().before(dateCreateFin)).mapToObj(i -> fileList.get(i)).collect(Collectors.toList());
         fileList.clear();
         fileList.addAll(listFilter);
+        LOGGER.info("searchByDateCreate: exit");
     }
 
     /**
@@ -331,10 +403,12 @@ public class Search {
      * @param dateModifyFin Is the end date for lastAccessTime time on a file.
      */
     private void searchByDateModified(Date dateModifyIni, Date dateModifyFin) {
+        LOGGER.info("searchByModify: into");
         List<Asset> listFilter = IntStream.range(0, fileList.size()).filter(i -> fileList.get(i).getDateModificate().after(dateModifyIni) &&
                 fileList.get(i).getDateModificate().before(dateModifyFin)).mapToObj(i -> fileList.get(i)).collect(Collectors.toList());
         fileList.clear();
         fileList.addAll(listFilter);
+        LOGGER.info("searchByModify: exit");
     }
 
     /**
@@ -344,13 +418,16 @@ public class Search {
      * @param dateAccessFin Is the end date for lastAccessTime time on a file.
      */
     private void searchByLastDateAccess(Date dateAccessIni, Date dateAccessFin) {
+        LOGGER.info("searchByLastDateAccess: into");
         List<Asset> listFilter = IntStream.range(0, fileList.size()).filter(i -> fileList.get(i).getDateAccess().after(dateAccessIni) &&
                 fileList.get(i).getDateAccess().before(dateAccessFin)).mapToObj(i -> fileList.get(i)).collect(Collectors.toList());
         fileList.clear();
         fileList.addAll(listFilter);
+        LOGGER.info("searchByLastDateAccess: exit");
     }
 
     private void addMultimediaAttributes(String path) {
+        LOGGER.info("addMultimediaAttributes: into");
         try {
             File[] files = new File(path).listFiles();
             for (File file : files) {
@@ -462,6 +539,7 @@ public class Search {
             }
         } catch (NullPointerException | IOException e) {
         }
+        LOGGER.info("addMultimediaAttributes: exit");
     }
 
     public void printValuesMultimedia() {
@@ -474,15 +552,18 @@ public class Search {
      * @param frameRate Frame Rate Criteria.
      */
     public void searchByFrameRate(String frameRate) {
+        LOGGER.info("searchByFrameRate: into");
         fileList.removeIf(file -> {
             AssetMultimedia multimediaResult = (AssetMultimedia) file;
             Double value = (Math.ceil(multimediaResult.getrFrameRate().doubleValue()));
             String valueForCompare = value.intValue() + " fps";
             return !frameRate.equalsIgnoreCase(valueForCompare);
         });
+        LOGGER.info("seachByFrameRate: exit");
     }
 
     private void searchByDuration(Double time, String operator) {
+        LOGGER.info("searchByDuration: into");
         if (operator.equalsIgnoreCase(">")) {
             fileList.removeIf(file -> !(((AssetMultimedia) file).getDuration() > time));
         }
@@ -492,6 +573,7 @@ public class Search {
         if (operator.equalsIgnoreCase("=")) {
             fileList.removeIf(file -> !(((AssetMultimedia) file).getDuration() == time));
         }
+        LOGGER.info("seachByDuration: exit");
         //LOOGER.info("Exit of searchMultimediaByDuration Method");
     }
 
@@ -501,12 +583,12 @@ public class Search {
      * @param videoCodec Multimedia video codec Criteria.
      */
     private void searchByVideoCodec(String videoCodec) {
-        //LOOGER.info("Entry to searchMultimediaByVideoCodec Method");
+        LOGGER.info("searchByVideoCodec: into");
         fileList.removeIf(file -> {
             AssetMultimedia multimediaResult = (AssetMultimedia) file;
             return !videoCodec.equalsIgnoreCase(multimediaResult.getCodecName());
         });
-        //LOOGER.info("Exit of searchMultimediaByVideoCodec Method");
+        LOGGER.info("searchByVideoCodec: exit");
     }
 
     /**
@@ -515,12 +597,12 @@ public class Search {
      * @param audioCodec Multimedia video codec Criteria.
      */
     private void searchByAudioCodec(String audioCodec) {
-        //LOOGER.info("Entry to searchMultimediaByVideoCodec Method");
+        LOGGER.info("searchByAudioCodec: into");
         fileList.removeIf(file -> {
             AssetMultimedia multimediaResult = (AssetMultimedia) file;
             return !audioCodec.equalsIgnoreCase(multimediaResult.getAudioCodecName());
         });
-        //LOOGER.info("Exit of searchMultimediaByVideoCodec Method");
+        LOGGER.info("searchByAudioCodec: exit");
     }
 
     /**
@@ -529,18 +611,20 @@ public class Search {
      * @param multimediaResolution Multimedia Resolution Criteria.
      */
     private void searchByResolution(String multimediaResolution) {
-        //LOOGER.info("Entry to searchMultimediaByResolution Method");
+        LOGGER.info("searchByResolution: into");
         fileList.removeIf(file -> {
             AssetMultimedia multimediaResult = (AssetMultimedia) file;
             String resolutionCompare = multimediaResult.getDisplayAspect() + " "
                     + multimediaResult.getWidth() + "x" + multimediaResult.getHeight();
             return !multimediaResolution.equalsIgnoreCase(resolutionCompare);
         });
-        //LOOGER.info("Exit of searchMultimediaByResolution Method");
+        LOGGER.info("searchByResolution: exit");
     }
 
     public void setCriteria(Criteria criteria) {
+        LOGGER.info("setCriteria: into");
         this.criteria = criteria;
+        LOGGER.info("setCiteria: exit");
     }
 
 
@@ -550,7 +634,8 @@ public class Search {
      * @return File Result list with the files already searched
      */
     public List<Asset> getResult() {
-
+        LOGGER.info("getResult: into");
+        LOGGER.info("getResult: exit");
         return fileList;
     }
 }
