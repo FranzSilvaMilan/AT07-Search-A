@@ -111,7 +111,8 @@ public class PanelMultimedia extends JPanel {
      */
 
     public PanelMultimedia() {
-        settingPanelSearch();
+        settingPanelMultimedia();
+        //settingPanelSearch();
         initComponet();
         initComponetTable();
         settingPanel();
@@ -171,12 +172,12 @@ public class PanelMultimedia extends JPanel {
         labelAudioCodec = new JLabel("AUDIO CODEC:");
         LabelResolution = new JLabel("RESOLUTION:");
         labelVideoCode = new JLabel("VIDEO CODE:");
-        listResolution = new String[]{"None ","320 X 240", "480 X 360", "128 X 720"};
+        listResolution = new String[]{" ","0:1 480x360", "3:2 720x480","4:3 320x240","16:9 1280x720","180:101 720x404"};
         operatiorOptions = new String[]{">", "<", "="};
-        listTime = new String [] {"None","second","minutes","hours"};
-        listVideoCode = new String [] {"None","H264","H263","MPEG4","WNV1"};
-        listFrameRate = new String[] {"None","24 fps","25 fps","30 fps","60 fps"};
-        listAduioCodec = new String[] {"None","DoD RELP","DoD CELP","DoD VSELP","DoD RPE-LTP"};
+        listTime = new String [] {" ","second","minutes","hours"};
+        listVideoCode = new String [] {" ","H264","H263","MPEG4","WNV1"};
+        listFrameRate = new String[] {" ","24 fps","25 fps","30 fps","60 fps"};
+        listAduioCodec = new String[] {" ","mp3","aac"};
         operator = new JComboBox<>(operatiorOptions);
         optionUnitsResolution = new JComboBox<>(listResolution);
         operationTime = new JComboBox<>(listTime);
@@ -216,13 +217,17 @@ public class PanelMultimedia extends JPanel {
         }
     }
 
-    /**
-     * it is method contain configuration.
-     */
-    public void settingPanelSearch() {
+    public void settingPanelMultimedia(){
         setLayout(null);
         setVisible(true);
     }
+    /**
+     * it is method contain configuration.
+     */
+   /* public void settingPanelSearch() {
+        setLayout(null);
+        setVisible(true);
+    }*/
 
     /**
      * this method containTable contain table of information list archive.
@@ -480,7 +485,12 @@ public class PanelMultimedia extends JPanel {
      * @return operator selected
      */
     public String getOperator(){
-        return operator.getSelectedItem().toString();
+        if (operator.getSelectedItem().equals(" ")){
+            return null;
+        } else {
+
+            return operator.getSelectedItem().toString();
+        }
     }
 
     /**
@@ -488,7 +498,11 @@ public class PanelMultimedia extends JPanel {
      * @return a string of video code.
      */
     public String getOptionVideoCode(){
-        return optionVideoCode.getSelectedItem().toString();
+        if (optionVideoCode.getSelectedItem().equals(" ")){
+            return null;
+        } else {
+            return optionVideoCode.getSelectedItem().toString();
+        }
     }
 
     /**
@@ -496,7 +510,12 @@ public class PanelMultimedia extends JPanel {
      * @return String selected of Resolution.
      */
     public String getOptionUnitsResolution(){
-        return optionUnitsResolution.getSelectedItem().toString();
+        if (optionUnitsResolution.getSelectedItem().equals(" ")){
+            return null;
+        } else {
+
+            return optionUnitsResolution.getSelectedItem().toString();
+        }
     }
 
     /**
@@ -504,7 +523,11 @@ public class PanelMultimedia extends JPanel {
      * @return String selected of Operation Time.
      */
     public String getOperationTime(){
-        return operationTime.getSelectedItem().toString();
+        if (operationTime.getSelectedItem().equals(" ")){
+            return null;
+        } else {
+            return operationTime.getSelectedItem().toString();
+        }
     }
 
     /**
@@ -512,7 +535,11 @@ public class PanelMultimedia extends JPanel {
      * @return String Option of frame selected
      */
     public String getOptionFrameRate(){
-        return optionFrameRate.getSelectedItem().toString();
+        if (optionFrameRate.getSelectedItem().equals(" ")){
+            return null;
+        }else {
+            return optionFrameRate.getSelectedItem().toString();
+        }
     }
 
     /**
@@ -520,7 +547,13 @@ public class PanelMultimedia extends JPanel {
      * @return string when selected of audio.
      */
     public String getOptionAudioCodec(){
-        return optionAudioCodec.getSelectedItem().toString();
+
+        if (optionAudioCodec.getSelectedItem().equals(" ")){
+            return null;
+        }else {
+
+            return optionAudioCodec.getSelectedItem().toString();
+        }
     }
 
     /**
