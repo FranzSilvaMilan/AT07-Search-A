@@ -23,7 +23,7 @@ import java.util.Date;
  */
 public class Convert {
     private static final int MODIFIER = 1024;
-
+    private static final double MODIFIERSHOW = 1024;
     /**
      * @param size   long of file.
      * @param choose of size.
@@ -42,6 +42,26 @@ public class Convert {
                 break;
         }
         return size;
+    }
+    /**
+     * @param size   long of file.
+     * @param choose of size.
+     * @return size in bits.
+     */
+    public double convertTOLongShow(long size, String choose) {
+        double sizeSw=size;
+        switch (choose) {
+            case "Gb":
+                sizeSw /= (MODIFIERSHOW * MODIFIERSHOW * MODIFIERSHOW);
+                break;
+            case "Mb":
+                sizeSw /= (MODIFIERSHOW * MODIFIERSHOW);
+                break;
+            case "Kb":
+                sizeSw /= MODIFIERSHOW;
+                break;
+        }
+        return sizeSw;
     }
 
     /**
@@ -88,5 +108,27 @@ public class Convert {
             return buildResult.append(String.valueOf(decimalFormat.format(time / 3600.0))).append(" " + unitTime).toString();
         }
         return String.valueOf(time);
+    }
+
+    /**
+     * This method convert  hours and minutes to seconds.
+     *
+     * @param duration Input string
+     * @param time     Unit Time hour or minute.
+     * @return a double number on unit seconds.
+     */
+    public double convertTimeDurationToDouble(String duration, String time) {
+        if(time != null) {
+            if (time.equalsIgnoreCase("second")) {
+                return Double.parseDouble(duration);
+            }
+            if (time.equalsIgnoreCase("minutes")) {
+                return Double.parseDouble(duration) * 60.0;
+            }
+            if (time.equalsIgnoreCase("hours")) {
+                return Double.parseDouble(duration) * 3600.0;
+            }
+        }
+        return 0.0;
     }
 }

@@ -41,6 +41,7 @@ public class Controller {
     private Search search;
     private Convert convert;
     private Criteria criteria;
+    String unityForSize;
 
     /**
      * this a constuctor.
@@ -72,7 +73,7 @@ public class Controller {
                         if (file instanceof AssetFile) {
                             AssetFile assetFile = (AssetFile) file;
                             row = new String[]{Boolean.toString(assetFile.getDirectory()), assetFile.getFileName(),
-                                    Long.toString(assetFile.getSize()), assetFile.getPath(),
+                                    String.format("%.3f", convert.convertTOLongShow(assetFile.getSize(),unityForSize)).concat(" ").concat(unityForSize), assetFile.getPath(),
                                     Boolean.toString(assetFile.getIsIshidden()), assetFile.getExtensions(), assetFile.getOwner(), Boolean.toString(assetFile.getReadOnly()),
                                     convert.convertDateToString(assetFile.getDateCreate()), convert.convertDateToString(assetFile.getDateModificate()),
                                     convert.convertDateToString(assetFile.getDateAccess())};
@@ -81,7 +82,7 @@ public class Controller {
                         } else {
                             AssetMultimedia assetMultimedia = (AssetMultimedia) file;
                             row = new String[]{Boolean.toString(false), assetMultimedia.getFileName(),
-                                    Long.toString(assetMultimedia.getSize()), assetMultimedia.getPath(),
+                                    String.format("%.3f", convert.convertTOLongShow(assetMultimedia.getSize(),unityForSize)).concat(" ").concat(unityForSize), assetMultimedia.getPath(),
                                     Boolean.toString(assetMultimedia.getIsIshidden()), assetMultimedia.getExtensions(), assetMultimedia.getOwner(), Boolean.toString(assetMultimedia.getReadOnly()),
                                     convert.convertDateToString(assetMultimedia.getDateCreate()), convert.convertDateToString(assetMultimedia.getDateModificate()),
                                     convert.convertDateToString(assetMultimedia.getDateAccess())};
@@ -102,7 +103,7 @@ public class Controller {
         String fileName = frame.getPanelSearch().getTextFile();
         String operator = frame.getPanelSearch().getOperator();
         Long valueOFView = Long.parseLong(frame.getPanelSearch().getSizeFile());
-        String unityForSize = frame.getPanelSearch().getOptionUnitsSize();
+        unityForSize = frame.getPanelSearch().getOptionUnitsSize();
         Long sizeValue = convert.convertTOLong(valueOFView, unityForSize);
         boolean hidden = frame.getPanelSearch().getHidden();
 
@@ -133,9 +134,9 @@ public class Controller {
             String videoCode = frame.getPanelMultimedia().getOptionVideoCode();
             String audioCode = frame.getPanelMultimedia().getOptionAudioCodec();
             String resolution = frame.getPanelMultimedia().getOptionUnitsResolution();
-            String unitDuration = frame.getPanelMultimedia().getOperator();
-            double duration = Double.parseDouble(frame.getPanelMultimedia().getDuration());
-            String operatorDurationTime = frame.getPanelMultimedia().getOperationTime();
+            String operatorDurationTime = frame.getPanelMultimedia().getOperator();// < > =
+            String unitDuration = frame.getPanelMultimedia().getOperationTime();//e.g. second
+            double duration = convert.convertTimeDurationToDouble(frame.getPanelMultimedia().getDuration(),unitDuration );
             ArrayList<String> extensionsMultimedia = frame.getPanelMultimedia().getOtherExtensions();
             criteriaBuilder.buildMultimedia(frameRate, videoCode, audioCode, resolution, duration, operatorDurationTime, extensionsMultimedia);
         }
