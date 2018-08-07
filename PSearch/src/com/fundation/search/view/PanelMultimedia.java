@@ -357,9 +357,9 @@ public class PanelMultimedia extends JPanel {
         containerFileExtensions.add(avi);
         containerFileExtensions.add(xvidi);
         containerFileExtensions.add(mpg);
-        containerFileExtensions.add(flv);
-        containerFileExtensions.add(labelOtherExtension);
-        containerFileExtensions.add(textOtherExtension);
+        //containerFileExtensions.add(flv);
+        //containerFileExtensions.add(labelOtherExtension);
+        //containerFileExtensions.add(textOtherExtension);
 
         GridBagLayout gbl=new GridBagLayout();
         GridBagConstraints gbc=new GridBagConstraints();

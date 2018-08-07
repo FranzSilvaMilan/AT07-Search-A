@@ -44,6 +44,10 @@ public class PanelSearch extends JPanel {
     private JTextField textExtension;
     private JTextField textOwner;
     private JTextField textContain;
+
+
+    private JTextField textEndWith;
+    private JTextField textStartWith;
     //these variables are for the dates.
     private JDateChooser dateCreate;
     private JDateChooser dateCreateTo;
@@ -72,6 +76,7 @@ public class PanelSearch extends JPanel {
     private JLabel labelToM;
     private JLabel labelToL;
 
+
     private PanelTable panelTable;
 
     private JSpinner spinnerSize;
@@ -92,6 +97,8 @@ public class PanelSearch extends JPanel {
     private JCheckBox enableOnlyRead;
     private JCheckBox enableKeySensitive;
     private JCheckBox folder;
+    private JCheckBox endWith;
+    private JCheckBox startWith;
 
     private Border blacking;
     private Border loweredetched;
@@ -129,6 +136,8 @@ public class PanelSearch extends JPanel {
         textExtension = new JTextField();
         textContain = new JTextField();
         textOwner = new JTextField();
+        textEndWith=new JTextField();
+        textStartWith=new JTextField();
 
         labelPhat = new JLabel("PATH:");
         LabelSize = new JLabel("SIZE:");
@@ -139,6 +148,7 @@ public class PanelSearch extends JPanel {
         labelTo = new JLabel("TO:");
         labelToM = new JLabel("TO:");
         labelToL = new JLabel("TO:");
+
 
         operator = new JComboBox<>(operatorOptions);
         optionUnitsSize = new JComboBox<>(listUnitSize);
@@ -163,6 +173,8 @@ public class PanelSearch extends JPanel {
         enableLastAccess = new JCheckBox("Date Last Access");
         enableOnlyRead = new JCheckBox("ReadOnly");
         enableKeySensitive = new JCheckBox("Key Sensitive");
+        endWith = new JCheckBox("ENDWITH");
+        startWith = new JCheckBox("STARTWITH");
 
         blacking = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
         loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
@@ -352,6 +364,11 @@ public class PanelSearch extends JPanel {
         textContain.setBackground(new Color(250, 252, 252));
         textContain.setBorder(blacking);
 
+        textEndWith.setBounds(670,20,150,30);
+        textStartWith.setBounds(670,50,150,30);
+        endWith.setBounds(820,20,120,30);
+        startWith.setBounds(820,50,120,30);
+
         //Search by only read,hidden and sensitive file.
 
         enableOnlyRead.setEnabled(true);
@@ -394,16 +411,23 @@ public class PanelSearch extends JPanel {
     private void chSearchTextStateChanged(ChangeEvent e) {
         if (this.changeCreate != enableCreate.isSelected()) {
             this.changeCreate = enableCreate.isSelected();
+            dateCreate.setCalendar(null);
+            dateCreateTo.setCalendar(null);
             dateCreate.setEnabled(changeCreate);
             dateCreateTo.setEnabled(changeCreate);
+
         }
         if (this.changeModified != enableModified.isSelected()) {
             this.changeModified = enableModified.isSelected();
+            dateModified.setCalendar(null);
+            dateModifiedTo.setCalendar(null);
             dateModified.setEnabled(changeModified);
             dateModifiedTo.setEnabled(changeModified);
         }
         if (this.changeLastAccess != enableLastAccess.isSelected()) {
             this.changeLastAccess = enableLastAccess.isSelected();
+            dateLastAccess.setCalendar(null);
+            dateLastAccessTo.setCalendar(null);
             dateLastAccess.setEnabled(changeLastAccess);
             dateLastAccessTo.setEnabled(changeLastAccess);
         }
@@ -458,6 +482,10 @@ public class PanelSearch extends JPanel {
         add(rar);
         add(textOwner);
         add(folder);
+        add(textEndWith);
+        add(textStartWith);
+        add(endWith);
+        add(startWith);
     }
 
     /**
@@ -572,6 +600,36 @@ public class PanelSearch extends JPanel {
         return spinnerSize.getValue().toString();
     }
 
+    /**
+     *
+     * @return
+     */
+    public String getTextEndWith() {
+        return textEndWith.getText();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getTextStartWith() {
+        return textStartWith.getText();
+    }
+    /**
+     *
+     * @return
+     */
+    public boolean getEndWith() {
+        return endWith.isSelected();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean getStartWith() {
+        return startWith.isSelected();
+    }
     /**
      * this method get value of radio button hidden.
      *
