@@ -52,4 +52,8 @@ public class Tab extends JTabbedPane{
     public PanelSearch getPanelSearch(){
         return panelSearch;
     }
+
+    public PanelMultimedia getPanelMultimedia() {
+        return panelMultimedia;
+    }
 }

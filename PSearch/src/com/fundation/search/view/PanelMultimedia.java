@@ -111,7 +111,8 @@ public class PanelMultimedia extends JPanel {
      */
 
     public PanelMultimedia() {
-        settingPanelSearch();
+        settingPanelMultimedia();
+        //settingPanelSearch();
         initComponet();
         initComponetTable();
         settingPanel();
@@ -171,12 +172,12 @@ public class PanelMultimedia extends JPanel {
         labelAudioCodec = new JLabel("AUDIO CODEC:");
         LabelResolution = new JLabel("RESOLUTION:");
         labelVideoCode = new JLabel("VIDEO CODE:");
-        listResolution = new String[]{"None ","320 X 240", "480 X 360", "128 X 720"};
+        listResolution = new String[]{"Null","0:1 480x360", "3:2 720x480","4:3 320x240","16:9 1280x720","180:101 720x404"};
         operatiorOptions = new String[]{">", "<", "="};
-        listTime = new String [] {"None","second","minutes","hours"};
-        listVideoCode = new String [] {"None","H264","H263","MPEG4","WNV1"};
-        listFrameRate = new String[] {"None","24 fps","25 fps","30 fps","60 fps"};
-        listAduioCodec = new String[] {"None","DoD RELP","DoD CELP","DoD VSELP","DoD RPE-LTP"};
+        listTime = new String [] {"Null","second","minutes","hours"};
+        listVideoCode = new String [] {"Null","H264","H263","MPEG4","WNV1"};
+        listFrameRate = new String[] {"Null","24 fps","25 fps","30 fps","60 fps"};
+        listAduioCodec = new String[] {"Null","mp3","aac"};
         operator = new JComboBox<>(operatiorOptions);
         optionUnitsResolution = new JComboBox<>(listResolution);
         operationTime = new JComboBox<>(listTime);
@@ -216,13 +217,17 @@ public class PanelMultimedia extends JPanel {
         }
     }
 
-    /**
-     * it is method contain configuration.
-     */
-    public void settingPanelSearch() {
+    public void settingPanelMultimedia(){
         setLayout(null);
         setVisible(true);
     }
+    /**
+     * it is method contain configuration.
+     */
+   /* public void settingPanelSearch() {
+        setLayout(null);
+        setVisible(true);
+    }*/
 
     /**
      * this method containTable contain table of information list archive.
