@@ -31,6 +31,7 @@ public class FrameMain  extends JFrame {
 
     JLabel title;
     Tab tab;
+    private PanelTable panelTable;
 
     /**
      * this is constructor of class {@link FrameMain}
@@ -39,6 +40,7 @@ public class FrameMain  extends JFrame {
     public FrameMain() {
         iniComponent();
         settingFameMain();
+        initComponentTable();
     }
 
     /**
@@ -53,12 +55,21 @@ public class FrameMain  extends JFrame {
         this.getContentPane().setBackground(Color.DARK_GRAY);
         setVisible(true);
     }
-
+    private void initComponentTable() {
+        panelTable = new PanelTable();
+        this.getContentPane().add(panelTable);
+    }
     public void iniComponent() {
 
         tab = new Tab();
         tab.iniComponentsTab();
         add(tab);
+    }
+    public void addRow(String[] newRow) {
+        panelTable.addRow(newRow);
+    }
+    public void cleanTable() {
+        panelTable.clean();
     }
 
     public PanelSearch getPanelSearch() {

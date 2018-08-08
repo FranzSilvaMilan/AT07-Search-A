@@ -15,6 +15,7 @@ package com.fundation.search.view;
 
 
 import com.fundation.search.utils.LoggerSearch;
+//import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDateChooser;
 import org.apache.log4j.Logger;
 
