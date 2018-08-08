@@ -60,12 +60,14 @@ public class PanelMultimedia extends JPanel {
     private String[] listVideoCode;
     private String[] listFrameRate;
     private String[] listAduioCodec;
+    private String[] listAspecRadio;
 
     private JComboBox<String> optionUnitsResolution;
     private JComboBox<String> operationTime;
     private JComboBox<String> optionVideoCode;
     private JComboBox<String> optionFrameRate;
     private JComboBox<String> optionAudioCodec;
+    private JComboBox<String> optionAspecRadio;
 
     JLabel LabelResolution;
     JLabel labelDataBase;
@@ -77,6 +79,7 @@ public class PanelMultimedia extends JPanel {
     JLabel labelFrameRate;
     JLabel labelOtherExtension;
     JLabel labelAudioCodec;
+    private JLabel labelAspecRadio;
 
 
     PanelTable panelTable;
@@ -164,6 +167,7 @@ public class PanelMultimedia extends JPanel {
         labelAudioCodec = new JLabel("AUDIO CODEC:");
         LabelResolution = new JLabel("RESOLUTION:");
         labelVideoCode = new JLabel("VIDEO CODE:");
+        labelAspecRadio = new JLabel("ASPECT RADIO:");
         listResolution = new String[]{" ", "0:1 480x360", "640:343 1280x686",
                 "3:2 720x480", "4:3 320x240", "16:9 1280x720", "45:19 720x304", "180:101 720x404"};
         operatiorOptions = new String[]{">", "<", "="};
@@ -171,12 +175,14 @@ public class PanelMultimedia extends JPanel {
         listVideoCode = new String[]{" ", "H264", "H263", "MPEG4", "WNV1"};
         listFrameRate = new String[]{" ", "24 fps", "25 fps", "30 fps", "60 fps"};
         listAduioCodec = new String[]{" ", "mp3", "aac"};
+        listAspecRadio = new String[]{"", "0:1", "3:2", "4:3", "16:9", "21:9", "45:19", "180:101"};
         operator = new JComboBox<>(operatiorOptions);
         optionUnitsResolution = new JComboBox<>(listResolution);
         operationTime = new JComboBox<>(listTime);
         optionVideoCode = new JComboBox<>(listVideoCode);
         optionFrameRate = new JComboBox<>(listFrameRate);
         optionAudioCodec = new JComboBox<>(listAduioCodec);
+        optionAspecRadio = new JComboBox<>(listAspecRadio);
         spinnerDuration = new JSpinner();
 
         //textDuration = new JTextField("Duration");
@@ -311,8 +317,22 @@ public class PanelMultimedia extends JPanel {
         gbcsetup.fill = GridBagConstraints.HORIZONTAL;
         containerFileSetup.add(optionUnitsResolution, gbcsetup);
 
+        gbcsetup.gridx = 0;
+        gbcsetup.gridy = 4;
+        gbcsetup.gridwidth = 1;
+        gbcsetup.gridheight = 1;
+        gbcsetup.fill = GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(labelAspecRadio, gbcsetup);
+
         gbcsetup.gridx = 1;
         gbcsetup.gridy = 4;
+        gbcsetup.gridwidth = 2;
+        gbcsetup.gridheight = 1;
+        gbcsetup.fill = GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(optionAspecRadio, gbcsetup);
+
+        gbcsetup.gridx = 1;
+        gbcsetup.gridy = 5;
         gbcsetup.gridwidth = 2;
         gbcsetup.gridheight = 1;
         gbcsetup.fill = GridBagConstraints.HORIZONTAL;
@@ -326,7 +346,7 @@ public class PanelMultimedia extends JPanel {
         containerFileSetup.add(operator, gbcsetup);
 
         gbcsetup.gridx = 1;
-        gbcsetup.gridy = 5;
+        gbcsetup.gridy = 6;
         gbcsetup.gridwidth = 1;
         gbcsetup.gridheight = 1;
         gbcsetup.weightx = 1.0;
@@ -334,7 +354,7 @@ public class PanelMultimedia extends JPanel {
         containerFileSetup.add(spinnerDuration, gbcsetup);
 
         gbcsetup.gridx = 2;
-        gbcsetup.gridy = 5;
+        gbcsetup.gridy = 6;
         gbcsetup.gridwidth = 1;
         gbcsetup.gridheight = 1;
         gbcsetup.fill = GridBagConstraints.HORIZONTAL;
@@ -509,6 +529,17 @@ public class PanelMultimedia extends JPanel {
         } else {
 
             return optionUnitsResolution.getSelectedItem().toString();
+        }
+    }
+
+    /**
+     * @return selected option of aspect radio of file multimedia.
+     */
+    public String getAspectRadio() {
+        if (optionAspecRadio.getSelectedItem().equals(" ")) {
+            return null;
+        } else {
+            return optionAspecRadio.getSelectedItem().toString();
         }
     }
 

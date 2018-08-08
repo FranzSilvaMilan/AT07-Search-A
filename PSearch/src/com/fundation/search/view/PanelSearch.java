@@ -45,10 +45,6 @@ public class PanelSearch extends JPanel {
     private JTextField textExtension;
     private JTextField textOwner;
     private JTextField textContain;
-
-
-    private JTextField textEndWith;
-    private JTextField textStartWith;
     //these variables are for the dates.
     private JDateChooser dateCreate;
     private JDateChooser dateCreateTo;
@@ -142,8 +138,6 @@ public class PanelSearch extends JPanel {
         textExtension = new JTextField();
         textContain = new JTextField();
         textOwner = new JTextField();
-        textEndWith = new JTextField();
-        textStartWith = new JTextField();
 
         labelPhat = new JLabel("PATH:");
         LabelSize = new JLabel("SIZE:");
@@ -204,7 +198,7 @@ public class PanelSearch extends JPanel {
     /**
      * this method containTable contain table of information list archive.
      */
-    private void initComponentTable() {
+    public void initComponentTable() {
         panelTable = new PanelTable();
     }
 
@@ -374,8 +368,6 @@ public class PanelSearch extends JPanel {
         textContain.setBackground(new Color(250, 252, 252));
         textContain.setBorder(blacking);
 
-        textEndWith.setBounds(670, 20, 150, 30);
-        textStartWith.setBounds(670, 50, 150, 30);
         endWith.setBounds(820, 20, 120, 30);
         startWith.setBounds(820, 50, 120, 30);
 
@@ -495,8 +487,6 @@ public class PanelSearch extends JPanel {
         add(rar);
         add(textOwner);
         add(folder);
-        add(textEndWith);
-        add(textStartWith);
         add(endWith);
         add(startWith);
         LOGGER.info("addComponents : exit");
@@ -617,20 +607,6 @@ public class PanelSearch extends JPanel {
     /**
      * @return
      */
-    public String getTextEndWith() {
-        return textEndWith.getText();
-    }
-
-    /**
-     * @return
-     */
-    public String getTextStartWith() {
-        return textStartWith.getText();
-    }
-
-    /**
-     * @return
-     */
     public boolean getEndWith() {
         return endWith.isSelected();
     }
@@ -719,6 +695,14 @@ public class PanelSearch extends JPanel {
      */
     public void cleanTable() {
         panelTable.clean();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public PanelTable getPanelTable() {
+        return panelTable;
     }
 
     /**
