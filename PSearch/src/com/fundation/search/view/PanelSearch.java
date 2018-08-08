@@ -15,7 +15,6 @@ package com.fundation.search.view;
 
 
 import com.fundation.search.utils.LoggerSearch;
-//import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDateChooser;
 import org.apache.log4j.Logger;
 
@@ -369,19 +368,21 @@ public class PanelSearch extends JPanel {
         textContain.setBackground(new Color(250, 252, 252));
         textContain.setBorder(blacking);
 
-        endWith.setBounds(820, 20, 120, 30);
-        startWith.setBounds(820, 50, 120, 30);
+        endWith.setBounds(505, 2, 100, 18);
+        endWith.setBackground(new Color(250, 252, 252));
+        startWith.setBounds(605, 2, 100, 18);
+        startWith.setBackground(new Color(250, 252, 252));
 
         //Search by only read,hidden and sensitive file.
 
         enableOnlyRead.setEnabled(true);
-        enableOnlyRead.setBounds(10, 50, 100, 20);
+        enableOnlyRead.setBounds(10, 50, 90, 20);
         enableOnlyRead.setBackground(new Color(250, 252, 252));
 
         hiddenCheck.setBounds(100, 50, 80, 20);
         hiddenCheck.setBackground(new Color(250, 252, 252));
 
-        enableKeySensitive.setBounds(190, 50, 120, 20);
+        enableKeySensitive.setBounds(180, 50, 120, 20);
         enableKeySensitive.setBackground(new Color(250, 252, 252));
 
         folder.setEnabled(true);

@@ -59,7 +59,7 @@ public class PanelTable extends JPanel{
         add(scrollPane);
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setPreferredSize(new Dimension(0, 0));
-        setBounds(20, 300, 1160, 450);
+        setBounds(10, 310, 1180, 450);
         setBackground(new Color(250, 252, 252));
         LOGGER.info("initTable: exit");
     }
