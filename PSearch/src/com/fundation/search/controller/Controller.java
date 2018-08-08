@@ -94,7 +94,7 @@ public class Controller {
                     search.setCriteria(criteria);
                     search.searchByCriteria(criteria);
                     List<Asset> listResult = search.getResult();
-                    frame.getPanelSearch().cleanTable();
+                    frame.cleanTable();
                     for (Asset file : listResult) {
                         String[] row;
                         if (file instanceof AssetFile) {
@@ -104,7 +104,7 @@ public class Controller {
                                     Boolean.toString(assetFile.getIsIshidden()), assetFile.getExtensions(), assetFile.getOwner(), Boolean.toString(assetFile.getReadOnly()),
                                     convert.convertDateToString(assetFile.getDateCreate()), convert.convertDateToString(assetFile.getDateModificate()),
                                     convert.convertDateToString(assetFile.getDateAccess())};
-                            frame.getPanelSearch().addRow(row);
+                            frame.addRow(row);
 
                         } else {
                             AssetMultimedia assetMultimedia = (AssetMultimedia) file;
@@ -116,7 +116,7 @@ public class Controller {
                                     convert.convertDateToString(assetMultimedia.getDateCreate()), convert.convertDateToString(assetMultimedia.getDateModificate()),
                                     convert.convertDateToString(assetMultimedia.getDateAccess()), assetMultimedia.getrFrameRate().toString(),
                                     resolution, assetMultimedia.getCodecName(), assetMultimedia.getAudioCodecName(), Double.toString(assetMultimedia.getDuration())};
-                            frame.getPanelSearch().addRow(row);
+                            frame.addRow(row);
                         }
                     }
                 }
