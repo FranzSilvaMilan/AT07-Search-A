@@ -339,7 +339,7 @@ public class PanelMultimedia extends JPanel {
         containerFileSetup.add(labelDuration, gbcsetup);
 
         gbcsetup.gridx = 0;
-        gbcsetup.gridy = 5;
+        gbcsetup.gridy = 6;
         gbcsetup.gridwidth = 1;
         gbcsetup.gridheight = 1;
         gbcsetup.fill = GridBagConstraints.HORIZONTAL;

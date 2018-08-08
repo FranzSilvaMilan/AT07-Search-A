@@ -40,7 +40,7 @@ public class Tab extends JTabbedPane{
 
         panelSearch.setBackground(Color.white);
         //panelMultimedia.setBounds(10,10,1180,200);
-        setBounds(10, 10, 1180, 800);
+        setBounds(10, 10, 1180, 300);
         add("FILE", panelSearch);
         addTab("MULTIMEDIA", panelMultimedia);
 
