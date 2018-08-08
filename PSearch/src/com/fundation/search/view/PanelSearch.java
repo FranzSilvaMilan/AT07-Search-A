@@ -47,8 +47,8 @@ public class PanelSearch extends JPanel {
     private JTextField textContain;
 
 
-    private JTextField textEndWith;
-    private JTextField textStartWith;
+   // private JTextField textEndWith;
+    //private JTextField textStartWith;
     //these variables are for the dates.
     private JDateChooser dateCreate;
     private JDateChooser dateCreateTo;
@@ -78,7 +78,7 @@ public class PanelSearch extends JPanel {
     private JLabel labelToL;
 
 
-    private PanelTable panelTable;
+   private PanelTable panelTable;
 
     private JSpinner spinnerSize;
     public ButtonGroup radioGruop;
@@ -142,8 +142,8 @@ public class PanelSearch extends JPanel {
         textExtension = new JTextField();
         textContain = new JTextField();
         textOwner = new JTextField();
-        textEndWith = new JTextField();
-        textStartWith = new JTextField();
+        //textEndWith = new JTextField();
+        //textStartWith = new JTextField();
 
         labelPhat = new JLabel("PATH:");
         LabelSize = new JLabel("SIZE:");
@@ -374,10 +374,10 @@ public class PanelSearch extends JPanel {
         textContain.setBackground(new Color(250, 252, 252));
         textContain.setBorder(blacking);
 
-        textEndWith.setBounds(670, 20, 150, 30);
-        textStartWith.setBounds(670, 50, 150, 30);
-        endWith.setBounds(820, 20, 120, 30);
-        startWith.setBounds(820, 50, 120, 30);
+        //textEndWith.setBounds(670, 20, 150, 30);
+        //textStartWith.setBounds(670, 50, 150, 30);
+        endWith.setBounds(680, 20, 120, 30);
+        startWith.setBounds(680, 50, 120, 30);
 
         //Search by only read,hidden and sensitive file.
 
@@ -495,8 +495,8 @@ public class PanelSearch extends JPanel {
         add(rar);
         add(textOwner);
         add(folder);
-        add(textEndWith);
-        add(textStartWith);
+        //add(textEndWith);
+        //add(textStartWith);
         add(endWith);
         add(startWith);
         LOGGER.info("addComponents : exit");
@@ -617,16 +617,17 @@ public class PanelSearch extends JPanel {
     /**
      * @return
      */
-    public String getTextEndWith() {
+    /*public String getTextEndWith() {
         return textEndWith.getText();
-    }
+    }*/
 
     /**
      * @return
      */
+    /*
     public String getTextStartWith() {
         return textStartWith.getText();
-    }
+    }*/
 
     /**
      * @return

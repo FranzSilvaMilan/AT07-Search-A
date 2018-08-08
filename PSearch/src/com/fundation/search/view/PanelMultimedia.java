@@ -60,12 +60,14 @@ public class PanelMultimedia extends JPanel {
     private String[] listVideoCode;
     private String[] listFrameRate;
     private String[] listAduioCodec;
+    //private String[] listAspecRatio;
 
     private JComboBox<String> optionUnitsResolution;
     private JComboBox<String> operationTime;
     private JComboBox<String> optionVideoCode;
     private JComboBox<String> optionFrameRate;
     private JComboBox<String> optionAudioCodec;
+    //private JComboBox<String> optionAspecRatio;
 
     JLabel LabelResolution;
     JLabel labelDataBase;
@@ -73,10 +75,12 @@ public class PanelMultimedia extends JPanel {
     JLabel labelCriteria;
     JLabel labelHidden;
     JLabel labelDuration;
+    //JLabel labelAspecRatio;
     JLabel labelVideoCode;
     JLabel labelFrameRate;
     JLabel labelOtherExtension;
     JLabel labelAudioCodec;
+
 
 
     PanelTable panelTable;
@@ -106,7 +110,6 @@ public class PanelMultimedia extends JPanel {
     public PanelMultimedia() {
         LOGGER.info("PanelMultimedia: enter");
         settingPanelMultimedia();
-        //settingPanelSearch();
         initComponet();
         initComponetTable();
         settingPanel();
@@ -163,9 +166,12 @@ public class PanelMultimedia extends JPanel {
         labelFrameRate = new JLabel("FRAME RATE:");
         labelAudioCodec = new JLabel("AUDIO CODEC:");
         LabelResolution = new JLabel("RESOLUTION:");
+        //labelAspecRatio = new JLabel("ASPEC RATIO");
         labelVideoCode = new JLabel("VIDEO CODE:");
-        listResolution = new String[]{" ", "0:1 480x360", "640:343 1280x686",
-                "3:2 720x480", "4:3 320x240", "16:9 1280x720", "45:19 720x304", "180:101 720x404"};
+
+        listResolution = new String[]{" ", "0:1  480x360", "640:343  1280x686",
+                "3:2  720x480", "4:3  320x240", "16:9  1280x720", "45:19  720x304", "180:101  720x404"};
+        //listAspecRatio = new String[] {"","0:1","640:343","3:2","4:3","16:9","45:19","180:101"};
         operatiorOptions = new String[]{">", "<", "="};
         listTime = new String[]{" ", "second", "minutes", "hours"};
         listVideoCode = new String[]{" ", "H264", "H263", "MPEG4", "WNV1"};
@@ -177,6 +183,7 @@ public class PanelMultimedia extends JPanel {
         optionVideoCode = new JComboBox<>(listVideoCode);
         optionFrameRate = new JComboBox<>(listFrameRate);
         optionAudioCodec = new JComboBox<>(listAduioCodec);
+        //optionAspecRatio = new JComboBox<>(listAspecRatio);
         spinnerDuration = new JSpinner();
 
         //textDuration = new JTextField("Duration");
@@ -247,7 +254,7 @@ public class PanelMultimedia extends JPanel {
         LOGGER.info("settingPanel: enter");
         GridBagLayout gblsetup = new GridBagLayout();
         GridBagConstraints gbcsetup = new GridBagConstraints();
-        containerFileSetup.setBounds(10, 50, 300, 200);
+        containerFileSetup.setBounds(10, 50, 400, 200);
         containerFileSetup.setVisible(true);
 
         containerFileSetup.setBackground(new java.awt.Color(201, 222, 244));
@@ -310,6 +317,22 @@ public class PanelMultimedia extends JPanel {
         gbcsetup.gridheight = 1;
         gbcsetup.fill = GridBagConstraints.HORIZONTAL;
         containerFileSetup.add(optionUnitsResolution, gbcsetup);
+        /*
+        gbcsetup.gridx = 1;
+        gbcsetup.gridy = 4;
+        gbcsetup.gridwidth = 2;
+        gbcsetup.gridheight = 1;
+        gbcsetup.fill = GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(labelAspecRatio, gbcsetup);*/
+        /*
+        gbcsetup.gridx = 5;
+        gbcsetup.gridy = 4;
+        gbcsetup.gridwidth = 2;
+        gbcsetup.gridheight = 1;
+        gbcsetup.fill = GridBagConstraints.HORIZONTAL;
+        containerFileSetup.add(optionAspecRatio, gbcsetup);*/
+
+
 
         gbcsetup.gridx = 1;
         gbcsetup.gridy = 4;
@@ -341,7 +364,7 @@ public class PanelMultimedia extends JPanel {
         containerFileSetup.add(operationTime, gbcsetup);
 
         GridLayout extensionsLayout = new GridLayout(0, 3);
-        containerFileExtensions.setBounds(310, 50, 300, 200);
+        containerFileExtensions.setBounds(410, 50, 300, 200);
         containerFileExtensions.setVisible(true);
 
         containerFileExtensions.setBackground(new java.awt.Color(201, 222, 244));
@@ -362,7 +385,7 @@ public class PanelMultimedia extends JPanel {
         GridBagLayout gbl = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
 
-        containerFileDateBase.setBounds(620, 50, 530, 200);
+        containerFileDateBase.setBounds(710, 50, 440, 200);
         containerFileDateBase.setVisible(true);
 
         containerFileDateBase.setLayout(gbl);
