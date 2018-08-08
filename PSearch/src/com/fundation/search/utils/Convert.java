@@ -90,6 +90,36 @@ public class Convert {
         return result;
     }
 
+    public Date convertDateToDateIni(Date date) {
+        try {
+            String result = "";
+            Date date1 = new Date();
+            if (date != null) {
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                result = dateFormat.format(date);
+                date1 = dateFormat.parse(result);
+            }
+            return date1;
+        }catch (Exception e){}
+        return null;
+    }
+
+    public Date convertDateToDateFin(Date date) {
+        try {
+            Date newDate = new Date();
+            if (date != null) {
+                String argTime = "23:59";
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+                String dateTime = sdf.format(date) + " " + argTime;
+               newDate = dateFormat.parse(dateTime);
+            }
+            return newDate;
+        }catch (Exception e){}
+        return null;
+
+    }
+
     /**
      * @param time     on seconds of a multimedia file.
      * @param unitTime the unit second, minute, hour.
