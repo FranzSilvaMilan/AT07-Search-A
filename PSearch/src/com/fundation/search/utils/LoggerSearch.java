@@ -31,7 +31,7 @@ public class LoggerSearch {
      */
     private LoggerSearch() {
 
-        log = Logger.getLogger("LoggerSearch.getName().class");
+        log = Logger.getLogger(getClass().toString());
         PropertyConfigurator.configure("info/log4j.properties");
     }
 
