@@ -62,7 +62,7 @@ public class Search {
     private FFprobe ffprobe;
     private FFmpegProbeResult probeResult;
     private FFmpegStream stream;
-    private static final String SLASH = "\\";
+    private static final String SLASH = System.getProperty("file.separator");
     private static final String OS = System.getProperty("os.name").toLowerCase();
 
 
@@ -72,6 +72,7 @@ public class Search {
     public Search() {
         LOGGER.info("Constructor Search : into");
         fileList = new ArrayList<>();
+        convert = new Convert();
         LOGGER.info("Consturctor search : exit");
     }
 
@@ -389,8 +390,11 @@ public class Search {
      */
     private void searchByDateCreate(Date dateCreateIni, Date dateCreateFin) {
         LOGGER.info("searchByDateCreate: into");
-        List<Asset> listFilter = IntStream.range(0, fileList.size()).filter(i -> fileList.get(i).getDateCreate().after(dateCreateIni) &&
-                fileList.get(i).getDateCreate().before(dateCreateFin)).mapToObj(i -> fileList.get(i)).collect(Collectors.toList());
+        Date dateIni = convert.convertDateToDateIni(dateCreateIni);
+        Date dateFin = convert.convertDateToDateFin(dateCreateFin);
+        List<Asset> listFilter = IntStream.range(0, fileList.size()).filter(i -> fileList.get(i).getDateCreate().after(dateIni) &&
+                fileList.get(i).getDateCreate().before(dateFin))
+                .mapToObj(i -> fileList.get(i)).collect(Collectors.toList());
         fileList.clear();
         fileList.addAll(listFilter);
         LOGGER.info("searchByDateCreate: exit");
@@ -404,8 +408,10 @@ public class Search {
      */
     private void searchByDateModified(Date dateModifyIni, Date dateModifyFin) {
         LOGGER.info("searchByModify: into");
-        List<Asset> listFilter = IntStream.range(0, fileList.size()).filter(i -> fileList.get(i).getDateModificate().after(dateModifyIni) &&
-                fileList.get(i).getDateModificate().before(dateModifyFin)).mapToObj(i -> fileList.get(i)).collect(Collectors.toList());
+        Date dateIni = convert.convertDateToDateIni(dateModifyIni);
+        Date dateFin = convert.convertDateToDateFin(dateModifyFin);
+        List<Asset> listFilter = IntStream.range(0, fileList.size()).filter(i -> fileList.get(i).getDateModificate().after(dateIni) &&
+                fileList.get(i).getDateModificate().before(dateFin)).mapToObj(i -> fileList.get(i)).collect(Collectors.toList());
         fileList.clear();
         fileList.addAll(listFilter);
         LOGGER.info("searchByModify: exit");
@@ -419,8 +425,10 @@ public class Search {
      */
     private void searchByLastDateAccess(Date dateAccessIni, Date dateAccessFin) {
         LOGGER.info("searchByLastDateAccess: into");
-        List<Asset> listFilter = IntStream.range(0, fileList.size()).filter(i -> fileList.get(i).getDateAccess().after(dateAccessIni) &&
-                fileList.get(i).getDateAccess().before(dateAccessFin)).mapToObj(i -> fileList.get(i)).collect(Collectors.toList());
+        Date dateIni = convert.convertDateToDateIni(dateAccessIni);
+        Date dateFin = convert.convertDateToDateFin(dateAccessFin);
+        List<Asset> listFilter = IntStream.range(0, fileList.size()).filter(i -> fileList.get(i).getDateAccess().after(dateIni) &&
+                fileList.get(i).getDateAccess().before(dateFin)).mapToObj(i -> fileList.get(i)).collect(Collectors.toList());
         fileList.clear();
         fileList.addAll(listFilter);
         LOGGER.info("searchByLastDateAccess: exit");
@@ -433,7 +441,6 @@ public class Search {
             for (File file : files) {
                 Path path1 = Paths.get(file.getPath());
                 fileBasicAttributes = Files.readAttributes(path1, BasicFileAttributes.class);
-                //Asset data = new AssetFile();
                 if (!file.isDirectory()) {
                     try {
                         AssetMultimedia data = new AssetMultimedia();
@@ -456,13 +463,12 @@ public class Search {
                             ffprobePath = new File(".").getCanonicalPath() + SLASH + "resources" + SLASH + "ffprobe.exe";
                         } else {
                             ffprobePath = new File(".").getCanonicalPath() + SLASH + "resources" + SLASH + "ffprobe";
-                            System.out.println("no windows");
                         }
 
                         System.out.println(file.getName() + " nombre del archivo");
+
                         //values multimedia
                         ffprobe = new FFprobe(ffprobePath);
-
                         probeResult = ffprobe.probe(data.getPath());
                         stream = probeResult.getStreams().get(0);
 
@@ -516,7 +522,7 @@ public class Search {
                         long audioMaxBitRate = stream.max_bit_rate;
                         long audioNbFrame = stream.nb_frames;
                         data.setAudioCodecName(audioCodecName);
-                        System.out.println("---------------0audio------------------");
+                        System.out.println("---------------audio------------------");
                         System.out.println("audioCodec: " + audioCodecName);
                         System.out.println("audicoCodecLong: " + audioCodecNameLong);
                         System.out.println("audioCodecTag: " + audioCodecTag);
@@ -574,7 +580,6 @@ public class Search {
             fileList.removeIf(file -> !(((AssetMultimedia) file).getDuration() == time));
         }
         LOGGER.info("seachByDuration: exit");
-        //LOOGER.info("Exit of searchMultimediaByDuration Method");
     }
 
     /**
@@ -619,6 +624,21 @@ public class Search {
             return !multimediaResolution.equalsIgnoreCase(resolutionCompare);
         });
         LOGGER.info("searchByResolution: exit");
+    }
+
+    /**
+     * This method is to search Multimedia by video resolution.
+     *
+     * @param aspectRatio Multimedia Resolution Criteria.
+     */
+    private void searchByAspectRatio(String aspectRatio) {
+        LOGGER.info("searchByAspectRatio: into");
+        fileList.removeIf(file -> {
+            AssetMultimedia multimediaResult = (AssetMultimedia) file;
+            String resolutionCompare = multimediaResult.getDisplayAspect();
+            return !aspectRatio.equalsIgnoreCase(resolutionCompare);
+        });
+        LOGGER.info("searchByAspectRatio: exit");
     }
 
     public void setCriteria(Criteria criteria) {
