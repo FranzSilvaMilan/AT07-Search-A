@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         SearchConnection.getInstance();
-        LoggerSearch.getInstance().getLogger().info(Main.class.toString().concat(":into"));
+        LoggerSearch.getInstance().getLogger().info(Main.class + "enter");
         new Controller();
         LoggerSearch.getInstance().getLogger().info("main : fin");
     }

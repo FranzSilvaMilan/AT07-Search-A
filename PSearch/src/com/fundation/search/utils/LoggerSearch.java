@@ -10,6 +10,7 @@
  */
 package com.fundation.search.utils;
 
+import com.fundation.search.model.Search;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -31,7 +32,7 @@ public class LoggerSearch {
      */
     private LoggerSearch() {
 
-        log = Logger.getLogger(getClass().toString());
+        log = Logger.getLogger(Search.class);
         PropertyConfigurator.configure("info/log4j.properties");
     }
 
