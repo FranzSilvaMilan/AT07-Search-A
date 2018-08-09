@@ -22,6 +22,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -36,11 +37,11 @@ public class PanelMultimedia extends JPanel {
     // private JTextField timeDuration;
     private static final Logger LOGGER = LoggerSearch.getInstance().getLogger();
 
-    private JPanel containerFileSetup;
-    private JPanel containerFileExtensions;
+    public JPanel containerFileSetup;
+    public JPanel containerFileExtensions;
     private JPanel containerFileDateBase;
 
-    private JCheckBox enableMediaSetup;
+    public JCheckBox enableMediaSetup;
 
 
     private JTextField textCriteria;
@@ -102,6 +103,7 @@ public class PanelMultimedia extends JPanel {
     private JSpinner spinnerDuration;
 
 
+
     /**
      * this is constructor of the class PanelSearch.
      */
@@ -133,18 +135,15 @@ public class PanelMultimedia extends JPanel {
         enableMediaSetup.setBounds(10, 10, 210, 30);
         enableMediaSetup.setSelected(false);
 
-        enableMediaSetup.addActionListener(event -> {
+        /**enableMediaSetup.addActionListener(event -> {
             JCheckBox cb = (JCheckBox) event.getSource();
             if (cb.isSelected()) {
                 enableSetupContainer(true);
             } else {
                 enableSetupContainer(false);
             }
-        });
+        });*/
 
-
-        //labelFile = new JLabel("FILE NAME:");
-        //textPath = new JTextField("C:\\");
         labelDataBase = new JLabel("DATA BASE");
         textCriteria = new JTextField(50);
         labelCriteria = new JLabel("CRITERIA:");
@@ -169,12 +168,12 @@ public class PanelMultimedia extends JPanel {
         labelVideoCode = new JLabel("VIDEO CODE:");
         labelAspecRadio = new JLabel("ASPECT RADIO:");
         listResolution = new String[]{" ", "0:1 480x360", "640:343 1280x686",
-                "3:2 720x480", "4:3 320x240", "16:9 1280x720", "45:19 720x304", "180:101 720x404"};
+                "3:2 720x480","4:3 176x144","4:3 178x576","4:3 320x240", "16:9 1280x720", "45:19 720x304", "180:101 720x404"};
         operatiorOptions = new String[]{">", "<", "="};
         listTime = new String[]{" ", "second", "minutes", "hours"};
         listVideoCode = new String[]{" ", "H264", "H263", "MPEG4", "WNV1"};
         listFrameRate = new String[]{" ", "24 fps", "25 fps", "30 fps", "60 fps"};
-        listAduioCodec = new String[]{" ", "mp3", "aac"};
+        listAduioCodec = new String[]{" ", "mp3", "aac","amr_nb"};
         listAspecRadio = new String[]{"", "0:1", "3:2", "4:3", "16:9", "21:9", "45:19", "180:101"};
         operator = new JComboBox<>(operatiorOptions);
         optionUnitsResolution = new JComboBox<>(listResolution);
@@ -203,9 +202,11 @@ public class PanelMultimedia extends JPanel {
 
         LOGGER.info("initComponet: exit");
 
+
+
     }
 
-    private void enableSetupContainer(boolean b) {
+    /**private void enableSetupContainer(boolean b) {
         LOGGER.info("enableSetupContainer: enter");
         containerFileExtensions.setEnabled(b);
         for (Component cp : containerFileExtensions.getComponents()) {
@@ -217,7 +218,7 @@ public class PanelMultimedia extends JPanel {
             cp.setEnabled(b);
         }
         LOGGER.info("enableSetupContainer: exit");
-    }
+    }*/
 
     public void settingPanelMultimedia() {
         LOGGER.info("settingPanelMultimedia: enter");
@@ -424,7 +425,7 @@ public class PanelMultimedia extends JPanel {
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         containerFileDateBase.add(panelTableBD, gbc);
-        enableSetupContainer(false);
+
 
         /**containerFileDateBase.setEnabled(false);
 
