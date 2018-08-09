@@ -1,5 +1,6 @@
 package com.fundation.search.database;
 
+
 import java.sql.*;
 
 public class SearchQuery {

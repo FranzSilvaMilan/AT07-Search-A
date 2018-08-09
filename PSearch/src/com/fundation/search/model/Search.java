@@ -15,8 +15,10 @@
 package com.fundation.search.model;
 
 import com.fundation.search.controller.Criteria;
+import com.fundation.search.database.SearchQuery;
 import com.fundation.search.utils.Convert;
 import com.fundation.search.utils.LoggerSearch;
+import com.google.gson.Gson;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import net.bramp.ffmpeg.probe.FFmpegStream;
@@ -31,14 +33,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
 /**
  * This class Search for four critearias path, name, size  and hidden.
  *
@@ -207,6 +205,7 @@ public class Search {
     public void searchByCriteria(Criteria criteria) {
         LOGGER.info("searchByCriteria: into");
         fileList.clear();
+        createJson(criteria);
         if (criteria.getPath() != null) {
 
             searchByPath(criteria.getPath());
@@ -241,7 +240,7 @@ public class Search {
             if (criteria.getDateAccessFrom() != null && criteria.getDateAccessTo() != null) {
                 searchByLastDateAccess(criteria.getDateAccessFrom(), criteria.getDateAccessTo());
             }
-            if(criteria.getContent() != null){
+            if (criteria.getContent() != null) {
                 searchIntoFile(criteria.getContent());
             }
             if (criteria.getIsMultimediaSelected()) {
@@ -261,8 +260,8 @@ public class Search {
                 if (!criteria.getExtensionVideo().isEmpty()) {
                     searchByExtension(criteria.getExtensionVideo());
                 }
-                if(criteria.getDuration()>=0 && criteria.getOperatorDurationTime()!=null){
-                    searchByDuration(criteria.getDuration(),criteria.getOperatorDurationTime());
+                if (criteria.getDuration() >= 0 && criteria.getOperatorDurationTime() != null) {
+                    searchByDuration(criteria.getDuration(), criteria.getOperatorDurationTime());
                 }
 
             }
@@ -295,17 +294,17 @@ public class Search {
                 }
                 /**if (((AssetFile) file).getFileNameExt().endsWith(".docx")) {
 
-                    try {
-                        FileInputStream fis = new FileInputStream(file.getPath());
-                        XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
-                        XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
-                        if (extractor.getText().toLowerCase().contains(pharse.toLowerCase())) {
-                            return false;
-                        }
-                    } catch (Exception ex) {
-                        return true;
-                    }
-                }**/
+                 try {
+                 FileInputStream fis = new FileInputStream(file.getPath());
+                 XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
+                 XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
+                 if (extractor.getText().toLowerCase().contains(pharse.toLowerCase())) {
+                 return false;
+                 }
+                 } catch (Exception ex) {
+                 return true;
+                 }
+                 }**/
             }
             return true;
 
@@ -657,5 +656,18 @@ public class Search {
         LOGGER.info("getResult: into");
         LOGGER.info("getResult: exit");
         return fileList;
+    }
+
+    /**
+     *
+     * @param criteria
+     */
+    public void createJson(Criteria criteria) {
+        Gson json = new Gson();
+        String criteriaJSON = json.toJson(criteria);
+        System.out.println(criteriaJSON);
+        //Properties properties = json.fromJson(criteriaJSON, Properties.class);
+        SearchQuery searchQuery = new SearchQuery();
+        searchQuery.insertCriteria(criteriaJSON);
     }
 }

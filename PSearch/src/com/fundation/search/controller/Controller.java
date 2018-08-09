@@ -39,15 +39,15 @@ import java.util.List;
  */
 public class Controller {
     /**
-     *variable that contains frame
+     * variable that contains frame
      */
     private FrameMain frame;
     /**
-     *varaible that contains validator
+     * varaible that contains validator
      */
     private ValidatorData validator;
     /**
-     *variable that contains search.
+     * variable that contains search.
      */
     private Search search;
     /**
@@ -55,15 +55,15 @@ public class Controller {
      */
     private Convert convert;
     /**
-     *varaible that contains criteria.
+     * varaible that contains criteria.
      */
     private Criteria criteria;
     /**
-     *variablbe that contains unityForSize
+     * variablbe that contains unityForSize
      */
     private String unityForSize;
     /**
-     *lOGGER
+     * lOGGER
      */
     private static final Logger LOGGER = LoggerSearch.getInstance().getLogger();
 
@@ -170,7 +170,8 @@ public class Controller {
             String unitDuration = frame.getPanelMultimedia().getOperationTime();//e.g. second
             double duration = convert.convertTimeDurationToDouble(frame.getPanelMultimedia().getDuration(), unitDuration);
             ArrayList<String> extensionsMultimedia = frame.getPanelMultimedia().getOtherExtensions();
-            criteriaBuilder.buildMultimedia(frameRate, videoCode, audioCode, resolution, duration, operatorDurationTime, extensionsMultimedia);
+            criteriaBuilder.buildMultimedia(frameRate, videoCode, audioCode,
+                    resolution, duration, operatorDurationTime, extensionsMultimedia);
         }
         this.criteria = criteriaBuilder.build();
         LOGGER.info("buildCriteria: exit");
@@ -184,7 +185,8 @@ public class Controller {
     private boolean validateAllFields() {
         LOGGER.info("validateAllFields : into");
         LOGGER.info("validateAllFields : exit");
-        return validator.isPathValid(frame.getPanelSearch().getTextPath()) && validator.isSizeValid(frame.getPanelSearch().getSizeFile());
+        return validator.isPathValid(frame.getPanelSearch().
+                getTextPath()) && validator.isSizeValid(frame.getPanelSearch().getSizeFile());
 
     }
 }
