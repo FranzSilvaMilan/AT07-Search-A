@@ -130,7 +130,7 @@ public class Search {
      * @param nameFile .
      */
     private void searchByName(String nameFile, boolean keysensitive) {
-        LOGGER.info("searchByName: into");
+        LOGGER.info("searchByName: into"+ nameFile +" "+ keysensitive);
         List<Asset> listFilter = new ArrayList<>();
         fileList.forEach(file -> {
             if (keysensitive) {

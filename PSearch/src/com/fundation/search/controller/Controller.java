@@ -25,9 +25,11 @@ import org.apache.log4j.Logger;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class controller can be FileResult, MultimediaResult and maybe SearchFolder.
@@ -78,6 +80,7 @@ public class Controller {
         convert = new Convert();
         criteria = new Criteria();
         actionListener();
+        actionListenerDataBase();
         LOGGER.info("Constructor Controller : exit");
     }
 
@@ -123,6 +126,35 @@ public class Controller {
             }
         });
         LOGGER.info("actionListener : exit");
+    }
+
+    /**
+     * this method has the accion listeenr of the button.
+     */
+    private void actionListenerDataBase() {
+        System.out.println("entraste a guardar");
+        frame.getPanelMultimedia().getButtonSave().addActionListener(e -> {
+            if (validateAllFields()) {
+                criteria = new Criteria();
+                buildCriteria();
+                search.createJson(criteria);
+            }
+        });
+
+    }
+    /**
+     * this method has the accion listeenr of the button.
+     */
+    private void actionListenerDataBaseLoad() {
+        frame.getPanelMultimedia().getButtonSave().addActionListener(e -> {
+            try {
+                Map<Integer,Criteria> database=search.getJSONCriteria();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+        });
+
     }
 
     /**
