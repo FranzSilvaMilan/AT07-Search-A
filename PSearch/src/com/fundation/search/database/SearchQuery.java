@@ -15,15 +15,7 @@ public class SearchQuery {
         PreparedStatement pre = null;
         try {
             pre = connection.prepareStatement(insert);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             pre.setString(2, criteriaJSON);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             pre.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,13 +25,9 @@ public class SearchQuery {
     public ResultSet getAllCriteria() {
 
         Statement state = null;
-        try {
-            state = connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         ResultSet set = null;
         try {
+            state = connection.createStatement();
             set = state.executeQuery("Select id, criteriaJSON from criteria");
         } catch (SQLException e) {
             e.printStackTrace();
