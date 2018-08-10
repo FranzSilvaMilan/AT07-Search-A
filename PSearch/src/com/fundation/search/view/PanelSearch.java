@@ -24,6 +24,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -48,6 +50,7 @@ public class PanelSearch extends JPanel {
     private JTextField textExtension;
     private JTextField textOwner;
     private JTextField textContain;
+
     //these variables are for the dates.
     private JDateChooser dateCreate;
     private JDateChooser dateCreateTo;
@@ -78,7 +81,6 @@ public class PanelSearch extends JPanel {
 
 
     private PanelTable panelTable;
-
     private JSpinner spinnerSize;
     public ButtonGroup radioGruop;
 
@@ -121,7 +123,10 @@ public class PanelSearch extends JPanel {
         initComponentTable();
         settingPanel();
         addComponents();
+        Sletras(textPath);
+        numbers(spinnerSize);
         LOGGER.info("PanelSearch : exit");
+
     }
 
     private void initComponent() {
@@ -156,7 +161,14 @@ public class PanelSearch extends JPanel {
 
         operator = new JComboBox<>(operatorOptions);
         optionUnitsSize = new JComboBox<>(listUnitSize);
-        spinnerSize = new JSpinner();
+        int min = 0;
+        int max = 100;
+        int step = 1;
+        int initValue = 50;
+        SpinnerModel model = new SpinnerNumberModel(initValue, min, max, step);
+        spinnerSize = new JSpinner(model);
+        ((JSpinner.DefaultEditor) spinnerSize.getEditor()).getTextField().setEditable(false);
+
 
         radioGruop = new ButtonGroup();
         btSelect = new JButton();
@@ -191,7 +203,6 @@ public class PanelSearch extends JPanel {
         //imagen = this.getClass().getResource("/src/com/fundation/search/view/432ee7c1-ffcd-4873-aed5-4ec30b3a5dc3.png");
         LOGGER.info("initComponent : exit");
     }
-
     /**
      * it is method contain configuration.
      */
@@ -501,8 +512,41 @@ public class PanelSearch extends JPanel {
         add(startWith);
         LOGGER.info("addComponents : exit");
     }
+    public void Sletras(JTextField textPath){
+        textPath.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c=e.getKeyChar();
+
+                //super.keyTyped(e);
+                if(!Character.isLetter(c) || Character.isLetter(c)){
+                    getToolkit().beep();
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "go to -Select Path-");
 
 
+                }
+
+            }
+        });
+    }
+    public void numbers( JSpinner spinnerSize){
+        spinnerSize.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c=e.getKeyChar();
+
+                //super.keyTyped(e);
+                if(!Character.isLetter(c)){
+                    getToolkit().beep();
+                    e.consume();
+                    //JOptionPane.showMessageDialog(, "Faltan dato.");
+
+                    // error.setText("ingrese path");
+                }
+            }
+        });
+    }
 
     /**
      * get value that is selected.
@@ -700,6 +744,117 @@ public class PanelSearch extends JPanel {
      */
     public Date getDateLastAccessTo() {
         return dateLastAccessTo.getDate();
+    }
+
+    public void setTextFile(String textFile) {
+        this.textFile.setText(textFile);
+    }
+
+    public void setTextPath(String textPath) {
+        this.textPath.setText(textPath);
+    }
+
+    public void setTextExtension(String textExtension) {
+        this.textExtension.setText(textExtension);
+    }
+
+    public void setTextOwner(String textOwner) {
+        this.textOwner.setText(textOwner);
+    }
+
+    public void setTextContain(String textContain) {
+        this.textContain.setText(textContain);
+    }
+
+
+    public void setOperator(String operator) {
+        this.operator.setSelectedItem(operator);
+    }
+
+    public void setOptionUnitsSize(String optionUnitsSize) {
+        this.optionUnitsSize.setSelectedItem(optionUnitsSize);
+    }
+
+    public void setDateCreate(JDateChooser dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+
+    public void setDateCreateTo(JDateChooser dateCreateTo) {
+        this.dateCreateTo = dateCreateTo;
+    }
+
+    public void setDateModified(JDateChooser dateModified) {
+        this.dateModified = dateModified;
+    }
+
+    public void setDateModifiedTo(JDateChooser dateModifiedTo) {
+        this.dateModifiedTo = dateModifiedTo;
+    }
+
+    public void setDateLastAccess(JDateChooser dateLastAccess) {
+        this.dateLastAccess = dateLastAccess;
+    }
+
+    public void setDateLastAccessTo(JDateChooser dateLastAccessTo) {
+        this.dateLastAccessTo = dateLastAccessTo;
+    }
+    public void setSpinnerSize(JSpinner spinnerSize) {
+        this.spinnerSize = spinnerSize;
+    }
+    public void setHiddenCheck(JCheckBox hiddenCheck) {
+        this.hiddenCheck = hiddenCheck;
+    }
+
+    public void setPdf(JCheckBox pdf) {
+        this.pdf = pdf;
+    }
+
+    public void setDocx(JCheckBox docx) {
+        this.docx = docx;
+    }
+
+    public void setExe(boolean stateExe) {
+        this.exe.setEnabled(stateExe);
+    }
+
+    public void setTxt(boolean statetxt) {
+        this.txt.setEnabled(statetxt);
+    }
+
+    public void setPpt(boolean statePpt) {
+        this.ppt.setEnabled(statePpt);
+    }
+
+    public void setZip(boolean stateZip) {
+        this.zip.setEnabled(stateZip);
+    }
+
+    public void setXlsx(boolean stateXlsx) {
+        this.xlsx.setEnabled(stateXlsx);
+    }
+
+    public void setRar(boolean stateRar) {
+        this.rar.setEnabled(stateRar);
+    }
+
+    public void setEnableOnlyRead(boolean enableOnlyRead) {
+        this.enableOnlyRead.setEnabled(enableOnlyRead);
+    }
+
+    public void setEnableKeySensitive(boolean enableKeySensitive) {
+        this.enableKeySensitive.setEnabled(enableKeySensitive);
+    }
+
+    public void setFolder(boolean folder) {
+        this.folder.setEnabled(folder);
+    }
+
+    public void setEndWith(boolean endWith) {
+        this.endWith.setEnabled(endWith);
+    }
+
+    public void setStartWith(boolean startWith) {
+        this.startWith.setEnabled(startWith);
     }
 
     /**

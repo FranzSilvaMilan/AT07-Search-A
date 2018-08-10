@@ -61,7 +61,6 @@ public class PanelMultimedia extends JPanel {
     private String[] listFrameRate;
     private String[] listAduioCodec;
     private String[] listAspecRadio;
-
     private JComboBox<String> optionUnitsResolution;
     private JComboBox<String> operationTime;
     private JComboBox<String> optionVideoCode;
@@ -89,7 +88,6 @@ public class PanelMultimedia extends JPanel {
     JRadioButton hidden;
     ButtonGroup radioGruop;
     private Border blacking;
-
     private JCheckBox mp4;
     private JCheckBox mpeg;
     private JCheckBox mov;
@@ -646,7 +644,79 @@ public class PanelMultimedia extends JPanel {
     public String getTextPath() {
         return textPath.getText();
     }*/
+    public void setMp4(boolean stateMp4) {
+        this.mp4.setEnabled(stateMp4);
+    }
 
+    public void setMpeg(boolean stateMpg) {
+        this.mpeg.setEnabled(stateMpg);
+    }
+
+    public void setMov(boolean stateMov) {
+        this.mov.setEnabled(stateMov);
+    }
+
+    public void setWmv(boolean stateWmv) {
+        this.wmv.setEnabled(stateWmv);
+    }
+
+    public void setAvi(boolean stateAvi) {
+        this.avi.setEnabled(stateAvi);
+    }
+
+    public void setXvidi(boolean stateXvidi) {
+        this.xvidi.setEnabled(stateXvidi);
+    }
+
+    public void setMpg(boolean stateMpg) {
+        this.mpg.setEnabled(stateMpg);
+    }
+
+    public void setFlv(boolean stateFlv) {
+        this.flv.setEnabled(stateFlv);
+    }
+
+    public void setSpinnerDuration(JSpinner spinnerDuration) {
+        this.spinnerDuration = spinnerDuration;
+    }
+    public void setOptionUnitsResolution(JComboBox<String> optionUnitsResolution) {
+        this.optionUnitsResolution = optionUnitsResolution;
+    }
+
+    public void setOperationTime(JComboBox<String> operationTime) {
+        this.operationTime = operationTime;
+    }
+
+    public void setOptionVideoCode(JComboBox<String> optionVideoCode) {
+        this.optionVideoCode = optionVideoCode;
+    }
+
+    public void setOptionFrameRate(JComboBox<String> optionFrameRate) {
+        this.optionFrameRate = optionFrameRate;
+    }
+    /*
+    public void setOptionAudioCodec(String[] optionAudioCodec) {
+        this.listAduioCodec=optionAudioCodec;
+    }
+
+    public  void setNewItemOnOptionAudioCodec(String newOption){
+        optionAudioCodec.addItem(newOption);
+    }*/
+
+    // este metodo se encarga de marcar como seleccionado el iten que tiene el lavel enviado.
+    /*
+    public  void setSelectedItemOnOptionAudioCodec(String item){
+        optionAudioCodec.setSelectedItem(item);
+    }
+
+    public void setOptionAudioCodecEnable(boolean enable){
+        optionAudioCodec.setEnabled(enable);
+    }*/
+
+
+    public void setOptionAspecRadio(JComboBox<String> optionAspecRadio) {
+        this.optionAspecRadio = optionAspecRadio;
+    }
 
     /**
      * This method add row in the table.
