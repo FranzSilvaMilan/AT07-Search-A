@@ -62,7 +62,6 @@ public class PanelMultimedia extends JPanel {
     private String[] listFrameRate;
     private String[] listAduioCodec;
     private String[] listAspecRadio;
-
     private JComboBox<String> optionUnitsResolution;
     private JComboBox<String> operationTime;
     private JComboBox<String> optionVideoCode;
@@ -90,7 +89,6 @@ public class PanelMultimedia extends JPanel {
     JRadioButton hidden;
     ButtonGroup radioGruop;
     private Border blacking;
-
     private JCheckBox mp4;
     private JCheckBox mpeg;
     private JCheckBox mov;
@@ -647,7 +645,64 @@ public class PanelMultimedia extends JPanel {
     public String getTextPath() {
         return textPath.getText();
     }*/
+    public void setMp4(JCheckBox mp4) {
+        this.mp4 = mp4;
+    }
 
+    public void setMpeg(JCheckBox mpeg) {
+        this.mpeg = mpeg;
+    }
+
+    public void setMov(JCheckBox mov) {
+        this.mov = mov;
+    }
+
+    public void setWmv(JCheckBox wmv) {
+        this.wmv = wmv;
+    }
+
+    public void setAvi(JCheckBox avi) {
+        this.avi = avi;
+    }
+
+    public void setXvidi(JCheckBox xvidi) {
+        this.xvidi = xvidi;
+    }
+
+    public void setMpg(JCheckBox mpg) {
+        this.mpg = mpg;
+    }
+
+    public void setFlv(JCheckBox flv) {
+        this.flv = flv;
+    }
+
+    public void setSpinnerDuration(JSpinner spinnerDuration) {
+        this.spinnerDuration = spinnerDuration;
+    }
+    public void setOptionUnitsResolution(JComboBox<String> optionUnitsResolution) {
+        this.optionUnitsResolution = optionUnitsResolution;
+    }
+
+    public void setOperationTime(JComboBox<String> operationTime) {
+        this.operationTime = operationTime;
+    }
+
+    public void setOptionVideoCode(JComboBox<String> optionVideoCode) {
+        this.optionVideoCode = optionVideoCode;
+    }
+
+    public void setOptionFrameRate(JComboBox<String> optionFrameRate) {
+        this.optionFrameRate = optionFrameRate;
+    }
+
+    public void setOptionAudioCodec(JComboBox<String> optionAudioCodec) {
+        this.optionAudioCodec = optionAudioCodec;
+    }
+
+    public void setOptionAspecRadio(JComboBox<String> optionAspecRadio) {
+        this.optionAspecRadio = optionAspecRadio;
+    }
 
     /**
      * This method add row in the table.
