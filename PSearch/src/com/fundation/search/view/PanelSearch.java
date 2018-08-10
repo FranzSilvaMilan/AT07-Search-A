@@ -27,8 +27,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static org.apache.commons.lang3.StringUtils.isNoneEmpty;
 
 /**
  * This class Asset can be FileResult SearchFolder.
@@ -103,6 +106,7 @@ public class PanelSearch extends JPanel {
     private boolean changeCreate;
     private boolean changeModified;
     private boolean changeLastAccess;
+    //private URL imagen1;
     //Logger
     private static final Logger LOGGER = LoggerSearch.getInstance().getLogger();
 
@@ -182,6 +186,9 @@ public class PanelSearch extends JPanel {
         changeCreate = false;
         changeModified = false;
         changeLastAccess = false;
+       // imagen1 = getClass().getResource("/view/432ee7c1-ffcd-4873-aed5-4ec30b3a5dc3.png");
+        //Image image = new ImageIcon(imagen1).getImage();
+        //imagen = this.getClass().getResource("/src/com/fundation/search/view/432ee7c1-ffcd-4873-aed5-4ec30b3a5dc3.png");
         LOGGER.info("initComponent : exit");
     }
 
@@ -298,7 +305,7 @@ public class PanelSearch extends JPanel {
         optionUnitsSize.setBounds(160, 100, 70, 30);
         optionUnitsSize.setBackground(new Color(250, 252, 252));
         optionUnitsSize.setBorder(blacking);
-        spinnerSize.setValue(0);
+       spinnerSize.setValue(0);
         spinnerSize.setBounds(90, 100, 70, 30);
         spinnerSize.setBackground(new Color(250, 252, 252));
         spinnerSize.setBorder(blacking);
@@ -406,6 +413,7 @@ public class PanelSearch extends JPanel {
         btSelect.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 btSelectMouseClicked(evt);
+
             }
         });
     }
@@ -493,6 +501,8 @@ public class PanelSearch extends JPanel {
         add(startWith);
         LOGGER.info("addComponents : exit");
     }
+
+
 
     /**
      * get value that is selected.
@@ -720,5 +730,24 @@ public class PanelSearch extends JPanel {
             File selectedFile = jfc.getSelectedFile();
             textPath.setText(selectedFile.getAbsolutePath());
         }
+
+    }
+
+    public  void enableComponents(boolean enable){
+        endWith.setEnabled(enable);
+        startWith.setEnabled(enable);
+        pdf.setEnabled(enable);
+        txt.setEnabled(enable);
+        ppt.setEnabled(enable);
+        rar.setEnabled(enable);
+        zip.setEnabled(enable);
+        exe.setEnabled(enable);
+        docx.setEnabled(enable);
+        xlsx.setEnabled(enable);
+
+        textExtension.enable(enable);
+        textOwner.enable(enable);
+        textContain.enable(enable);
+        folder.setEnabled(enable);
     }
 }

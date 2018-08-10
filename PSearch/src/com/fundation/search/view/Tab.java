@@ -13,9 +13,7 @@
  */
 package com.fundation.search.view;
 
-import javax.swing.JTabbedPane;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import java.awt.*;
 
@@ -29,24 +27,43 @@ public class Tab extends JTabbedPane{
 
     PanelSearch panelSearch;
     PanelMultimedia panelMultimedia;
-    //panel data base
-    //PanelDataBase panelDataBase;
-
 
     public void iniComponentsTab(){
         panelSearch = new PanelSearch();
         panelMultimedia = new PanelMultimedia();
-
+        enableSetupContainer(false);
 
         panelSearch.setBackground(Color.white);
-        //panelMultimedia.setBounds(10,10,1180,200);
         setBounds(10, 10, 1180, 300);
+
+        panelMultimedia.enableMediaSetup.addActionListener(event -> {
+            JCheckBox cb = (JCheckBox) event.getSource();
+            if (cb.isSelected()) {
+                enableSetupContainer(true);
+            } else {
+                enableSetupContainer(false);
+            }
+        });
+
         add("FILE", panelSearch);
         addTab("MULTIMEDIA", panelMultimedia);
+    }
 
-        //addTab("Welcome",new JLabel(new ImageIcon("bksqla_xlargecover.jpg")));
-        //ImageIcon tab1Icon = new ImageIcon(
-        //this.getClass().getResource("/images/test-pass-icon.png"));
+
+    private void enableSetupContainer(boolean b) {
+
+        panelMultimedia.containerFileExtensions.setEnabled(b);
+        for (Component cp : panelMultimedia.containerFileExtensions.getComponents()) {
+            cp.setEnabled(b);
+        }
+
+        panelMultimedia.containerFileSetup.setEnabled(b);
+        for (Component cp : panelMultimedia.containerFileSetup.getComponents()) {
+            cp.setEnabled(b);
+        }
+
+        panelSearch.enableComponents(!b);
+
     }
 
     public PanelSearch getPanelSearch(){
