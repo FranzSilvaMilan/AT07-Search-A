@@ -645,36 +645,36 @@ public class PanelMultimedia extends JPanel {
     public String getTextPath() {
         return textPath.getText();
     }*/
-    public void setMp4(JCheckBox mp4) {
-        this.mp4 = mp4;
+    public void setMp4(boolean stateMp4) {
+        this.mp4.setEnabled(stateMp4);
     }
 
-    public void setMpeg(JCheckBox mpeg) {
-        this.mpeg = mpeg;
+    public void setMpeg(boolean stateMpg) {
+        this.mpeg.setEnabled(stateMpg);
     }
 
-    public void setMov(JCheckBox mov) {
-        this.mov = mov;
+    public void setMov(boolean stateMov) {
+        this.mov.setEnabled(stateMov);
     }
 
-    public void setWmv(JCheckBox wmv) {
-        this.wmv = wmv;
+    public void setWmv(boolean stateWmv) {
+        this.wmv.setEnabled(stateWmv);
     }
 
-    public void setAvi(JCheckBox avi) {
-        this.avi = avi;
+    public void setAvi(boolean stateAvi) {
+        this.avi.setEnabled(stateAvi);
     }
 
-    public void setXvidi(JCheckBox xvidi) {
-        this.xvidi = xvidi;
+    public void setXvidi(boolean stateXvidi) {
+        this.xvidi.setEnabled(stateXvidi);
     }
 
-    public void setMpg(JCheckBox mpg) {
-        this.mpg = mpg;
+    public void setMpg(boolean stateMpg) {
+        this.mpg.setEnabled(stateMpg);
     }
 
-    public void setFlv(JCheckBox flv) {
-        this.flv = flv;
+    public void setFlv(boolean stateFlv) {
+        this.flv.setEnabled(stateFlv);
     }
 
     public void setSpinnerDuration(JSpinner spinnerDuration) {
@@ -695,10 +695,25 @@ public class PanelMultimedia extends JPanel {
     public void setOptionFrameRate(JComboBox<String> optionFrameRate) {
         this.optionFrameRate = optionFrameRate;
     }
-
-    public void setOptionAudioCodec(JComboBox<String> optionAudioCodec) {
-        this.optionAudioCodec = optionAudioCodec;
+    /*
+    public void setOptionAudioCodec(String[] optionAudioCodec) {
+        this.listAduioCodec=optionAudioCodec;
     }
+
+    public  void setNewItemOnOptionAudioCodec(String newOption){
+        optionAudioCodec.addItem(newOption);
+    }*/
+
+    // este metodo se encarga de marcar como seleccionado el iten que tiene el lavel enviado.
+    /*
+    public  void setSelectedItemOnOptionAudioCodec(String item){
+        optionAudioCodec.setSelectedItem(item);
+    }
+
+    public void setOptionAudioCodecEnable(boolean enable){
+        optionAudioCodec.setEnabled(enable);
+    }*/
+
 
     public void setOptionAspecRadio(JComboBox<String> optionAspecRadio) {
         this.optionAspecRadio = optionAspecRadio;

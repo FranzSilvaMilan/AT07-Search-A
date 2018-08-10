@@ -161,7 +161,14 @@ public class PanelSearch extends JPanel {
 
         operator = new JComboBox<>(operatorOptions);
         optionUnitsSize = new JComboBox<>(listUnitSize);
-        spinnerSize = new JSpinner();
+        int min = 0;
+        int max = 100;
+        int step = 1;
+        int initValue = 50;
+        SpinnerModel model = new SpinnerNumberModel(initValue, min, max, step);
+        spinnerSize = new JSpinner(model);
+        ((JSpinner.DefaultEditor) spinnerSize.getEditor()).getTextField().setEditable(false);
+
 
         radioGruop = new ButtonGroup();
         btSelect = new JButton();
@@ -505,24 +512,6 @@ public class PanelSearch extends JPanel {
         add(startWith);
         LOGGER.info("addComponents : exit");
     }
-    public void keyTyped( KeyEvent ke){
-        char c=ke.getKeyChar();
-        if(Character.isLetter(c)){
-            getToolkit().beep();
-            ke.consume();
-            JOptionPane.showMessageDialog(this, "Faltan dato.");
-
-           // error.setText("ingrese path");
-        }
-    }
-    public void textFileKeyTyped(java.awt.event.KeyEvent event){
-        char c = event.getKeyChar();
-        if(Character.isDefined(c)){
-            event.consume();
-            getToolkit().beep();
-            JOptionPane.showMessageDialog(this,"permite texto");
-        }
-    }
     public void Sletras(JTextField textPath){
         textPath.addKeyListener(new KeyAdapter() {
             @Override
@@ -530,20 +519,14 @@ public class PanelSearch extends JPanel {
                 char c=e.getKeyChar();
 
                 //super.keyTyped(e);
-                if(!Character.isLetter(c)){
+                if(!Character.isLetter(c) || Character.isLetter(c)){
                     getToolkit().beep();
                     e.consume();
-                    //JOptionPane.showMessageDialog(this, "Faltan dato.");
+                    JOptionPane.showMessageDialog(null, "go to -Select Path-");
 
-                    // error.setText("ingrese path");
-                }
-                if(Character.isLetter(c)){
-                    getToolkit().beep();
-                    e.consume();
-                    //JOptionPane.showMessageDialog(, "Faltan dato.");
 
-                    // error.setText("ingrese path");
                 }
+
             }
         });
     }
@@ -554,7 +537,7 @@ public class PanelSearch extends JPanel {
                 char c=e.getKeyChar();
 
                 //super.keyTyped(e);
-                if(!Character.isDigit(c)){
+                if(!Character.isLetter(c)){
                     getToolkit().beep();
                     e.consume();
                     //JOptionPane.showMessageDialog(, "Faltan dato.");
@@ -763,33 +746,33 @@ public class PanelSearch extends JPanel {
         return dateLastAccessTo.getDate();
     }
 
-    public void setTextFile(JTextField textFile) {
-        this.textFile = textFile;
+    public void setTextFile(String textFile) {
+        this.textFile.setText(textFile);
     }
 
-    public void setTextPath(JTextField textPath) {
-        this.textPath = textPath;
+    public void setTextPath(String textPath) {
+        this.textPath.setText(textPath);
     }
 
-    public void setTextExtension(JTextField textExtension) {
-        this.textExtension = textExtension;
+    public void setTextExtension(String textExtension) {
+        this.textExtension.setText(textExtension);
     }
 
-    public void setTextOwner(JTextField textOwner) {
-        this.textOwner = textOwner;
+    public void setTextOwner(String textOwner) {
+        this.textOwner.setText(textOwner);
     }
 
-    public void setTextContain(JTextField textContain) {
-        this.textContain = textContain;
+    public void setTextContain(String textContain) {
+        this.textContain.setText(textContain);
     }
 
 
-    public void setOperator(JComboBox<String> operator) {
-        this.operator = operator;
+    public void setOperator(String operator) {
+        this.operator.setSelectedItem(operator);
     }
 
-    public void setOptionUnitsSize(JComboBox<String> optionUnitsSize) {
-        this.optionUnitsSize = optionUnitsSize;
+    public void setOptionUnitsSize(String optionUnitsSize) {
+        this.optionUnitsSize.setSelectedItem(optionUnitsSize);
     }
 
     public void setDateCreate(JDateChooser dateCreate) {
@@ -830,48 +813,48 @@ public class PanelSearch extends JPanel {
         this.docx = docx;
     }
 
-    public void setExe(JCheckBox exe) {
-        this.exe = exe;
+    public void setExe(boolean stateExe) {
+        this.exe.setEnabled(stateExe);
     }
 
-    public void setTxt(JCheckBox txt) {
-        this.txt = txt;
+    public void setTxt(boolean statetxt) {
+        this.txt.setEnabled(statetxt);
     }
 
-    public void setPpt(JCheckBox ppt) {
-        this.ppt = ppt;
+    public void setPpt(boolean statePpt) {
+        this.ppt.setEnabled(statePpt);
     }
 
-    public void setZip(JCheckBox zip) {
-        this.zip = zip;
+    public void setZip(boolean stateZip) {
+        this.zip.setEnabled(stateZip);
     }
 
-    public void setXlsx(JCheckBox xlsx) {
-        this.xlsx = xlsx;
+    public void setXlsx(boolean stateXlsx) {
+        this.xlsx.setEnabled(stateXlsx);
     }
 
-    public void setRar(JCheckBox rar) {
-        this.rar = rar;
+    public void setRar(boolean stateRar) {
+        this.rar.setEnabled(stateRar);
     }
 
-    public void setEnableOnlyRead(JCheckBox enableOnlyRead) {
-        this.enableOnlyRead = enableOnlyRead;
+    public void setEnableOnlyRead(boolean enableOnlyRead) {
+        this.enableOnlyRead.setEnabled(enableOnlyRead);
     }
 
-    public void setEnableKeySensitive(JCheckBox enableKeySensitive) {
-        this.enableKeySensitive = enableKeySensitive;
+    public void setEnableKeySensitive(boolean enableKeySensitive) {
+        this.enableKeySensitive.setEnabled(enableKeySensitive);
     }
 
-    public void setFolder(JCheckBox folder) {
-        this.folder = folder;
+    public void setFolder(boolean folder) {
+        this.folder.setEnabled(folder);
     }
 
-    public void setEndWith(JCheckBox endWith) {
-        this.endWith = endWith;
+    public void setEndWith(boolean endWith) {
+        this.endWith.setEnabled(endWith);
     }
 
-    public void setStartWith(JCheckBox startWith) {
-        this.startWith = startWith;
+    public void setStartWith(boolean startWith) {
+        this.startWith.setEnabled(startWith);
     }
 
     /**
