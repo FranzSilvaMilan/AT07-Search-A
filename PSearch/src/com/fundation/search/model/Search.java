@@ -130,7 +130,7 @@ public class Search {
      * @param nameFile .
      */
     private void searchByName(String nameFile, boolean keysensitive) {
-        LOGGER.info("searchByName: into"+ nameFile +" "+ keysensitive);
+        LOGGER.info("searchByName: into" + nameFile + " " + keysensitive);
         List<Asset> listFilter = new ArrayList<>();
         fileList.forEach(file -> {
             if (keysensitive) {
@@ -662,13 +662,13 @@ public class Search {
     /**
      * @param criteria
      */
-    public void createJson(Criteria criteria) {
+    public void createJson(Criteria criteria, String nameCriteria) {
         Gson json = new Gson();
         String criteriaJSON = json.toJson(criteria);
         System.out.println(criteriaJSON);
         //Properties properties = json.fromJson(criteriaJSON, Properties.class);
         SearchQuery searchQuery = new SearchQuery();
-        searchQuery.insertCriteria(criteriaJSON);
+        searchQuery.insertCriteria(criteriaJSON, nameCriteria);
     }
 
     /**
@@ -681,6 +681,20 @@ public class Search {
         while (set.next()) {
 
             map.put(Integer.parseInt(set.getString("ID")), converToCriteria(set.getString("criteriaJSON")));
+        }
+        return map;
+    }
+
+    /**
+     * @return
+     * @throws SQLException
+     */
+    public Map<Integer, String> getJSONCriteriaUI() throws SQLException {
+        ResultSet set = new SearchQuery().getAllCriteria();
+        Map<Integer, String> map = new HashMap<>();
+        while (set.next()) {
+
+            map.put(Integer.parseInt(set.getString("ID")), set.getString("nameCriteria"));
         }
         return map;
     }

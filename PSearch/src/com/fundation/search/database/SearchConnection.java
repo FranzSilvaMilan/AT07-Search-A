@@ -26,7 +26,7 @@ public class SearchConnection {
             connection = DriverManager.getConnection("jdbc:sqlite:search.db");
             Statement state = null;
             state = connection.createStatement();
-            state.execute("create table if not exists Criteria(id integer, criteriaJSON varchar(300), primary key(id));");
+            state.execute("create table if not exists Criteria(id integer, criteriaJSON varchar(300), nameCriteria varchar(50), primary key(id));");
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

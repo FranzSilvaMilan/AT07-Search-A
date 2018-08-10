@@ -80,7 +80,9 @@ public class Controller {
         convert = new Convert();
         criteria = new Criteria();
         actionListener();
-        actionListenerDataBase();
+        actionListenerDataBaseSave();
+        actionListenerDataBaseLoad();
+        dataBaseLoad();
         LOGGER.info("Constructor Controller : exit");
     }
 
@@ -131,30 +133,57 @@ public class Controller {
     /**
      * this method has the accion listeenr of the button.
      */
-    private void actionListenerDataBase() {
-        System.out.println("entraste a guardar");
+    private void actionListenerDataBaseSave() {
         frame.getPanelMultimedia().getButtonSave().addActionListener(e -> {
             if (validateAllFields()) {
                 criteria = new Criteria();
                 buildCriteria();
-                search.createJson(criteria);
+                String nameCriteria=frame.getPanelMultimedia().getTextCriteria();
+                search.createJson(criteria,nameCriteria);
+                dataBaseLoad();
             }
         });
-
     }
+
     /**
      * this method has the accion listeenr of the button.
      */
     private void actionListenerDataBaseLoad() {
-        frame.getPanelMultimedia().getButtonSave().addActionListener(e -> {
+        frame.getPanelMultimedia().getButtonLoad().addActionListener(e -> {
+            int idSelect = Integer.parseInt(frame.getPanelMultimedia().getTextCriteria());
+            System.out.println(idSelect);
+           // frame.getPanelMultimedia().setTextCriteria(new JTextField(idSelect));
             try {
-                Map<Integer,Criteria> database=search.getJSONCriteria();
+                Map<Integer, Criteria> database = search.getJSONCriteria();
+                final Criteria[] selectCriteria = {new Criteria()};
+                database.forEach((id, criterial) -> {
+                    if (id == idSelect) {
+                        selectCriteria[0] = criterial;
+                    }
+                });
+                System.out.println(selectCriteria[0].getPath());
+               // frame.getPanelSearch().setTextPath(new JTextField(selectCriteria[0].getPath()));
+                System.out.println(frame.getPanelSearch().getTextPath());
+
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
-
         });
 
+    }
+
+    /**
+     * this method has the accion listeenr of the button.
+     */
+    private void dataBaseLoad() {
+        frame.getPanelMultimedia().cleanTableDB();
+        try {
+            Map<Integer, String> database = search.getJSONCriteriaUI();
+            database.forEach((id, nameCriteria) -> frame.getPanelMultimedia().
+                    addRowDB(new String[]{id.toString(), nameCriteria}));
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
     }
 
     /**

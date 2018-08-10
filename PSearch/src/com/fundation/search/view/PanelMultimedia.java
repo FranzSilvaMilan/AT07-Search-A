@@ -22,7 +22,6 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -654,11 +653,11 @@ public class PanelMultimedia extends JPanel {
      *
      * @param newRow
      */
-    public void addRow(String[] newRow) {
+    public void addRowDB(String[] newRow) {
         panelTableBD.addRow(newRow);
     }
 
-    public void cleanTable() {
+    public void cleanTableDB() {
         panelTableBD.clean();
     }
 
