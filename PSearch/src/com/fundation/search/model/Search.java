@@ -33,6 +33,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -128,7 +130,7 @@ public class Search {
      * @param nameFile .
      */
     private void searchByName(String nameFile, boolean keysensitive) {
-        LOGGER.info("searchByName: into");
+        LOGGER.info("searchByName: into"+ nameFile +" "+ keysensitive);
         List<Asset> listFilter = new ArrayList<>();
         fileList.forEach(file -> {
             if (keysensitive) {
@@ -205,7 +207,6 @@ public class Search {
     public void searchByCriteria(Criteria criteria) {
         LOGGER.info("searchByCriteria: into");
         fileList.clear();
-        createJson(criteria);
         if (criteria.getPath() != null) {
 
             searchByPath(criteria.getPath());
@@ -659,7 +660,6 @@ public class Search {
     }
 
     /**
-     *
      * @param criteria
      */
     public void createJson(Criteria criteria) {
@@ -669,5 +669,29 @@ public class Search {
         //Properties properties = json.fromJson(criteriaJSON, Properties.class);
         SearchQuery searchQuery = new SearchQuery();
         searchQuery.insertCriteria(criteriaJSON);
+    }
+
+    /**
+     * @return
+     * @throws SQLException
+     */
+    public Map<Integer, Criteria> getJSONCriteria() throws SQLException {
+        ResultSet set = new SearchQuery().getAllCriteria();
+        Map<Integer, Criteria> map = new HashMap<>();
+        while (set.next()) {
+
+            map.put(Integer.parseInt(set.getString("ID")), converToCriteria(set.getString("criteriaJSON")));
+        }
+        return map;
+    }
+
+    /**
+     * @param criteriaJSON
+     * @return
+     */
+    private Criteria converToCriteria(String criteriaJSON) {
+        final Gson json = new Gson();
+        final Criteria criteria = json.fromJson(criteriaJSON, Criteria.class);
+        return criteria;
     }
 }

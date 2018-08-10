@@ -655,12 +655,10 @@ public class PanelMultimedia extends JPanel {
      * @param newRow
      */
     public void addRow(String[] newRow) {
-        panelTable.addRow(newRow);
         panelTableBD.addRow(newRow);
     }
 
     public void cleanTable() {
-        panelTable.clean();
         panelTableBD.clean();
     }
 

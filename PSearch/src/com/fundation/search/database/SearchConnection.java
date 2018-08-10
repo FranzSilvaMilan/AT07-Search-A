@@ -23,23 +23,13 @@ public class SearchConnection {
     private void init() {
         try {
             Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
             connection = DriverManager.getConnection("jdbc:sqlite:search.db");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        Statement state = null;
-        try {
+            Statement state = null;
             state = connection.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        try {
             state.execute("create table if not exists Criteria(id integer, criteriaJSON varchar(300), primary key(id));");
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
