@@ -20,14 +20,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public interface IBuilder {
-    public void buildFile(String path, String fileName, boolean hidden, Long size, String operator);
+    public void buildFile(String path, String fileName, boolean hidden, Long size, String operator, String unitForSize);
 
     public void buildFileAdvance(boolean directory, boolean readOnly,
                                  Date dateModifyIni, Date dateModifyFin, Date dateCreateIni,
                                  Date dateCreateFin, Date dateAccessini, Date dateAccessFin,
-                                 boolean keysensitive, String owner, String contain, ArrayList<String> extensions,boolean multimediaSelected);
+                                 boolean keysensitive, String owner, String contain, ArrayList<String> extensions,
+                                 boolean endWith, boolean startWith, boolean multimediaSelected);
 
-    public void buildMultimedia(String frameRare,String videoCode,String audioCode,String resolution,double duration,String operatorDurationTime,
+    public void buildMultimedia(String frameRare, String videoCode, String audioCode, String resolution, double duration, String operatorDurationTime,
                                 ArrayList<String> extensionVideo);
 
     public Criteria build();

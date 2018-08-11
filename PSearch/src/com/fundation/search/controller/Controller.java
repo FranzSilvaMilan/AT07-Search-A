@@ -151,8 +151,6 @@ public class Controller {
     private void actionListenerDataBaseLoad() {
         frame.getPanelMultimedia().getButtonLoad().addActionListener(e -> {
             int idSelect = Integer.parseInt(frame.getPanelMultimedia().getTextCriteria());
-            System.out.println(idSelect);
-           // frame.getPanelMultimedia().setTextCriteria(new JTextField(idSelect));
             try {
                 Map<Integer, Criteria> database = search.getJSONCriteria();
                 final Criteria[] selectCriteria = {new Criteria()};
@@ -161,9 +159,26 @@ public class Controller {
                         selectCriteria[0] = criterial;
                     }
                 });
-                System.out.println(selectCriteria[0].getPath());
-               // frame.getPanelSearch().setTextPath(new JTextField(selectCriteria[0].getPath()));
-                System.out.println(frame.getPanelSearch().getTextPath());
+                frame.getPanelSearch().setTextPath(selectCriteria[0].getPath());
+                frame.getPanelSearch().setTextFile(selectCriteria[0].getFileName());
+                frame.getPanelSearch().setTextContain(selectCriteria[0].getContent());
+                frame.getPanelSearch().setTextOwner(selectCriteria[0].getOwner());
+                frame.getPanelSearch().setExtensions(selectCriteria[0].getListExtensions());
+                frame.getPanelSearch().setOperator(selectCriteria[0].getOperator());
+                frame.getPanelSearch().setOptionUnitsSize(selectCriteria[0].getUnitForSize());
+                frame.getPanelSearch().setSpinnerSize(convert.convertTOLongShow(selectCriteria[0].getSize(),selectCriteria[0].getUnitForSize()));
+                frame.getPanelSearch().setEnableKeySensitive(selectCriteria[0].isKeySensitive());
+                frame.getPanelSearch().setEnableOnlyRead(selectCriteria[0].getReadOnly());
+                frame.getPanelSearch().setFolder(selectCriteria[0].getDirectory());
+                frame.getPanelSearch().setHiddenCheck(selectCriteria[0].getIsIshidden());
+                frame.getPanelSearch().setEndWith(selectCriteria[0].isEndWith());
+                frame.getPanelSearch().setStartWith(selectCriteria[0].isStartWith());
+                frame.getPanelSearch().setDateCreate(selectCriteria[0].getDateCreateFrom());
+                frame.getPanelSearch().setDateCreateTo(selectCriteria[0].getDateCreateTo());
+                frame.getPanelSearch().setDateModified(selectCriteria[0].getDateModificateFrom());
+                frame.getPanelSearch().setDateModifiedTo(selectCriteria[0].getDateModificateTo());
+                frame.getPanelSearch().setDateLastAccess(selectCriteria[0].getDateCreateFrom());
+                frame.getPanelSearch().setDateLastAccessTo(selectCriteria[0].getDateAccessTo());
 
             } catch (SQLException e1) {
                 e1.printStackTrace();
@@ -212,15 +227,17 @@ public class Controller {
         String owner = frame.getPanelSearch().getOwner();
         String contain = frame.getPanelSearch().getContain();
         boolean folder = frame.getPanelSearch().getSearchFolder();
+        boolean endWith= frame.getPanelSearch().getEndWith();
+        boolean startWith= frame.getPanelSearch().getStartWith();
         ArrayList<String> listExtensions = frame.getPanelSearch().getExtensions();
         boolean multimediaSelected = frame.getPanelMultimedia().getenableMediaSetup();
 
 
         //builder criteria
         CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
-        criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator);
+        criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator,unityForSize);
         criteriaBuilder.buildFileAdvance(folder, readOnly, dateModifyFrom, dateModifyTo, dateCreateFrom,
-                dateCreateTo, dateAccessFrom, dateAccessTo, keySensitive, owner, contain, listExtensions, multimediaSelected);
+                dateCreateTo, dateAccessFrom, dateAccessTo, keySensitive, owner, contain, listExtensions,endWith,startWith, multimediaSelected);
         if (multimediaSelected) {
             //multimedia
             String frameRate = frame.getPanelMultimedia().getOptionFrameRate();
