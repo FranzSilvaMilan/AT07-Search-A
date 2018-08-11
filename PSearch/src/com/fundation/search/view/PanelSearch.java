@@ -84,7 +84,9 @@ public class PanelSearch extends JPanel {
     private JSpinner spinnerSize;
     public ButtonGroup radioGruop;
 
-    private JCheckBox hiddenCheck;
+    /**
+     * type of extensions of the file
+     */
     private JCheckBox pdf;
     private JCheckBox docx;
     private JCheckBox exe;
@@ -93,6 +95,9 @@ public class PanelSearch extends JPanel {
     private JCheckBox zip;
     private JCheckBox xlsx;
     private JCheckBox rar;
+
+
+    private JCheckBox hiddenCheck;
     private JCheckBox enableCreate;
     private JCheckBox enableModified;
     private JCheckBox enableLastAccess;
@@ -162,9 +167,9 @@ public class PanelSearch extends JPanel {
         operator = new JComboBox<>(operatorOptions);
         optionUnitsSize = new JComboBox<>(listUnitSize);
         int min = 0;
-        int max = 100;
+        int max = 1000000000;
         int step = 1;
-        int initValue = 50;
+        int initValue = 0;
         SpinnerModel model = new SpinnerNumberModel(initValue, min, max, step);
         spinnerSize = new JSpinner(model);
         ((JSpinner.DefaultEditor) spinnerSize.getEditor()).getTextField().setEditable(false);
@@ -754,9 +759,7 @@ public class PanelSearch extends JPanel {
         this.textPath.setText(textPath);
     }
 
-    public void setTextExtension(String textExtension) {
-        this.textExtension.setText(textExtension);
-    }
+
 
     public void setTextOwner(String textOwner) {
         this.textOwner.setText(textOwner);
@@ -775,66 +778,34 @@ public class PanelSearch extends JPanel {
         this.optionUnitsSize.setSelectedItem(optionUnitsSize);
     }
 
-    public void setDateCreate(JDateChooser dateCreate) {
-        this.dateCreate = dateCreate;
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate.setDate(dateCreate);
     }
 
-    public void setDateCreateTo(JDateChooser dateCreateTo) {
-        this.dateCreateTo = dateCreateTo;
+    public void setDateCreateTo(Date dateCreateTo) {
+        this.dateCreateTo.setDate(dateCreateTo);
     }
 
-    public void setDateModified(JDateChooser dateModified) {
-        this.dateModified = dateModified;
+    public void setDateModified(Date dateModified) {
+        this.dateModified.setDate(dateModified);
     }
 
-    public void setDateModifiedTo(JDateChooser dateModifiedTo) {
-        this.dateModifiedTo = dateModifiedTo;
+    public void setDateModifiedTo(Date dateModifiedTo) {
+        this.dateModifiedTo.setDate(dateModifiedTo);
     }
 
-    public void setDateLastAccess(JDateChooser dateLastAccess) {
-        this.dateLastAccess = dateLastAccess;
+    public void setDateLastAccess(Date dateLastAccess) {
+        this.dateLastAccess.setDate(dateLastAccess);
     }
 
-    public void setDateLastAccessTo(JDateChooser dateLastAccessTo) {
-        this.dateLastAccessTo = dateLastAccessTo;
-    }
+   /* public void setDateLastAccessTo(JDateChooser dateLastAccessTo) {
+        this.dateLastAccessTo.setDate(dateLastAccessTo);
+    }*/
     public void setSpinnerSize(JSpinner spinnerSize) {
         this.spinnerSize = spinnerSize;
     }
-    public void setHiddenCheck(JCheckBox hiddenCheck) {
-        this.hiddenCheck = hiddenCheck;
-    }
-
-    public void setPdf(JCheckBox pdf) {
-        this.pdf = pdf;
-    }
-
-    public void setDocx(JCheckBox docx) {
-        this.docx = docx;
-    }
-
-    public void setExe(boolean stateExe) {
-        this.exe.setEnabled(stateExe);
-    }
-
-    public void setTxt(boolean statetxt) {
-        this.txt.setEnabled(statetxt);
-    }
-
-    public void setPpt(boolean statePpt) {
-        this.ppt.setEnabled(statePpt);
-    }
-
-    public void setZip(boolean stateZip) {
-        this.zip.setEnabled(stateZip);
-    }
-
-    public void setXlsx(boolean stateXlsx) {
-        this.xlsx.setEnabled(stateXlsx);
-    }
-
-    public void setRar(boolean stateRar) {
-        this.rar.setEnabled(stateRar);
+    public void setHiddenCheck(boolean hiddenCheck) {
+        this.hiddenCheck.setEnabled(hiddenCheck);
     }
 
     public void setEnableOnlyRead(boolean enableOnlyRead) {
@@ -856,7 +827,44 @@ public class PanelSearch extends JPanel {
     public void setStartWith(boolean startWith) {
         this.startWith.setEnabled(startWith);
     }
+    public void setExtensions(ArrayList<String> listExtencions) {
+        for (String valuesExtencion : listExtencions) {
+            if (valuesExtencion.contains("pdf")){
+                pdf.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("exe")){
+                exe.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("ppt")){
+                ppt.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("xlsx")){
+                xlsx.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("zip")){
+                zip.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("rar")){
+                rar.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("xlsx")){
+                xlsx.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("txt")){
+                txt.setEnabled(true);
+                continue;
+            }
+            textExtension.setText(valuesExtencion);
+        }
 
+    }
     /**
      * this method clean table.
      */

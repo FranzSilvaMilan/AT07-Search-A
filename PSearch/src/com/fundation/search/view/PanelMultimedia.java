@@ -179,7 +179,13 @@ public class PanelMultimedia extends JPanel {
         optionFrameRate = new JComboBox<>(listFrameRate);
         optionAudioCodec = new JComboBox<>(listAduioCodec);
         optionAspecRadio = new JComboBox<>(listAspecRadio);
-        spinnerDuration = new JSpinner();
+        int min = 0;
+        int max = 1000000000;
+        int step = 1;
+        int initValue = 0;
+        SpinnerModel model = new SpinnerNumberModel(initValue, min, max, step);
+        spinnerDuration = new JSpinner(model);
+        ((JSpinner.DefaultEditor) spinnerDuration.getEditor()).getTextField().setEditable(false);
 
         //textDuration = new JTextField("Duration");
 
@@ -624,100 +630,103 @@ public class PanelMultimedia extends JPanel {
         return enableMediaSetup.isSelected();
     }
 
-
     /**
      *
-     *
-     * @return value of file text
+     * @param dateEnableMediaSetup  state of enable multimedia.
      */
-    /*
-    public String getTextFile() {
-        return timeDuration.getText();
+    public void setSelectedMultiMediaSetup(boolean dateEnableMediaSetup) {
+        this.enableMediaSetup.setSelected(dateEnableMediaSetup);
+    }
+
+    public void setTextCriteria(String textCriteria){
+        this.textCriteria.setText(textCriteria);
+    }
+
+
+
+    //
+    public void setOptionUnitsResolution(String dateOptionUnitsResolution2){
+        if(dateOptionUnitsResolution2!=null) {
+            this.optionUnitsResolution.setSelectedItem(dateOptionUnitsResolution2);
+        }
+        optionUnitsResolution.setSelectedItem(" ");
+    }
+
+    public void setOptionAspecRadio(String dateOptionAspecRadio) {
+       if(dateOptionAspecRadio!=null){
+           this.optionAspecRadio.setSelectedItem(dateOptionAspecRadio);
+       }
+       optionAspecRadio.setSelectedItem(" ");
+    }
+
+    public void setOptionVideoCode(String dateOptionVideoCode) {
+        if(dateOptionVideoCode!=null){
+            this.optionVideoCode.setSelectedItem(dateOptionVideoCode);
+        }
+        optionVideoCode.setSelectedItem(" ");
+    }
+    public void setOptionFrameRate(String dateOptionFrameRate) {
+        if(dateOptionFrameRate != null){
+            this.optionFrameRate.setSelectedItem(dateOptionFrameRate);
+        }
+        optionFrameRate.setSelectedItem(" ");
+    }
+   public void setOptionAudioCodec(String dateOptionAudioCodec){
+        if(dateOptionAudioCodec != null){
+            this.optionAudioCodec.setSelectedItem(dateOptionAudioCodec);
+        }
+        optionAudioCodec.setSelectedItem(" ");
+   }
+
+    public void setOperatorMultimedia(String dataOperator){
+        if(dataOperator != null){
+            this.operator.setSelectedItem(dataOperator);
+        }
+        operator.setSelectedItem(" ");
+    }
+
+    public void setOperationTime(String dateOperationTime){
+        operationTime.setSelectedItem(dateOperationTime);
+    }
+  /*
+    public void setOperationTime(JComboBox<String> operationTime) {
+        this.operationTime = operationTime;
     }*/
-
-    /**
-     * this method get path.
-     *
-     * @return value of camp path
-     */
-    /*
-    public String getTextPath() {
-        return textPath.getText();
-    }*/
-    public void setMp4(boolean stateMp4) {
-        this.mp4.setEnabled(stateMp4);
-    }
-
-    public void setMpeg(boolean stateMpg) {
-        this.mpeg.setEnabled(stateMpg);
-    }
-
-    public void setMov(boolean stateMov) {
-        this.mov.setEnabled(stateMov);
-    }
-
-    public void setWmv(boolean stateWmv) {
-        this.wmv.setEnabled(stateWmv);
-    }
-
-    public void setAvi(boolean stateAvi) {
-        this.avi.setEnabled(stateAvi);
-    }
-
-    public void setXvidi(boolean stateXvidi) {
-        this.xvidi.setEnabled(stateXvidi);
-    }
-
-    public void setMpg(boolean stateMpg) {
-        this.mpg.setEnabled(stateMpg);
-    }
-
-    public void setFlv(boolean stateFlv) {
-        this.flv.setEnabled(stateFlv);
-    }
 
     public void setSpinnerDuration(JSpinner spinnerDuration) {
         this.spinnerDuration = spinnerDuration;
-    }
-    public void setOptionUnitsResolution(JComboBox<String> optionUnitsResolution) {
-        this.optionUnitsResolution = optionUnitsResolution;
+
     }
 
-    public void setOperationTime(JComboBox<String> operationTime) {
-        this.operationTime = operationTime;
+    public void setExtensionsMultimedia(ArrayList<String> listextencionsMultimedia) {
+        for (String valuesExtencion : listextencionsMultimedia) {
+            if (valuesExtencion.contains("Mp4")){
+                mp4.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("Wmv")){
+                wmv.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("Mov")){
+                mov.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("Avi")){
+                avi.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("Xvidi")){
+                xvidi.setEnabled(true);
+                continue;
+            }
+            if (valuesExtencion.contains("mpg")){
+                mpg.setEnabled(true);
+                continue;
+            }
+
+        }
     }
-
-    public void setOptionVideoCode(JComboBox<String> optionVideoCode) {
-        this.optionVideoCode = optionVideoCode;
-    }
-
-    public void setOptionFrameRate(JComboBox<String> optionFrameRate) {
-        this.optionFrameRate = optionFrameRate;
-    }
-    /*
-    public void setOptionAudioCodec(String[] optionAudioCodec) {
-        this.listAduioCodec=optionAudioCodec;
-    }
-
-    public  void setNewItemOnOptionAudioCodec(String newOption){
-        optionAudioCodec.addItem(newOption);
-    }*/
-
-    // este metodo se encarga de marcar como seleccionado el iten que tiene el lavel enviado.
-    /*
-    public  void setSelectedItemOnOptionAudioCodec(String item){
-        optionAudioCodec.setSelectedItem(item);
-    }
-
-    public void setOptionAudioCodecEnable(boolean enable){
-        optionAudioCodec.setEnabled(enable);
-    }*/
-
-
-    public void setOptionAspecRadio(JComboBox<String> optionAspecRadio) {
-        this.optionAspecRadio = optionAspecRadio;
-    }
-
     /**
      * This method add row in the table.
      *
