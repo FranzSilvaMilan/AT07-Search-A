@@ -29,11 +29,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static org.apache.commons.lang3.StringUtils.isNoneEmpty;
 
 /**
  * This class Asset can be FileResult SearchFolder.
@@ -220,11 +217,12 @@ public class PanelSearch extends JPanel {
         changeCreate = false;
         changeModified = false;
         changeLastAccess = false;
-       // imagen1 = getClass().getResource("/view/432ee7c1-ffcd-4873-aed5-4ec30b3a5dc3.png");
+        // imagen1 = getClass().getResource("/view/432ee7c1-ffcd-4873-aed5-4ec30b3a5dc3.png");
         //Image image = new ImageIcon(imagen1).getImage();
         //imagen = this.getClass().getResource("/src/com/fundation/search/view/432ee7c1-ffcd-4873-aed5-4ec30b3a5dc3.png");
         LOGGER.info("initComponent : exit");
     }
+
     /**
      * it is method contain configuration.
      */
@@ -338,7 +336,7 @@ public class PanelSearch extends JPanel {
         optionUnitsSize.setBounds(160, 100, 70, 30);
         optionUnitsSize.setBackground(new Color(250, 252, 252));
         optionUnitsSize.setBorder(blacking);
-       spinnerSize.setValue(0);
+        spinnerSize.setValue(0);
         spinnerSize.setBounds(90, 100, 70, 30);
         spinnerSize.setBackground(new Color(250, 252, 252));
         spinnerSize.setBorder(blacking);
@@ -545,13 +543,14 @@ public class PanelSearch extends JPanel {
         LOGGER.info("addComponents : exit");
     }
     public void letersNumberEnable(JTextField textPath){
+
         textPath.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                char c=e.getKeyChar();
+                char c = e.getKeyChar();
 
                 //super.keyTyped(e);
-                if(!Character.isLetter(c) || Character.isLetter(c)){
+                if (!Character.isLetter(c) || Character.isLetter(c)) {
                     getToolkit().beep();
                     e.consume();
                     JOptionPane.showMessageDialog(null, "go to -Select Path-");
@@ -562,14 +561,15 @@ public class PanelSearch extends JPanel {
             }
         });
     }
-    public void numbers( JSpinner spinnerSize){
+
+    public void numbers(JSpinner spinnerSize) {
         spinnerSize.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                char c=e.getKeyChar();
+                char c = e.getKeyChar();
 
                 //super.keyTyped(e);
-                if(!Character.isLetter(c)){
+                if (!Character.isLetter(c)) {
                     getToolkit().beep();
                     e.consume();
                     //JOptionPane.showMessageDialog(, "Faltan dato.");
@@ -787,7 +787,6 @@ public class PanelSearch extends JPanel {
     }
 
 
-
     public void setTextOwner(String textOwner) {
         this.textOwner.setText(textOwner);
     }
@@ -825,12 +824,18 @@ public class PanelSearch extends JPanel {
         this.dateLastAccess.setDate(dateLastAccess);
     }
 
-   /* public void setDateLastAccessTo(JDateChooser dateLastAccessTo) {
+    public void setDateLastAccessTo(Date dateLastAccessTo) {
         this.dateLastAccessTo.setDate(dateLastAccessTo);
-    }*/
-    public void setSpinnerSize(JSpinner spinnerSize) {
-        this.spinnerSize = spinnerSize;
     }
+
+
+    /* public void setDateLastAccessTo(JDateChooser dateLastAccessTo) {
+         this.dateLastAccessTo.setDate(dateLastAccessTo);
+     }*/
+    public void setSpinnerSize(double spinnerSize) {
+        this.spinnerSize.setValue(spinnerSize);
+    }
+
     public void setHiddenCheck(boolean hiddenCheck) {
         this.hiddenCheck.setSelected(hiddenCheck);
     }
@@ -854,44 +859,50 @@ public class PanelSearch extends JPanel {
     public void setStartWith(boolean startWith) {
         this.startWith.setSelected(startWith);
     }
+
     public void setExtensions(ArrayList<String> listExtencions) {
         for (String valuesExtencion : listExtencions) {
-            if (valuesExtencion.contains("pdf")){
+            if (valuesExtencion.contains("pdf")) {
                 pdf.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("exe")){
+            if (valuesExtencion.contains("exe")) {
                 exe.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("ppt")){
+            if (valuesExtencion.contains("ppt")) {
                 ppt.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("xlsx")){
+            if (valuesExtencion.contains("xlsx")) {
                 xlsx.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("zip")){
+            if (valuesExtencion.contains("zip")) {
                 zip.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("rar")){
+            if (valuesExtencion.contains("rar")) {
                 rar.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("xlsx")){
+            if (valuesExtencion.contains("xlsx")) {
                 xlsx.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("txt")){
+            if (valuesExtencion.contains("txt")) {
                 txt.setSelected(true);
+                continue;
+            }
+            if (valuesExtencion.contains("docx")) {
+                docx.setSelected(true);
                 continue;
             }
             textExtension.setText(valuesExtencion);
         }
 
     }
+
     /**
      * this method clean table.
      */
@@ -900,7 +911,6 @@ public class PanelSearch extends JPanel {
     }
 
     /**
-     *
      * @return
      */
     public PanelTable getPanelTable() {
@@ -923,7 +933,7 @@ public class PanelSearch extends JPanel {
 
     }
 
-    public  void enableComponents(boolean enable){
+    public void enableComponents(boolean enable) {
         endWith.setEnabled(enable);
         startWith.setEnabled(enable);
         pdf.setEnabled(enable);

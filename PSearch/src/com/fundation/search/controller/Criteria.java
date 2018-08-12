@@ -47,11 +47,23 @@ public class Criteria {
      * status if is hidden of criteria.
      */
     private boolean ishidden;
+    /**
+     * search the word  of criteria.
+     */
+    private boolean endWith;
+    /**
+     * search the word  of criteria.
+     */
+    private boolean startWith;
 
     /**
      * operator that help search by size.
      */
     private String operator;
+    /**
+     *
+     */
+    private String unitForSize;
     /**
      * this is a owner.
      */
@@ -127,7 +139,6 @@ public class Criteria {
     }
 
 
-
     public String getVideoCode() {
         return videoCode;
     }
@@ -178,15 +189,12 @@ public class Criteria {
     }
 
 
-
-
-
     /**
      * this  is a constuctot.
      */
     Criteria() {
         listExtensions = new ArrayList<>();
-        extensionVideo =  new ArrayList<>();
+        extensionVideo = new ArrayList<>();
     }
 
     /**
@@ -197,6 +205,7 @@ public class Criteria {
     public Date getDateCreateFrom() {
         return dateCreateFrom;
     }
+
     /**
      * set a new value.
      *
@@ -214,6 +223,7 @@ public class Criteria {
     public Date getDateCreateTo() {
         return dateCreateTo;
     }
+
     /**
      * set a new value.
      *
@@ -231,6 +241,7 @@ public class Criteria {
     public Date getDateModificateFrom() {
         return dateModificateFrom;
     }
+
     /**
      * set a new value.
      *
@@ -248,6 +259,7 @@ public class Criteria {
     public Date getDateModificateTo() {
         return dateModificateTo;
     }
+
     /**
      * set a new value.
      *
@@ -265,8 +277,10 @@ public class Criteria {
     public Date getDateAccessFrom() {
         return dateAccessFrom;
     }
+
     /**
      * set a new value.
+     *
      * @param dateAccessFrom with a new value.
      */
     public void setDateAccessFrom(Date dateAccessFrom) {
@@ -281,6 +295,7 @@ public class Criteria {
     public Date getDateAccessTo() {
         return dateAccessTo;
     }
+
     /**
      * set a new value.
      *
@@ -298,6 +313,7 @@ public class Criteria {
     public boolean getDirectory() {
         return directory;
     }
+
     /**
      * set a new value.
      *
@@ -310,11 +326,12 @@ public class Criteria {
     /**
      * this method get value if is read only.
      *
-     * @return  true if user selecct.
+     * @return true if user selecct.
      */
     public boolean getReadOnly() {
         return readOnly;
     }
+
     /**
      * set a new value.
      *
@@ -332,6 +349,7 @@ public class Criteria {
     public boolean isKeySensitive() {
         return keySensitive;
     }
+
     /**
      * set a new value.
      *
@@ -349,6 +367,7 @@ public class Criteria {
     public String getContent() {
         return content;
     }
+
     /**
      * set a new value.
      *
@@ -366,6 +385,7 @@ public class Criteria {
     public String getOwner() {
         return owner;
     }
+
     /**
      * set a new value.
      *
@@ -383,10 +403,11 @@ public class Criteria {
     public ArrayList<String> getListExtensions() {
         return listExtensions;
     }
+
     /**
      * set a new value.
      *
-     * @param listExtensions  with a new value.
+     * @param listExtensions with a new value.
      */
     public void setListExtensions(ArrayList<String> listExtensions) {
         this.listExtensions = listExtensions;
@@ -483,5 +504,45 @@ public class Criteria {
         this.ishidden = ishidden;
     }
 
+    /**
+     * @return if is selected of option of search.
+     */
+    public boolean isStartWith() {
+        return startWith;
+    }
 
+    /**
+     * @param startWith is update of status.
+     */
+    public void setStartWith(boolean startWith) {
+        this.startWith = startWith;
+    }
+
+    /**
+     * @return if is selected of option of search.
+     */
+    public boolean isEndWith() {
+        return endWith;
+    }
+
+    /**
+     * @param endWith is update of status.
+     */
+    public void setEndWith(boolean endWith) {
+        this.endWith = endWith;
+    }
+
+    /**
+     * @return
+     */
+    public String getUnitForSize() {
+        return unitForSize;
+    }
+
+    /**
+     * @param unitForSize
+     */
+    public void setUnitForSize(String unitForSize) {
+        this.unitForSize = unitForSize;
+    }
 }
