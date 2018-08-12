@@ -115,6 +115,11 @@ public class PanelSearch extends JPanel {
     private boolean changeLastAccess;
     //private URL imagen1;
     //Logger
+    JLabel labelImagen ;
+    JLabel labelImagenFile;
+    JLabel labelFondo;
+    String url = "imagen1.png";
+
     private static final Logger LOGGER = LoggerSearch.getInstance().getLogger();
 
     /**
@@ -128,7 +133,7 @@ public class PanelSearch extends JPanel {
         initComponentTable();
         settingPanel();
         addComponents();
-        Sletras(textPath);
+        letersNumberEnable(textPath);
         numbers(spinnerSize);
         LOGGER.info("PanelSearch : exit");
 
@@ -136,6 +141,16 @@ public class PanelSearch extends JPanel {
 
     private void initComponent() {
         LOGGER.info("initComponent : enter");
+        ImageIcon icone = new ImageIcon("src/com/fundation/search/view/imagen/imagen2.png");
+        labelImagen = new JLabel(icone);
+
+        ImageIcon iconeFile = new ImageIcon("src/com/fundation/search/view/imagen/fileColor.png");
+        labelImagenFile = new JLabel(iconeFile);
+
+        ImageIcon iconeFondo = new ImageIcon("src/com/fundation/search/view/imagen/fondo3.jpg");
+        labelFondo = new JLabel(iconeFondo);
+
+
         listUnitSize = new String[]{"bytes", "Kb", "Mb", "Gb"};
         operatorOptions = new String[]{">", "<", "="};
 
@@ -176,8 +191,10 @@ public class PanelSearch extends JPanel {
 
 
         radioGruop = new ButtonGroup();
-        btSelect = new JButton();
-        buttonSearch = new JButton("SEARCH");
+        ImageIcon iconeSelectPhat = new ImageIcon("src/com/fundation/search/view/imagen/selectPath.png");
+        btSelect = new JButton(iconeSelectPhat);
+       ImageIcon iconeSearch = new ImageIcon("src/com/fundation/search/view/imagen/search.png");
+        buttonSearch = new JButton(iconeSearch);
 
         hiddenCheck = new JCheckBox("Hidden");
         folder = new JCheckBox("Folder");
@@ -306,7 +323,7 @@ public class PanelSearch extends JPanel {
         //Button and operators.
 
         btSelect.setText("Select Path");
-        btSelect.setBounds(290, 100, 120, 30);
+        btSelect.setBounds(290, 100, 120, 33);
         //btSelect.setBackground(Color.blue);
         btSelect.setForeground(Color.blue);
 
@@ -325,75 +342,75 @@ public class PanelSearch extends JPanel {
         spinnerSize.setBounds(90, 100, 70, 30);
         spinnerSize.setBackground(new Color(250, 252, 252));
         spinnerSize.setBorder(blacking);
-        buttonSearch.setBounds(1000, 180, 150, 30);
+        buttonSearch.setBounds(450, 180, 150, 41);
         buttonSearch.setBackground(new Color(9, 244, 184));
         buttonSearch.setBorder(blacking);
 
         //Search by extension.
 
-        labelSearchExtension.setBounds(425, 80, 80, 30);
+        labelSearchExtension.setBounds(550, 80, 80, 30);
         labelSearchExtension.setForeground(new Color(1, 1, 33));
 
-        textExtension.setBounds(505, 80, 150, 30);
+        textExtension.setBounds(631, 80, 150, 30);
         textExtension.setBackground(new Color(250, 252, 252));
         textExtension.setBorder(blacking);
         labelSearchExtension.setBorder(blacking);
 
         pdf.setEnabled(true);
-        pdf.setBounds(495, 115, 60, 23);
+        pdf.setBounds(630, 115, 60, 23);
         pdf.setBackground(new Color(250, 252, 252));
 
         docx.setEnabled(true);
-        docx.setBounds(565, 115, 60, 23);
+        docx.setBounds(700, 115, 60, 23);
         docx.setBackground(new Color(250, 252, 252));
 
         exe.setEnabled(true);
-        exe.setBounds(495, 135, 60, 23);
+        exe.setBounds(630, 135, 60, 23);
         exe.setBackground(new Color(250, 252, 252));
 
         txt.setEnabled(true);
-        txt.setBounds(565, 135, 60, 23);
+        txt.setBounds(700, 135, 60, 23);
         txt.setBackground(new Color(250, 252, 252));
 
         ppt.setEnabled(true);
-        ppt.setBounds(495, 155, 60, 23);
+        ppt.setBounds(630, 155, 60, 23);
         ppt.setBackground(new Color(250, 252, 252));
 
         zip.setEnabled(true);
-        zip.setBounds(565, 155, 60, 23);
+        zip.setBounds(700, 155, 60, 23);
         zip.setBackground(new Color(250, 252, 252));
 
         xlsx.setEnabled(true);
-        xlsx.setBounds(495, 175, 60, 23);
+        xlsx.setBounds(630, 175, 60, 23);
         xlsx.setBackground(new Color(250, 252, 252));
 
         rar.setEnabled(true);
-        rar.setBounds(565, 175, 60, 23);
+        rar.setBounds(700, 175, 60, 23);
         rar.setBackground(new Color(250, 252, 252));
 
         //Search by owner of files.
 
-        labelOwner.setBounds(425, 50, 80, 30);
+        labelOwner.setBounds(550, 50, 80, 30);
         labelOwner.setForeground(new Color(1, 1, 33));
         labelOwner.setBorder(blacking);
 
-        textOwner.setBounds(505, 50, 150, 30);
+        textOwner.setBounds(631, 50, 150, 30);
         textOwner.setBackground(new Color(250, 252, 252));
         textOwner.setBorder(blacking);
 
         //Search by contain of files.
 
-        labelSearchOthers.setBounds(425, 20, 80, 30);
+        labelSearchOthers.setBounds(550, 20, 80, 30);
         labelSearchOthers.setForeground(new Color(1, 1, 33));
         labelSearchOthers.setBorder(blacking);
 
-        textContain.setBounds(505, 20, 150, 30);
+        textContain.setBounds(631, 20, 150, 30);
         textContain.setBackground(new Color(250, 252, 252));
         textContain.setBorder(blacking);
 
-        endWith.setBounds(505, 2, 100, 18);
+        endWith.setBounds(410, 18, 100, 18);
         endWith.setBackground(new Color(250, 252, 252));
-        startWith.setBounds(605, 2, 100, 18);
+        startWith.setBounds(410, 40, 100, 18);
         startWith.setBackground(new Color(250, 252, 252));
 
         //Search by only read,hidden and sensitive file.
@@ -411,6 +428,13 @@ public class PanelSearch extends JPanel {
         folder.setEnabled(true);
         folder.setBounds(300, 50, 80, 20);
         folder.setBackground(new Color(250, 252, 252));
+        /**
+         * this is format of image interface.
+         */
+        labelImagen.setBounds(800,0,400,100);
+        labelImagenFile.setBounds(850,0,300,300);
+        labelFondo.setBounds(0,0,900,400);
+        //labelImagen.setIcon(icone);
 
         actionBottom();
 
@@ -515,9 +539,12 @@ public class PanelSearch extends JPanel {
         add(folder);
         add(endWith);
         add(startWith);
+        add(labelImagen);
+        add(labelImagenFile);
+        add(labelFondo);
         LOGGER.info("addComponents : exit");
     }
-    public void Sletras(JTextField textPath){
+    public void letersNumberEnable(JTextField textPath){
         textPath.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -710,21 +737,21 @@ public class PanelSearch extends JPanel {
     }
 
     /**
-     * @return
+     * @return date if selected.
      */
     public Date getDateCreate() {
         return dateCreate.getDate();
     }
 
     /**
-     * @return
+     * @return date of selected date create.
      */
     public Date getDateCreateTo() {
         return dateCreateTo.getDate();
     }
 
     /**
-     * @return
+     * @return date of selected date modified.
      */
     public Date getDateModified() {
         return dateModified.getDate();
@@ -805,60 +832,60 @@ public class PanelSearch extends JPanel {
         this.spinnerSize = spinnerSize;
     }
     public void setHiddenCheck(boolean hiddenCheck) {
-        this.hiddenCheck.setEnabled(hiddenCheck);
+        this.hiddenCheck.setSelected(hiddenCheck);
     }
 
     public void setEnableOnlyRead(boolean enableOnlyRead) {
-        this.enableOnlyRead.setEnabled(enableOnlyRead);
+        this.enableOnlyRead.setSelected(enableOnlyRead);
     }
 
     public void setEnableKeySensitive(boolean enableKeySensitive) {
-        this.enableKeySensitive.setEnabled(enableKeySensitive);
+        this.enableKeySensitive.setSelected(enableKeySensitive);
     }
 
     public void setFolder(boolean folder) {
-        this.folder.setEnabled(folder);
+        this.folder.setSelected(folder);
     }
 
     public void setEndWith(boolean endWith) {
-        this.endWith.setEnabled(endWith);
+        this.endWith.setSelected(endWith);
     }
 
     public void setStartWith(boolean startWith) {
-        this.startWith.setEnabled(startWith);
+        this.startWith.setSelected(startWith);
     }
     public void setExtensions(ArrayList<String> listExtencions) {
         for (String valuesExtencion : listExtencions) {
             if (valuesExtencion.contains("pdf")){
-                pdf.setEnabled(true);
+                pdf.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("exe")){
-                exe.setEnabled(true);
+                exe.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("ppt")){
-                ppt.setEnabled(true);
+                ppt.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("xlsx")){
-                xlsx.setEnabled(true);
+                xlsx.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("zip")){
-                zip.setEnabled(true);
+                zip.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("rar")){
-                rar.setEnabled(true);
+                rar.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("xlsx")){
-                xlsx.setEnabled(true);
+                xlsx.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("txt")){
-                txt.setEnabled(true);
+                txt.setSelected(true);
                 continue;
             }
             textExtension.setText(valuesExtencion);

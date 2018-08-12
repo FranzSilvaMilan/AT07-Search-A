@@ -53,7 +53,7 @@ public class PanelMultimedia extends JPanel {
     private JComboBox<String> operator;
     private JButton btSelect;
     /**
-     * array that contains units of the bytes,kb,Mb and Gb.
+     * array that contains units of the resolution, video code, frame rate, Audio Codec, Aspect Ratio.
      */
     private String[] listResolution;
     private String[] listTime;
@@ -68,6 +68,7 @@ public class PanelMultimedia extends JPanel {
     private JComboBox<String> optionAudioCodec;
     private JComboBox<String> optionAspecRadio;
 
+    // title of each textLabel.
     JLabel LabelResolution;
     JLabel labelDataBase;
     //JLabel labelFile;
@@ -87,6 +88,8 @@ public class PanelMultimedia extends JPanel {
     JSpinner spinnerSize;
     JRadioButton hidden;
     ButtonGroup radioGruop;
+
+    // declare of checkBox multimedia extensions.
     private Border blacking;
     private JCheckBox mp4;
     private JCheckBox mpeg;
@@ -98,7 +101,7 @@ public class PanelMultimedia extends JPanel {
     private JCheckBox flv;
 
     private JSpinner spinnerDuration;
-
+    JLabel labelFondo;
 
 
     /**
@@ -120,6 +123,9 @@ public class PanelMultimedia extends JPanel {
 
     }
 
+    /**
+     * method init of componet multimedia.
+     */
     private void initComponet() {
         LOGGER.info("initComponet: enter");
 
@@ -179,6 +185,7 @@ public class PanelMultimedia extends JPanel {
         optionFrameRate = new JComboBox<>(listFrameRate);
         optionAudioCodec = new JComboBox<>(listAduioCodec);
         optionAspecRadio = new JComboBox<>(listAspecRadio);
+
         int min = 0;
         int max = 1000000000;
         int step = 1;
@@ -191,6 +198,8 @@ public class PanelMultimedia extends JPanel {
 
         textOtherExtension = new JTextField();
         labelOtherExtension = new JLabel("OTHER EXTENSION:");
+
+        // checkbox of the extensions.
         mp4 = new JCheckBox(".MP4");
         mpeg = new JCheckBox(".MPEG");
         mov = new JCheckBox(".MOV");
@@ -199,6 +208,10 @@ public class PanelMultimedia extends JPanel {
         xvidi = new JCheckBox(".XVIDI");
         mpg = new JCheckBox(".MPG");
         flv = new JCheckBox(".FLV");
+
+        // add image fund of multimedia.
+        ImageIcon iconeFondo = new ImageIcon("src/com/fundation/search/view/imagen/fondo3.jpg");
+        labelFondo = new JLabel(iconeFondo);
 
 
         blacking = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
@@ -249,7 +262,7 @@ public class PanelMultimedia extends JPanel {
 
     /**
      * this method contain is have the location and other property as color and text
-     * for look for archive.
+     * for look for archive and apply layout of multimedia.
      */
 
     public void settingPanel() {
@@ -429,6 +442,7 @@ public class PanelMultimedia extends JPanel {
         gbc.fill = GridBagConstraints.BOTH;
         containerFileDateBase.add(panelTableBD, gbc);
 
+        labelFondo.setBounds(0,0,1500,400);
 
         /**containerFileDateBase.setEnabled(false);
 
@@ -448,6 +462,7 @@ public class PanelMultimedia extends JPanel {
         add(containerFileExtensions);
         add(containerFileDateBase);
         add(panelTable);
+        add(labelFondo);
         LOGGER.info("addComponents: exit");
     }
 
@@ -638,13 +653,18 @@ public class PanelMultimedia extends JPanel {
         this.enableMediaSetup.setSelected(dateEnableMediaSetup);
     }
 
+    /**
+     * this is method of set criteria.
+     * @param textCriteria
+     */
     public void setTextCriteria(String textCriteria){
         this.textCriteria.setText(textCriteria);
     }
 
-
-
-    //
+    /**
+     * this method of set resolution
+     * @param dateOptionUnitsResolution2 is string selected.
+     */
     public void setOptionUnitsResolution(String dateOptionUnitsResolution2){
         if(dateOptionUnitsResolution2!=null) {
             this.optionUnitsResolution.setSelectedItem(dateOptionUnitsResolution2);
@@ -652,6 +672,10 @@ public class PanelMultimedia extends JPanel {
         optionUnitsResolution.setSelectedItem(" ");
     }
 
+    /**
+     * this method set Aspect Ratio multimedia.
+     * @param dateOptionAspecRadio is string selected.
+     */
     public void setOptionAspecRadio(String dateOptionAspecRadio) {
        if(dateOptionAspecRadio!=null){
            this.optionAspecRadio.setSelectedItem(dateOptionAspecRadio);
@@ -659,18 +683,32 @@ public class PanelMultimedia extends JPanel {
        optionAspecRadio.setSelectedItem(" ");
     }
 
+    /**
+     * this method set Video Code multimedia.
+     * @param dateOptionVideoCode is string selected.
+     */
     public void setOptionVideoCode(String dateOptionVideoCode) {
         if(dateOptionVideoCode!=null){
             this.optionVideoCode.setSelectedItem(dateOptionVideoCode);
         }
         optionVideoCode.setSelectedItem(" ");
     }
+
+    /**
+     * this method set Frame Rate multimedia.
+     * @param dateOptionFrameRate is string selected.
+     */
     public void setOptionFrameRate(String dateOptionFrameRate) {
         if(dateOptionFrameRate != null){
             this.optionFrameRate.setSelectedItem(dateOptionFrameRate);
         }
         optionFrameRate.setSelectedItem(" ");
     }
+
+    /**
+     * this method set Audio Codec multimedia.
+     * @param dateOptionAudioCodec is string selected.
+     */
    public void setOptionAudioCodec(String dateOptionAudioCodec){
         if(dateOptionAudioCodec != null){
             this.optionAudioCodec.setSelectedItem(dateOptionAudioCodec);
@@ -678,6 +716,10 @@ public class PanelMultimedia extends JPanel {
         optionAudioCodec.setSelectedItem(" ");
    }
 
+    /**
+     * this method set operator of multimedia multimedia.
+     * @param dataOperator is string selected.
+     */
     public void setOperatorMultimedia(String dataOperator){
         if(dataOperator != null){
             this.operator.setSelectedItem(dataOperator);
@@ -685,6 +727,10 @@ public class PanelMultimedia extends JPanel {
         operator.setSelectedItem(" ");
     }
 
+    /**
+     * this method set operator time
+     * @param dateOperationTime is string selected.
+     */
     public void setOperationTime(String dateOperationTime){
         operationTime.setSelectedItem(dateOperationTime);
     }
@@ -698,30 +744,34 @@ public class PanelMultimedia extends JPanel {
 
     }
 
+    /**
+     *
+     * @param listextencionsMultimedia  list is select setter of extensions extencion.
+     */
     public void setExtensionsMultimedia(ArrayList<String> listextencionsMultimedia) {
         for (String valuesExtencion : listextencionsMultimedia) {
             if (valuesExtencion.contains("Mp4")){
-                mp4.setEnabled(true);
+                mp4.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("Wmv")){
-                wmv.setEnabled(true);
+                wmv.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("Mov")){
-                mov.setEnabled(true);
+                mov.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("Avi")){
-                avi.setEnabled(true);
+                avi.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("Xvidi")){
-                xvidi.setEnabled(true);
+                xvidi.setSelected(true);
                 continue;
             }
             if (valuesExtencion.contains("mpg")){
-                mpg.setEnabled(true);
+                mpg.setSelected(true);
                 continue;
             }
 
@@ -736,6 +786,9 @@ public class PanelMultimedia extends JPanel {
         panelTableBD.addRow(newRow);
     }
 
+    /**
+     * clean of table of data base.
+     */
     public void cleanTableDB() {
         panelTableBD.clean();
     }
