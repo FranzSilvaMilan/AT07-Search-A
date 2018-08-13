@@ -99,14 +99,10 @@ public class Controller {
                     search.setCriteria(criteria);
                     search.searchByCriteria(criteria);
                     List<Asset> listResult = search.getResult();
-                    System.out.println("sale de get result " + listResult.size());
                     frame.cleanTable();
-                    System.out.println("limpia la tabla");
                     for (Asset file : listResult) {
-                        System.out.println("entra al for");
                         String[] row;
                         if (file instanceof AssetFile) {
-                            System.out.println("entra a Assetfile");
                             AssetFile assetFile = (AssetFile) file;
                             row = new String[]{Boolean.toString(assetFile.getDirectory()), assetFile.getFileName(),
                                     String.format("%.3f", convert.convertTOLongShow(assetFile.getSize(), unityForSize)).concat(" ").concat(unityForSize), assetFile.getPath(),
@@ -116,7 +112,6 @@ public class Controller {
                             frame.addRow(row);
 
                         } else {
-                            System.out.println("entra a multimedia");
                             AssetMultimedia assetMultimedia = (AssetMultimedia) file;
                             String resolution = assetMultimedia.getDisplayAspect() + " " + assetMultimedia.getWidth() + "x" + assetMultimedia.getHeight();
                             row = new String[]{Boolean.toString(false), assetMultimedia.getFileName(),
@@ -126,7 +121,6 @@ public class Controller {
                                     convert.convertDateToString(assetMultimedia.getDateAccess()), assetMultimedia.getrFrameRate().toString(),
                                     resolution, assetMultimedia.getCodecName(), assetMultimedia.getAudioCodecName(), Double.toString(assetMultimedia.getDuration())};
                             frame.addRow(row);
-                            System.out.println("añade en multimedia");
                         }
                     }
                 }
@@ -212,7 +206,6 @@ public class Controller {
     private void buildCriteria() {
         LOGGER.info("buildCriteria : into");
         //values of search basic
-        frame.getPanelSearch().showErrorMessage("entra a build");
         String path = frame.getPanelSearch().getTextPath();
         String fileName = frame.getPanelSearch().getTextFile();
         String operator = frame.getPanelSearch().getOperator();

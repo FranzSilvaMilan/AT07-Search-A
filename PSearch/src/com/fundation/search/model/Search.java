@@ -283,31 +283,24 @@ public class Search {
             }
             if (criteria.getIsMultimediaSelected()) {
                 if (criteria.getFrameRate() != null) {
-                    System.out.println("entra a buscar FrameRAte");
                     searchByFrameRate(criteria.getFrameRate());
                 }
                 if (criteria.getVideoCode() != null) {
-                    System.out.println("entra a buscar videoCode");
                     searchByVideoCodec(criteria.getVideoCode());
                 }
                 if (criteria.getResolution() != null) {
-                    System.out.println("entra a buscar resolution");
                     searchByResolution(criteria.getResolution());
                 }
                 if (criteria.getAudioCode() != null) {
-                    System.out.println("entra a buscar audiocode");
                     searchByAudioCodec(criteria.getAudioCode());
                 }
                 if (!criteria.getExtensionVideo().isEmpty()) {
-                    System.out.println("entra a buscar extensionVideo");
                     searchByExtension(criteria.getExtensionVideo());
                 }
                 if (criteria.getDuration() >= 0 && criteria.getOperatorDurationTime() != null) {
-                    System.out.println("entra a buscar duration");
                     searchByDuration(criteria.getDuration(), criteria.getOperatorDurationTime());
                 }
                 if(criteria.getAspectRatio() != null){
-                    System.out.println("entra a buscar aspect Ratio");
                     searchByAspectRatio(criteria.getAspectRatio());
                 }
             }
@@ -579,7 +572,6 @@ public class Search {
                         System.out.println("audioMaxBitRate: " + audioMaxBitRate);
                         System.out.println("audioNbFrame: " + audioNbFrame);
                         fileList.add(data);
-                        System.out.println("añadio a fileÑist ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ "+ fileList.size());
 
                     } catch (IOException | NullPointerException exception) {
 
