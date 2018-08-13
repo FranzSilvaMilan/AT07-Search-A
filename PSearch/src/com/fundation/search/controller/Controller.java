@@ -25,6 +25,8 @@ import org.apache.log4j.Logger;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,6 +85,7 @@ public class Controller {
         actionListener();
         actionListenerDataBaseSave();
         actionListenerDataBaseLoad();
+        //actionMouse();
         LOGGER.info("Constructor Controller : exit");
     }
 
@@ -148,53 +151,65 @@ public class Controller {
      * this method has the accion listeenr of the button.
      */
     private void actionListenerDataBaseLoad() {
-        frame.getPanelMultimedia().getButtonLoad().addActionListener(e -> {
-            int idSelect = Integer.parseInt(frame.getPanelMultimedia().getTextCriteria());
-            try {
-                Map<Integer, Criteria> database = search.getJSONCriteria();
-                final Criteria[] selectCriteria = {new Criteria()};
-                database.forEach((id, criterial) -> {
-                    if (id == idSelect) {
-                        selectCriteria[0] = criterial;
-                    }
-                });
-                frame.getPanelSearch().setTextPath(selectCriteria[0].getPath());
-                frame.getPanelSearch().setTextFile(selectCriteria[0].getFileName());
-                frame.getPanelSearch().setTextContain(selectCriteria[0].getContent());
-                frame.getPanelSearch().setTextOwner(selectCriteria[0].getOwner());
-                frame.getPanelSearch().setExtensions(selectCriteria[0].getListExtensions());
-                frame.getPanelSearch().setOperator(selectCriteria[0].getOperator());
-                frame.getPanelSearch().setOptionUnitsSize(selectCriteria[0].getUnitForSize());
-                frame.getPanelSearch().setSpinnerSize((int) convert.convertTOLongShow(selectCriteria[0].getSize(),
-                        selectCriteria[0].getUnitForSize()));
-                frame.getPanelSearch().setEnableKeySensitive(selectCriteria[0].isKeySensitive());
-                frame.getPanelSearch().setEnableOnlyRead(selectCriteria[0].getReadOnly());
-                frame.getPanelSearch().setFolder(selectCriteria[0].getDirectory());
-                frame.getPanelSearch().setHiddenCheck(selectCriteria[0].getIsIshidden());
-                frame.getPanelSearch().setEndWith(selectCriteria[0].isEndWith());
-                frame.getPanelSearch().setStartWith(selectCriteria[0].isStartWith());
-                frame.getPanelSearch().setEnableCreate(selectCriteria[0].isEnableCreate());
-                frame.getPanelSearch().setDateCreate(selectCriteria[0].getDateCreateFrom());
-                frame.getPanelSearch().setDateCreateTo(selectCriteria[0].getDateCreateTo());
-                frame.getPanelSearch().setEnableModified(selectCriteria[0].isEnableModified());
-                frame.getPanelSearch().setDateModified(selectCriteria[0].getDateModificateFrom());
-                frame.getPanelSearch().setDateModifiedTo(selectCriteria[0].getDateModificateTo());
-                frame.getPanelSearch().setEnableLastAccess(selectCriteria[0].isEnableLastAccess());
-                frame.getPanelSearch().setDateLastAccess(selectCriteria[0].getDateCreateFrom());
-                frame.getPanelSearch().setDateLastAccessTo(selectCriteria[0].getDateAccessTo());
-                //Multimedia
-                frame.getPanelMultimedia().setSelectedMultiMediaSetup(selectCriteria[0].getIsMultimediaSelected());
-                frame.getPanelMultimedia().setOptionAudioCodec(selectCriteria[0].getAudioCode());
-                frame.getPanelMultimedia().setOptionVideoCode(selectCriteria[0].getVideoCode());
-                frame.getPanelMultimedia().setOptionFrameRate(selectCriteria[0].getFrameRate());
-                frame.getPanelMultimedia().setOptionUnitsResolution(selectCriteria[0].getResolution());
-                frame.getPanelMultimedia().setOptionAspecRadio(selectCriteria[0].getAspectRatio());
-                frame.getPanelMultimedia().setExtensionsMultimedia(selectCriteria[0].getExtensionVideo());
+        frame.getPanelMultimedia().getButtonLoad().addMouseListener(new MouseAdapter() {
+            /**
+             * {@inheritDoc}
+             *
+             * @param e
+             */
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    int idSelect = frame.getPanelMultimedia().getPanelTableBD().getTable().getSelectedRow() + 1;
+                    System.out.println(idSelect);
+                    frame.getPanelMultimedia().setTextCriteria(frame.getPanelMultimedia().
+                            getPanelTableBD().getModelDB().getValueAt(idSelect - 1, 1).toString());
+                    Map<Integer, Criteria> database = search.getJSONCriteria();
+                    final Criteria[] selectCriteria = {new Criteria()};
+                    database.forEach((id, criterial) -> {
+                        if (id == idSelect) {
+                            selectCriteria[0] = criterial;
+                        }
+                    });
+                    frame.getPanelSearch().setTextPath(selectCriteria[0].getPath());
+                    frame.getPanelSearch().setTextFile(selectCriteria[0].getFileName());
+                    frame.getPanelSearch().setTextContain(selectCriteria[0].getContent());
+                    frame.getPanelSearch().setTextOwner(selectCriteria[0].getOwner());
+                    frame.getPanelSearch().setExtensions(selectCriteria[0].getListExtensions());
+                    frame.getPanelSearch().setOperator(selectCriteria[0].getOperator());
+                    frame.getPanelSearch().setOptionUnitsSize(selectCriteria[0].getUnitForSize());
+                    frame.getPanelSearch().setSpinnerSize((int) convert.convertTOLongShow(selectCriteria[0].getSize(),
+                            selectCriteria[0].getUnitForSize()));
+                    frame.getPanelSearch().setEnableKeySensitive(selectCriteria[0].isKeySensitive());
+                    frame.getPanelSearch().setEnableOnlyRead(selectCriteria[0].getReadOnly());
+                    frame.getPanelSearch().setFolder(selectCriteria[0].getDirectory());
+                    frame.getPanelSearch().setHiddenCheck(selectCriteria[0].getIsIshidden());
+                    frame.getPanelSearch().setEndWith(selectCriteria[0].isEndWith());
+                    frame.getPanelSearch().setStartWith(selectCriteria[0].isStartWith());
+                    frame.getPanelSearch().setEnableCreate(selectCriteria[0].isEnableCreate());
+                    frame.getPanelSearch().setDateCreate(selectCriteria[0].getDateCreateFrom());
+                    frame.getPanelSearch().setDateCreateTo(selectCriteria[0].getDateCreateTo());
+                    frame.getPanelSearch().setEnableModified(selectCriteria[0].isEnableModified());
+                    frame.getPanelSearch().setDateModified(selectCriteria[0].getDateModificateFrom());
+                    frame.getPanelSearch().setDateModifiedTo(selectCriteria[0].getDateModificateTo());
+                    frame.getPanelSearch().setEnableLastAccess(selectCriteria[0].isEnableLastAccess());
+                    frame.getPanelSearch().setDateLastAccess(selectCriteria[0].getDateCreateFrom());
+                    frame.getPanelSearch().setDateLastAccessTo(selectCriteria[0].getDateAccessTo());
+                    //Multimedia
+                    frame.getPanelMultimedia().setSelectedMultiMediaSetup(selectCriteria[0].getIsMultimediaSelected());
+                    frame.getPanelMultimedia().setOptionAudioCodec(selectCriteria[0].getAudioCode());
+                    frame.getPanelMultimedia().setOptionVideoCode(selectCriteria[0].getVideoCode());
+                    frame.getPanelMultimedia().setOptionFrameRate(selectCriteria[0].getFrameRate());
+                    frame.getPanelMultimedia().setOptionUnitsResolution(selectCriteria[0].getResolution());
+                    frame.getPanelMultimedia().setOptionAspecRadio(selectCriteria[0].getAspectRatio());
+                    frame.getPanelMultimedia().setExtensionsMultimedia(selectCriteria[0].getExtensionVideo());
 
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
+
     }
 
     /**

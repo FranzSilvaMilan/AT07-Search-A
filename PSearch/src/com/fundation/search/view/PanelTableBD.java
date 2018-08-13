@@ -14,32 +14,34 @@ import java.awt.Color;
 /**
  * class panel of DATA BASE;
  */
-public class PanelTableBD extends JPanel{
+public class PanelTableBD extends JPanel {
 
-        private DefaultTableModel modelDB;
-        private JTable table;
-        private JScrollPane scrollPane;
+    private DefaultTableModel modelDB;
+    private DefaultTableCellRenderer render;
+    private JTable table;
+    private JScrollPane scrollPane;
 
     /**
      * Panel DATA base.
      */
 
-    public PanelTableBD (){
+    public PanelTableBD() {
 
         tableBD();
     }
-        private void tableBD(){
-        String columnHeadBD[] = {"Nro","NAMES"};
+
+    private void tableBD() {
+        String columnHeadBD[] = {"Nro", "NAMES"};
 
         scrollPane = new JScrollPane();
         modelDB = new DefaultTableModel(columnHeadBD, 0);
         table = new JTable(modelDB);
         int vertical = ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS;
         int horizontal = ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS;
-        scrollPane = new JScrollPane(table,vertical,horizontal);
+        scrollPane = new JScrollPane(table, vertical, horizontal);
         setLayout(new BorderLayout());
         add(scrollPane);
-        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+        render = new DefaultTableCellRenderer();
         render.setPreferredSize(new Dimension(0, 0));
         setBounds(700, 100, 450, 100);
 
@@ -47,15 +49,29 @@ public class PanelTableBD extends JPanel{
 
     }
 
-        public void addRow(String[] newRow) {
+    public void addRow(String[] newRow) {
         modelDB.addRow(newRow);
     }
 
-        public void clean(){
+    public void clean() {
         modelDB.setNumRows(0);
     }
 
-
+    /**
+     * @return
+     */
+    public DefaultTableModel getModelDB() {
+        return modelDB;
     }
+
+    /**
+     * @return
+     */
+    public JTable getTable() {
+        return table;
+    }
+
+
+}
 
 
