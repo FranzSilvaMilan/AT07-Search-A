@@ -26,7 +26,8 @@ public interface IBuilder {
                                  Date dateModifyIni, Date dateModifyFin, Date dateCreateIni,
                                  Date dateCreateFin, Date dateAccessini, Date dateAccessFin,
                                  boolean keysensitive, String owner, String contain, ArrayList<String> extensions,
-                                 boolean endWith, boolean startWith, boolean multimediaSelected);
+                                 boolean endWith, boolean startWith, boolean multimediaSelected, boolean dateCreate,
+                                 boolean dateModified, boolean dateLassAccess);
 
     public void buildMultimedia(String frameRare, String videoCode, String audioCode, String resolution, double duration, String operatorDurationTime,
                                 ArrayList<String> extensionVideo,String aspectRatio);

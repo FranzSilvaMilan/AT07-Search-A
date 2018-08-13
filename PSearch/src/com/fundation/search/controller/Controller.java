@@ -79,10 +79,10 @@ public class Controller {
         validator = new ValidatorData();
         convert = new Convert();
         criteria = new Criteria();
+        dataBaseLoad();
         actionListener();
         actionListenerDataBaseSave();
         actionListenerDataBaseLoad();
-        dataBaseLoad();
         LOGGER.info("Constructor Controller : exit");
     }
 
@@ -148,6 +148,7 @@ public class Controller {
      * this method has the accion listeenr of the button.
      */
     private void actionListenerDataBaseLoad() {
+        System.out.println("Inicia carga de datos");
         frame.getPanelMultimedia().getButtonLoad().addActionListener(e -> {
             int idSelect = Integer.parseInt(frame.getPanelMultimedia().getTextCriteria());
             try {
@@ -165,25 +166,40 @@ public class Controller {
                 frame.getPanelSearch().setExtensions(selectCriteria[0].getListExtensions());
                 frame.getPanelSearch().setOperator(selectCriteria[0].getOperator());
                 frame.getPanelSearch().setOptionUnitsSize(selectCriteria[0].getUnitForSize());
-                frame.getPanelSearch().setSpinnerSize(convert.convertTOLongShow(selectCriteria[0].getSize(), selectCriteria[0].getUnitForSize()));
+                System.out.println(String.valueOf((int) convert.convertTOLongShow(selectCriteria[0].getSize(),
+                        selectCriteria[0].getUnitForSize())));
+                frame.getPanelSearch().setSpinnerSize((int) convert.convertTOLongShow(selectCriteria[0].getSize(),
+                        selectCriteria[0].getUnitForSize()));
                 frame.getPanelSearch().setEnableKeySensitive(selectCriteria[0].isKeySensitive());
                 frame.getPanelSearch().setEnableOnlyRead(selectCriteria[0].getReadOnly());
                 frame.getPanelSearch().setFolder(selectCriteria[0].getDirectory());
                 frame.getPanelSearch().setHiddenCheck(selectCriteria[0].getIsIshidden());
                 frame.getPanelSearch().setEndWith(selectCriteria[0].isEndWith());
                 frame.getPanelSearch().setStartWith(selectCriteria[0].isStartWith());
+                frame.getPanelSearch().setEnableCreate(selectCriteria[0].isEnableCreate());
                 frame.getPanelSearch().setDateCreate(selectCriteria[0].getDateCreateFrom());
                 frame.getPanelSearch().setDateCreateTo(selectCriteria[0].getDateCreateTo());
+                frame.getPanelSearch().setEnableModified(selectCriteria[0].isEnableModified());
                 frame.getPanelSearch().setDateModified(selectCriteria[0].getDateModificateFrom());
                 frame.getPanelSearch().setDateModifiedTo(selectCriteria[0].getDateModificateTo());
+                frame.getPanelSearch().setEnableLastAccess(selectCriteria[0].isEnableLastAccess());
                 frame.getPanelSearch().setDateLastAccess(selectCriteria[0].getDateCreateFrom());
                 frame.getPanelSearch().setDateLastAccessTo(selectCriteria[0].getDateAccessTo());
+                //Multimedia
+                frame.getPanelMultimedia().setSelectedMultiMediaSetup(selectCriteria[0].getIsMultimediaSelected());
+                frame.getPanelMultimedia().setOptionAudioCodec(selectCriteria[0].getAudioCode());
+                frame.getPanelMultimedia().setOptionVideoCode(selectCriteria[0].getVideoCode());
+                frame.getPanelMultimedia().setOptionFrameRate(selectCriteria[0].getFrameRate());
+                frame.getPanelMultimedia().setOptionUnitsResolution(selectCriteria[0].getResolution());
+                frame.getPanelMultimedia().setOptionAspecRadio(selectCriteria[0].getAspectRatio());
+                frame.getPanelMultimedia().setExtensionsMultimedia(selectCriteria[0].getExtensionVideo());
 
             } catch (SQLException e1) {
                 e1.printStackTrace();
+                System.out.println("Ocurrio un error");
             }
         });
-
+        System.out.println("Finaliza la carga");
     }
 
     /**
@@ -228,6 +244,9 @@ public class Controller {
         boolean folder = frame.getPanelSearch().getSearchFolder();
         boolean endWith = frame.getPanelSearch().getEndWith();
         boolean startWith = frame.getPanelSearch().getStartWith();
+        boolean dateCreate = frame.getPanelSearch().getEnableCreate();
+        boolean dateModified = frame.getPanelSearch().getEnableModified();
+        boolean dateLassAccess = frame.getPanelSearch().getEnableLastAccess();
         ArrayList<String> listExtensions = frame.getPanelSearch().getExtensions();
         boolean multimediaSelected = frame.getPanelMultimedia().getenableMediaSetup();
 
@@ -236,7 +255,8 @@ public class Controller {
         CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
         criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator, unityForSize);
         criteriaBuilder.buildFileAdvance(folder, readOnly, dateModifyFrom, dateModifyTo, dateCreateFrom,
-                dateCreateTo, dateAccessFrom, dateAccessTo, keySensitive, owner, contain, listExtensions, endWith, startWith, multimediaSelected);
+                dateCreateTo, dateAccessFrom, dateAccessTo, keySensitive, owner, contain, listExtensions,
+                endWith, startWith, multimediaSelected, dateCreate, dateModified, dateLassAccess);
         if (multimediaSelected) {
             //multimedia
             String frameRate = frame.getPanelMultimedia().getOptionFrameRate();

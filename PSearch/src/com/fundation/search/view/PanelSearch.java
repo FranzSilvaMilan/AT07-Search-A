@@ -835,7 +835,7 @@ public class PanelSearch extends JPanel {
     /* public void setDateLastAccessTo(JDateChooser dateLastAccessTo) {
          this.dateLastAccessTo.setDate(dateLastAccessTo);
      }*/
-    public void setSpinnerSize(double spinnerSize) {
+    public void setSpinnerSize(int  spinnerSize) {
         this.spinnerSize.setValue(spinnerSize);
     }
 
@@ -906,6 +906,52 @@ public class PanelSearch extends JPanel {
 
     }
 
+    /**
+     *
+     * @return
+     */
+    public boolean getEnableCreate() {
+        return enableCreate.isSelected();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean getEnableModified() {
+        return enableModified.isSelected();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean getEnableLastAccess() {
+        return enableLastAccess.isSelected();
+    }
+    /**
+     *
+     * @param enableCreate
+     */
+    public void setEnableCreate(boolean enableCreate) {
+        this.enableCreate.setSelected(enableCreate);
+    }
+
+    /**
+     *
+     * @param enableModified
+     */
+    public void setEnableModified(boolean enableModified) {
+        this.enableModified.setSelected(enableModified);
+    }
+
+    /**
+     *
+     * @param enableLastAccess
+     */
+    public void setEnableLastAccess(boolean enableLastAccess) {
+        this.enableLastAccess.setSelected(enableLastAccess);
+    }
     /**
      * this method clean table.
      */
