@@ -102,30 +102,35 @@ public class Search {
                 for (File file : files) {
                     Path path1 = Paths.get(file.getPath());
                     fileBasicAttributes = Files.readAttributes(path1, BasicFileAttributes.class);
-                    //Asset data = new AssetFile();
-                    AssetFile data = new AssetFile();
-                    data.setPath(file.getPath());
-                    data.setIshidden(file.isHidden());
-                    data.setSize(file.length());
-                    data.setOwner(Files.getOwner(path1).getName());
-                    data.setDirectory(file.isDirectory());
-                    data.setDateAccess(new Date(fileBasicAttributes.lastAccessTime().toMillis()));
-                    data.setDateCreate(new Date(fileBasicAttributes.creationTime().toMillis()));
-                    data.setDateModificate(new Date(file.lastModified()));
-                    data.setReadOnly(!file.canWrite());
-                    data.setFileNameExt(file.getName());
-                    fileList.add(data);
+                    String pathFile = file.getPath();
+                    boolean hidden = file.isHidden();
+                    long size = file.length();
+                    String owner = Files.getOwner(path1).getName();
+                    boolean directory = file.isDirectory();
+                    Date lastAccess = new Date(fileBasicAttributes.lastAccessTime().toMillis());
+                    Date lastCreate = new Date(fileBasicAttributes.creationTime().toMillis());
+                    Date lastModified = new Date(file.lastModified());
+                    boolean readOnly = !file.canWrite();
+                    String nameExt = file.getName();
+                    String fileName;
+                    String extension;
                     if (file.isDirectory()) {
-                        data.setFileName(file.getName());
-                        data.setExtensions("");
+                        fileName=file.getName();
+                        extension = "";
+                        Asset assetFile = AssetFactory.getAsset(pathFile,hidden,size,owner,directory,lastAccess,lastCreate,lastModified,
+                                readOnly,nameExt,fileName,extension);
+                        fileList.add(assetFile);
                         searchByPath(file.getPath());
 
                     } else {
                         String[] fileN = file.getName().split("\\.");
                         StringJoiner name = new StringJoiner(".");
                         Arrays.stream(fileN, 0, fileN.length - 1).forEachOrdered(name::add);
-                        data.setFileName(name.toString());
-                        data.setExtensions(".".concat(fileN[fileN.length - 1]));
+                        fileName = name.toString();
+                        extension = ".".concat(fileN[fileN.length - 1]);
+                        Asset assetFile = AssetFactory.getAsset(pathFile,hidden,size,owner,directory,lastAccess,lastCreate,lastModified,
+                                readOnly,nameExt,fileName,extension);
+                        fileList.add(assetFile);
                     }
 
 
@@ -481,21 +486,20 @@ public class Search {
                 fileBasicAttributes = Files.readAttributes(path1, BasicFileAttributes.class);
                 if (!file.isDirectory()) {
                     try {
-                        AssetMultimedia data = new AssetMultimedia();
-                        data.setPath(file.getPath());
-                        data.setIshidden(file.isHidden());
-                        data.setSize(file.length());
-                        data.setOwner(Files.getOwner(path1).getName());
-                        data.setDateAccess(new Date(fileBasicAttributes.lastAccessTime().toMillis()));
-                        data.setDateCreate(new Date(fileBasicAttributes.creationTime().toMillis()));
-                        data.setDateModificate(new Date(file.lastModified()));
-                        data.setReadOnly(!file.canWrite());
+                        String pathFile = file.getPath();
+                        boolean hidden = file.isHidden();
+                        long size = file.length();
+                        String owner = Files.getOwner(path1).getName();
+                        Date lastAccess = new Date(fileBasicAttributes.lastAccessTime().toMillis());
+                        Date lastCreate = new Date(fileBasicAttributes.creationTime().toMillis());
+                        Date lastModified = new Date(file.lastModified());
+                        boolean readOnly = !file.canWrite();
 
                         String[] fileN = file.getName().split("\\.");
                         StringJoiner name = new StringJoiner(".");
                         Arrays.stream(fileN, 0, fileN.length - 1).forEachOrdered(name::add);
-                        data.setFileName(name.toString());
-                        data.setExtensions(".".concat(fileN[fileN.length - 1]));
+                        String fileName = name.toString();
+                        String extension = ".".concat(fileN[fileN.length - 1]);
                         String ffprobePath;
                         if (OS.contains("windows")) {
                             ffprobePath = new File(".").getCanonicalPath() + SLASH + "resources" + SLASH + "ffprobe.exe";
@@ -507,33 +511,22 @@ public class Search {
 
                         //values multimedia
                         ffprobe = new FFprobe(ffprobePath);
-                        probeResult = ffprobe.probe(data.getPath());
+                        probeResult = ffprobe.probe(pathFile);
                         stream = probeResult.getStreams().get(0);
 
                         // video information
                         String codecName = stream.codec_name;
                         String codecLongName = stream.codec_long_name;
+                        //resolution
                         int width = stream.width;
                         int height = stream.height;
                         String displayAspect = stream.display_aspect_ratio;
+                        //
                         Fraction rFrameRate = stream.r_frame_rate;
                         double startTime = stream.start_time;
                         double duration = stream.duration;
                         long bitRate = stream.bit_rate;
                         long nbFrames = stream.nb_frames;
-
-                        data.setCodecName(codecName);
-                        data.setCodecLongName(codecLongName);
-                        //resolution
-                        data.setWidth(width);//320
-                        data.setHeight(height); //430
-                        data.setDisplayAspect(displayAspect);// e. g. 4:3
-                        //end resolution
-                        data.setrFrameRate(rFrameRate);
-                        data.setStarTime(startTime);
-                        data.setDuration(duration);
-                        data.setBitRate(bitRate);
-                        data.setNbFrames(nbFrames);
                         System.out.println("-------------video----------------");
                         System.out.println("codecName: " + codecName);
                         System.out.println("codecLongName: " + codecLongName);
@@ -559,7 +552,7 @@ public class Search {
                         long audioBitRate = stream.bit_rate;
                         long audioMaxBitRate = stream.max_bit_rate;
                         long audioNbFrame = stream.nb_frames;
-                        data.setAudioCodecName(audioCodecName);
+                        //data.setAudioCodecName(audioCodecName);
                         System.out.println("---------------audio------------------");
                         System.out.println("audioCodec: " + audioCodecName);
                         System.out.println("audicoCodecLong: " + audioCodecNameLong);
@@ -571,7 +564,10 @@ public class Search {
                         System.out.println("audioBitRate: " + audioBitRate);
                         System.out.println("audioMaxBitRate: " + audioMaxBitRate);
                         System.out.println("audioNbFrame: " + audioNbFrame);
-                        fileList.add(data);
+                        Asset asset = AssetFactory.getAsset(pathFile,hidden,size,owner,lastAccess,lastCreate,lastModified,
+                                readOnly,fileName,extension,codecName,codecLongName,width,height,displayAspect,rFrameRate,duration,
+                                bitRate,nbFrames,audioCodecName);
+                        fileList.add(asset);
 
                     } catch (IOException | NullPointerException exception) {
 
