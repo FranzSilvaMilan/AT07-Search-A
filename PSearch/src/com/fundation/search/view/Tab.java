@@ -46,7 +46,7 @@ public class Tab extends JTabbedPane{
         });
 
         add("FILE", panelSearch);
-        addTab("MULTIMEDIA", panelMultimedia);
+        addTab("MULTIMEDIA/DB", panelMultimedia);
     }
 
 

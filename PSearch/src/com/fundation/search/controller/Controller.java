@@ -113,8 +113,7 @@ public class Controller {
 
                         } else {
                             AssetMultimedia assetMultimedia = (AssetMultimedia) file;
-                            String resolution = assetMultimedia.getDisplayAspect() + " "
-                                    + assetMultimedia.getWidth() + "x" + assetMultimedia.getHeight();
+                            String resolution = assetMultimedia.getDisplayAspect() + " " + assetMultimedia.getWidth() + "x" + assetMultimedia.getHeight();
                             row = new String[]{Boolean.toString(false), assetMultimedia.getFileName(),
                                     String.format("%.3f", convert.convertTOLongShow(assetMultimedia.getSize(), unityForSize)).concat(" ").concat(unityForSize), assetMultimedia.getPath(),
                                     Boolean.toString(assetMultimedia.getIsIshidden()), assetMultimedia.getExtensions(), assetMultimedia.getOwner(), Boolean.toString(assetMultimedia.getReadOnly()),
@@ -138,8 +137,8 @@ public class Controller {
             if (validateAllFields()) {
                 criteria = new Criteria();
                 buildCriteria();
-                String nameCriteria=frame.getPanelMultimedia().getTextCriteria();
-                search.createJson(criteria,nameCriteria);
+                String nameCriteria = frame.getPanelMultimedia().getTextCriteria();
+                search.createJson(criteria, nameCriteria);
                 dataBaseLoad();
             }
         });
@@ -166,7 +165,7 @@ public class Controller {
                 frame.getPanelSearch().setExtensions(selectCriteria[0].getListExtensions());
                 frame.getPanelSearch().setOperator(selectCriteria[0].getOperator());
                 frame.getPanelSearch().setOptionUnitsSize(selectCriteria[0].getUnitForSize());
-                frame.getPanelSearch().setSpinnerSize(convert.convertTOLongShow(selectCriteria[0].getSize(),selectCriteria[0].getUnitForSize()));
+                frame.getPanelSearch().setSpinnerSize(convert.convertTOLongShow(selectCriteria[0].getSize(), selectCriteria[0].getUnitForSize()));
                 frame.getPanelSearch().setEnableKeySensitive(selectCriteria[0].isKeySensitive());
                 frame.getPanelSearch().setEnableOnlyRead(selectCriteria[0].getReadOnly());
                 frame.getPanelSearch().setFolder(selectCriteria[0].getDirectory());
@@ -227,17 +226,17 @@ public class Controller {
         String owner = frame.getPanelSearch().getOwner();
         String contain = frame.getPanelSearch().getContain();
         boolean folder = frame.getPanelSearch().getSearchFolder();
-        boolean endWith= frame.getPanelSearch().getEndWith();
-        boolean startWith= frame.getPanelSearch().getStartWith();
+        boolean endWith = frame.getPanelSearch().getEndWith();
+        boolean startWith = frame.getPanelSearch().getStartWith();
         ArrayList<String> listExtensions = frame.getPanelSearch().getExtensions();
         boolean multimediaSelected = frame.getPanelMultimedia().getenableMediaSetup();
 
 
         //builder criteria
         CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
-        criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator,unityForSize);
+        criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator, unityForSize);
         criteriaBuilder.buildFileAdvance(folder, readOnly, dateModifyFrom, dateModifyTo, dateCreateFrom,
-                dateCreateTo, dateAccessFrom, dateAccessTo, keySensitive, owner, contain, listExtensions,endWith,startWith, multimediaSelected);
+                dateCreateTo, dateAccessFrom, dateAccessTo, keySensitive, owner, contain, listExtensions, endWith, startWith, multimediaSelected);
         if (multimediaSelected) {
             //multimedia
             String frameRate = frame.getPanelMultimedia().getOptionFrameRate();
@@ -248,8 +247,9 @@ public class Controller {
             String unitDuration = frame.getPanelMultimedia().getOperationTime();//e.g. second
             double duration = convert.convertTimeDurationToDouble(frame.getPanelMultimedia().getDuration(), unitDuration);
             ArrayList<String> extensionsMultimedia = frame.getPanelMultimedia().getOtherExtensions();
+            String aspectRatio = frame.getPanelMultimedia().getAspectRadio();
             criteriaBuilder.buildMultimedia(frameRate, videoCode, audioCode,
-                    resolution, duration, operatorDurationTime, extensionsMultimedia);
+                    resolution, duration, operatorDurationTime, extensionsMultimedia, aspectRatio);
         }
         this.criteria = criteriaBuilder.build();
         LOGGER.info("buildCriteria: exit");

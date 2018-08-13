@@ -177,7 +177,7 @@ public class PanelMultimedia extends JPanel {
         listVideoCode = new String[]{" ", "H264", "H263", "MPEG4", "WNV1"};
         listFrameRate = new String[]{" ", "24 fps", "25 fps", "30 fps", "60 fps"};
         listAduioCodec = new String[]{" ", "mp3", "aac","amr_nb"};
-        listAspecRadio = new String[]{"", "0:1", "3:2", "4:3", "16:9", "21:9", "45:19", "180:101"};
+        listAspecRadio = new String[]{" ", "0:1", "3:2", "4:3", "16:9", "21:9", "45:19", "180:101"};
         operator = new JComboBox<>(operatiorOptions);
         optionUnitsResolution = new JComboBox<>(listResolution);
         operationTime = new JComboBox<>(listTime);

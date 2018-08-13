@@ -24,8 +24,12 @@ import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import net.bramp.ffmpeg.probe.FFmpegStream;
 import org.apache.commons.lang3.math.Fraction;
 import org.apache.log4j.Logger;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,7 +39,14 @@ import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -64,6 +75,7 @@ public class Search {
     private FFmpegStream stream;
     private static final String SLASH = System.getProperty("file.separator");
     private static final String OS = System.getProperty("os.name").toLowerCase();
+    private ArrayList<String> multime;
 
 
     /**
@@ -72,6 +84,7 @@ public class Search {
     public Search() {
         LOGGER.info("Constructor Search : into");
         fileList = new ArrayList<>();
+        //ultime = {"",""};
         convert = new Convert();
         LOGGER.info("Consturctor search : exit");
     }
@@ -133,15 +146,39 @@ public class Search {
         LOGGER.info("searchByName: into" + nameFile + " " + keysensitive);
         List<Asset> listFilter = new ArrayList<>();
         fileList.forEach(file -> {
-            if (keysensitive) {
-                if (file.getFileName().contains(nameFile)) {
-                    listFilter.add(file);
-                }
-            } else {
-                if (file.getFileName().toUpperCase().contains(nameFile.toUpperCase())) {
-                    listFilter.add(file);
-                }
-            }
+                    if(keysensitive) {
+                        if(criteria.isStartWith()){
+                            if(file.getFileName().startsWith(nameFile)) {
+                                listFilter.add(file);
+                            }
+                        }
+                        else if(criteria.isEndWith()){
+                            if(file.getFileName().endsWith(nameFile)){
+                                listFilter.add(file);
+                            }
+                        }
+                        else{
+                            if (!file.getFileName().contains(nameFile)) {
+                                listFilter.add(file);
+                            }
+                        }
+                    } else {
+                        if(criteria.isStartWith()){
+                            if(file.getFileName().toLowerCase().startsWith(nameFile.toLowerCase())){
+                                listFilter.add(file);
+                            }
+                        }
+                        else if(criteria.isEndWith()){
+                            if(file.getFileName().toLowerCase().endsWith(nameFile.toLowerCase())){
+                                listFilter.add(file);
+                            }
+                        }
+                        else{
+                            if (file.getFileName().toLowerCase().contains(nameFile.toLowerCase())) {
+                                listFilter.add(file);
+                            }
+                        }
+                    }
         });
         fileList.clear();
         fileList.addAll(listFilter);
@@ -255,7 +292,6 @@ public class Search {
                     searchByResolution(criteria.getResolution());
                 }
                 if (criteria.getAudioCode() != null) {
-
                     searchByAudioCodec(criteria.getAudioCode());
                 }
                 if (!criteria.getExtensionVideo().isEmpty()) {
@@ -264,7 +300,9 @@ public class Search {
                 if (criteria.getDuration() >= 0 && criteria.getOperatorDurationTime() != null) {
                     searchByDuration(criteria.getDuration(), criteria.getOperatorDurationTime());
                 }
-
+                if(criteria.getAspectRatio() != null){
+                    searchByAspectRatio(criteria.getAspectRatio());
+                }
             }
         }
         LOGGER.info("searchByPath: exit");
@@ -293,19 +331,19 @@ public class Search {
                         e.printStackTrace();
                     }
                 }
-                /**if (((AssetFile) file).getFileNameExt().endsWith(".docx")) {
+                if (((AssetFile) file).getFileNameExt().endsWith(".docx")) {
 
-                 try {
-                 FileInputStream fis = new FileInputStream(file.getPath());
-                 XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
-                 XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
-                 if (extractor.getText().toLowerCase().contains(pharse.toLowerCase())) {
-                 return false;
-                 }
-                 } catch (Exception ex) {
-                 return true;
-                 }
-                 }**/
+                    try {
+                        FileInputStream fis = new FileInputStream(file.getPath());
+                        XWPFDocument xdoc = new XWPFDocument(OPCPackage.open(fis));
+                        XWPFWordExtractor extractor = new XWPFWordExtractor(xdoc);
+                        if (extractor.getText().toLowerCase().contains(pharse.toLowerCase())) {
+                            return false;
+                        }
+                    } catch (Exception ex) {
+                        return true;
+                    }
+                }
             }
             return true;
 
@@ -534,6 +572,7 @@ public class Search {
                         System.out.println("audioMaxBitRate: " + audioMaxBitRate);
                         System.out.println("audioNbFrame: " + audioNbFrame);
                         fileList.add(data);
+
                     } catch (IOException | NullPointerException exception) {
 
                     } catch (IndexOutOfBoundsException ex) {
@@ -546,10 +585,6 @@ public class Search {
         } catch (NullPointerException | IOException e) {
         }
         LOGGER.info("addMultimediaAttributes: exit");
-    }
-
-    public void printValuesMultimedia() {
-
     }
 
     /**

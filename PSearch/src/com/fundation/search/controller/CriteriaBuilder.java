@@ -70,17 +70,9 @@ public class CriteriaBuilder implements IBuilder {
 
     }
 
-    private String videoCode;
-    private String audioCode;
-    private String resolution;
-    private long duration;
-    private String operatorDurationTime;
-    private ArrayList<String> extensionVideo;
-    private boolean isMultimediaSelected;
-
     @Override
     public void buildMultimedia(String frameRare, String videoCode, String audioCode, String resolution, double duration, String operatorDurationTime,
-                                ArrayList<String> extensionVideo) {
+                                ArrayList<String> extensionVideo,String aspectRatio) {
         System.out.println("buildea multimedia");
         if (frameRare != null) {
             criteria.setFrameRate(frameRare);
@@ -100,11 +92,14 @@ public class CriteriaBuilder implements IBuilder {
         if (operatorDurationTime != null) {
             criteria.setOperatorDurationTime(operatorDurationTime);
         }
-        System.out.println("antes de extensions su tamaño es " + extensionVideo.isEmpty());
         if (!extensionVideo.isEmpty()) {
             System.out.println(" setea extensions");
             criteria.setExtensionVideo(extensionVideo);
         }
+        if(aspectRatio != null){
+            criteria.setAspectRatio(aspectRatio);
+        }
+
     }
 
     @Override

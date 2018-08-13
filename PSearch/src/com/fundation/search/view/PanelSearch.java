@@ -561,6 +561,9 @@ public class PanelSearch extends JPanel {
             }
         });
     }
+    public void showErrorMessage(String showError){
+        JOptionPane.showMessageDialog(null,showError);
+    }
 
     public void numbers(JSpinner spinnerSize) {
         spinnerSize.addKeyListener(new KeyAdapter() {
