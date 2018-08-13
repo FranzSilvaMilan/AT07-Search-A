@@ -451,7 +451,6 @@ public class PanelSearch extends JPanel {
         btSelect.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 btSelectMouseClicked(evt);
-
             }
         });
     }
