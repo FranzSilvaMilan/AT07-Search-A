@@ -55,6 +55,18 @@ public class Criteria {
      * search the word  of criteria.
      */
     private boolean startWith;
+    /**
+     * Activate date create.
+     */
+    private boolean enableCreate;
+    /**
+     * Activate date modified.
+     */
+    private boolean enableModified;
+    /**
+     * Activate date last access.
+     */
+    private boolean enableLastAccess;
 
     /**
      * operator that help search by size.
@@ -553,5 +565,53 @@ public class Criteria {
      */
     public void setUnitForSize(String unitForSize) {
         this.unitForSize = unitForSize;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isEnableCreate() {
+        return enableCreate;
+    }
+
+    /**
+     *
+     * @param enableCreate
+     */
+    public void setEnableCreate(boolean enableCreate) {
+        this.enableCreate = enableCreate;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isEnableModified() {
+        return enableModified;
+    }
+
+    /**
+     *
+     * @param enableModified
+     */
+    public void setEnableModified(boolean enableModified) {
+        this.enableModified = enableModified;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isEnableLastAccess() {
+        return enableLastAccess;
+    }
+
+    /**
+     *
+     * @param enableLastAccess
+     */
+    public void setEnableLastAccess(boolean enableLastAccess) {
+        this.enableLastAccess = enableLastAccess;
     }
 }

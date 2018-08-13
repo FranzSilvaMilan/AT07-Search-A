@@ -750,27 +750,27 @@ public class PanelMultimedia extends JPanel {
      */
     public void setExtensionsMultimedia(ArrayList<String> listextencionsMultimedia) {
         for (String valuesExtencion : listextencionsMultimedia) {
-            if (valuesExtencion.contains("Mp4")){
+            if (valuesExtencion.contains("MP4")){
                 mp4.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("Wmv")){
+            if (valuesExtencion.contains("WMV")){
                 wmv.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("Mov")){
+            if (valuesExtencion.contains("MOV")){
                 mov.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("Avi")){
+            if (valuesExtencion.contains("AVI")){
                 avi.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("Xvidi")){
+            if (valuesExtencion.contains("XVIDI")){
                 xvidi.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("mpg")){
+            if (valuesExtencion.contains("MPG")){
                 mpg.setSelected(true);
                 continue;
             }

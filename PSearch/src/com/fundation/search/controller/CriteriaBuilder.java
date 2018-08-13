@@ -48,10 +48,14 @@ public class CriteriaBuilder implements IBuilder {
                                  Date dateModifyFrom, Date dateModifyTo, Date dateCreateFrom,
                                  Date dateCreateTo, Date dateAccessFrom, Date dateAccessTo,
                                  boolean keysensitive, String owner, String contain, ArrayList<String> extensions,
-                                 boolean endWith, boolean startWith, boolean multimediaSelected) {
+                                 boolean endWith, boolean startWith, boolean multimediaSelected, boolean dateCreate,
+                                 boolean dateModified, boolean dateLassAccess) {
 
         if (directory) criteria.setDirectory(directory);
         if (endWith) criteria.setEndWith(endWith);
+        if (dateCreate) criteria.setEnableCreate(dateCreate);
+        if (dateModified) criteria.setEnableModified(dateModified);
+        if (dateLassAccess) criteria.setEnableLastAccess(dateLassAccess);
         if (startWith) criteria.setStartWith(startWith);
         if (readOnly) criteria.setReadOnly(readOnly);
         if (dateModifyFrom != null) criteria.setDateModificateFrom(dateModifyFrom);
@@ -72,7 +76,7 @@ public class CriteriaBuilder implements IBuilder {
 
     @Override
     public void buildMultimedia(String frameRare, String videoCode, String audioCode, String resolution, double duration, String operatorDurationTime,
-                                ArrayList<String> extensionVideo,String aspectRatio) {
+                                ArrayList<String> extensionVideo, String aspectRatio) {
         System.out.println("buildea multimedia");
         if (frameRare != null) {
             criteria.setFrameRate(frameRare);
@@ -96,7 +100,7 @@ public class CriteriaBuilder implements IBuilder {
             System.out.println(" setea extensions");
             criteria.setExtensionVideo(extensionVideo);
         }
-        if(aspectRatio != null){
+        if (aspectRatio != null) {
             criteria.setAspectRatio(aspectRatio);
         }
 
