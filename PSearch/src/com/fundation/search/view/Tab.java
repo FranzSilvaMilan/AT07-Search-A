@@ -50,7 +50,7 @@ public class Tab extends JTabbedPane{
     }
 
 
-    private void enableSetupContainer(boolean b) {
+    public void enableSetupContainer(boolean b) {
 
         panelMultimedia.containerFileExtensions.setEnabled(b);
         for (Component cp : panelMultimedia.containerFileExtensions.getComponents()) {
