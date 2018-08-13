@@ -24,13 +24,13 @@ import java.awt.Color;
  * this is class is a Jframe fisrt,it contain panel of.
  * search panel of a archive and path.
  */
-public class FrameMain  extends JFrame {
+public class FrameMain extends JFrame {
     /**
      * instance the object panelSearch, panelMultimedia, title and tab.
      */
 
     JLabel title;
-    Tab tab;
+    private Tab tab;
     private PanelTable panelTable;
 
     /**
@@ -55,19 +55,23 @@ public class FrameMain  extends JFrame {
         this.getContentPane().setBackground(Color.DARK_GRAY);
         setVisible(true);
     }
+
     private void initComponentTable() {
         panelTable = new PanelTable();
         this.getContentPane().add(panelTable);
     }
+
     public void iniComponent() {
 
         tab = new Tab();
         tab.iniComponentsTab();
         add(tab);
     }
+
     public void addRow(String[] newRow) {
         panelTable.addRow(newRow);
     }
+
     public void cleanTable() {
         panelTable.clean();
     }
@@ -75,7 +79,12 @@ public class FrameMain  extends JFrame {
     public PanelSearch getPanelSearch() {
         return tab.getPanelSearch();
     }
-    public PanelMultimedia getPanelMultimedia(){
-        return  tab.panelMultimedia;
+
+    public PanelMultimedia getPanelMultimedia() {
+        return tab.panelMultimedia;
+    }
+
+    public Tab getTab() {
+        return tab;
     }
 }

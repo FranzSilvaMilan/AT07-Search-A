@@ -16,6 +16,7 @@ package com.fundation.search.view;
 
 import com.fundation.search.utils.LoggerSearch;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -112,7 +113,7 @@ public class PanelSearch extends JPanel {
     private boolean changeLastAccess;
     //private URL imagen1;
     //Logger
-    JLabel labelImagen ;
+    JLabel labelImagen;
     JLabel labelImagenFile;
     JLabel labelFondo;
     String url = "imagen1.png";
@@ -130,7 +131,7 @@ public class PanelSearch extends JPanel {
         initComponentTable();
         settingPanel();
         addComponents();
-        letersNumberEnable(textPath);
+        lettersNumberEnable(textPath);
         numbers(spinnerSize);
         LOGGER.info("PanelSearch : exit");
 
@@ -190,7 +191,7 @@ public class PanelSearch extends JPanel {
         radioGruop = new ButtonGroup();
         ImageIcon iconeSelectPhat = new ImageIcon("src/com/fundation/search/view/imagen/selectPath.png");
         btSelect = new JButton(iconeSelectPhat);
-       ImageIcon iconeSearch = new ImageIcon("src/com/fundation/search/view/imagen/search.png");
+        ImageIcon iconeSearch = new ImageIcon("src/com/fundation/search/view/imagen/search.png");
         buttonSearch = new JButton(iconeSearch);
 
         hiddenCheck = new JCheckBox("Hidden");
@@ -272,6 +273,7 @@ public class PanelSearch extends JPanel {
         dateCreate.setBounds(5, 140, 100, 20);
         dateCreate.setBorder(loweredetched);
         dateCreate.setEnabled(false);
+        ((JTextFieldDateEditor) dateCreate.getDateEditor()).setEditable(false);
 
         labelTo.setBounds(105, 140, 30, 20);
         labelTo.setForeground(new Color(1, 1, 33));
@@ -280,6 +282,7 @@ public class PanelSearch extends JPanel {
         dateCreateTo.setBounds(135, 140, 100, 20);
         dateCreateTo.setBorder(loweredetched);
         dateCreateTo.setEnabled(false);
+        ((JTextFieldDateEditor) dateCreateTo.getDateEditor()).setEditable(false);
 
         //Search by Calendar for date modified.
 
@@ -290,6 +293,7 @@ public class PanelSearch extends JPanel {
         dateModified.setBounds(5, 160, 100, 20);
         dateModified.setBorder(loweredetched);
         dateModified.setEnabled(false);
+        ((JTextFieldDateEditor) dateModified.getDateEditor()).setEditable(false);
 
         labelToM.setBounds(105, 160, 30, 20);
         labelToM.setForeground(new Color(1, 1, 33));
@@ -298,6 +302,7 @@ public class PanelSearch extends JPanel {
         dateModifiedTo.setBounds(135, 160, 100, 20);
         dateModifiedTo.setBorder(loweredetched);
         dateModifiedTo.setEnabled(false);
+        ((JTextFieldDateEditor) dateModifiedTo.getDateEditor()).setEditable(false);
 
 
         //Search by Calendar for date last access.
@@ -309,6 +314,7 @@ public class PanelSearch extends JPanel {
         dateLastAccess.setBounds(5, 180, 100, 20);
         dateLastAccess.setBorder(loweredetched);
         dateLastAccess.setEnabled(false);
+        ((JTextFieldDateEditor) dateLastAccess.getDateEditor()).setEditable(false);
 
         labelToL.setBounds(105, 180, 30, 20);
         labelToL.setForeground(new Color(1, 1, 33));
@@ -317,6 +323,7 @@ public class PanelSearch extends JPanel {
         dateLastAccessTo.setBounds(135, 180, 100, 20);
         dateLastAccessTo.setBorder(loweredetched);
         dateLastAccessTo.setEnabled(false);
+        ((JTextFieldDateEditor) dateLastAccessTo.getDateEditor()).setEditable(false);
 
         //Button and operators.
 
@@ -429,9 +436,9 @@ public class PanelSearch extends JPanel {
         /**
          * this is format of image interface.
          */
-        labelImagen.setBounds(800,0,400,100);
-        labelImagenFile.setBounds(850,0,300,300);
-        labelFondo.setBounds(0,0,900,400);
+        labelImagen.setBounds(800, 0, 400, 100);
+        labelImagenFile.setBounds(850, 0, 300, 300);
+        labelFondo.setBounds(0, 0, 900, 400);
         //labelImagen.setIcon(icone);
 
         actionBottom();
@@ -541,7 +548,8 @@ public class PanelSearch extends JPanel {
         add(labelFondo);
         LOGGER.info("addComponents : exit");
     }
-    public void letersNumberEnable(JTextField textPath){
+
+    public void lettersNumberEnable(JTextField textPath) {
 
         textPath.addKeyListener(new KeyAdapter() {
             @Override
@@ -560,8 +568,9 @@ public class PanelSearch extends JPanel {
             }
         });
     }
-    public void showErrorMessage(String showError){
-        JOptionPane.showMessageDialog(null,showError);
+
+    public void showErrorMessage(String showError) {
+        JOptionPane.showMessageDialog(null, showError);
     }
 
     public void numbers(JSpinner spinnerSize) {
@@ -834,7 +843,7 @@ public class PanelSearch extends JPanel {
     /* public void setDateLastAccessTo(JDateChooser dateLastAccessTo) {
          this.dateLastAccessTo.setDate(dateLastAccessTo);
      }*/
-    public void setSpinnerSize(int  spinnerSize) {
+    public void setSpinnerSize(int spinnerSize) {
         this.spinnerSize.setValue(spinnerSize);
     }
 
@@ -863,6 +872,15 @@ public class PanelSearch extends JPanel {
     }
 
     public void setExtensions(ArrayList<String> listExtencions) {
+        pdf.setSelected(false);
+        exe.setSelected(false);
+        ppt.setSelected(false);
+        txt.setSelected(false);
+        xlsx.setSelected(false);
+        zip.setSelected(false);
+        rar.setSelected(false);
+        docx.setSelected(false);
+        textExtension.setText(" ");
         for (String valuesExtencion : listExtencions) {
             if (valuesExtencion.contains("pdf")) {
                 pdf.setSelected(true);
@@ -888,25 +906,22 @@ public class PanelSearch extends JPanel {
                 rar.setSelected(true);
                 continue;
             }
-            if (valuesExtencion.contains("xlsx")) {
-                xlsx.setSelected(true);
-                continue;
-            }
+
             if (valuesExtencion.contains("txt")) {
                 txt.setSelected(true);
                 continue;
             }
+
             if (valuesExtencion.contains("docx")) {
                 docx.setSelected(true);
                 continue;
             }
+
             textExtension.setText(valuesExtencion);
         }
-
     }
 
     /**
-     *
      * @return
      */
     public boolean getEnableCreate() {
@@ -914,7 +929,6 @@ public class PanelSearch extends JPanel {
     }
 
     /**
-     *
      * @return
      */
     public boolean getEnableModified() {
@@ -922,14 +936,13 @@ public class PanelSearch extends JPanel {
     }
 
     /**
-     *
      * @return
      */
     public boolean getEnableLastAccess() {
         return enableLastAccess.isSelected();
     }
+
     /**
-     *
      * @param enableCreate
      */
     public void setEnableCreate(boolean enableCreate) {
@@ -937,7 +950,6 @@ public class PanelSearch extends JPanel {
     }
 
     /**
-     *
      * @param enableModified
      */
     public void setEnableModified(boolean enableModified) {
@@ -945,12 +957,12 @@ public class PanelSearch extends JPanel {
     }
 
     /**
-     *
      * @param enableLastAccess
      */
     public void setEnableLastAccess(boolean enableLastAccess) {
         this.enableLastAccess.setSelected(enableLastAccess);
     }
+
     /**
      * this method clean table.
      */
@@ -981,21 +993,21 @@ public class PanelSearch extends JPanel {
 
     }
 
-    public void enableComponents(boolean enable) {
-        endWith.setEnabled(enable);
-        startWith.setEnabled(enable);
-        pdf.setEnabled(enable);
-        txt.setEnabled(enable);
-        ppt.setEnabled(enable);
-        rar.setEnabled(enable);
-        zip.setEnabled(enable);
-        exe.setEnabled(enable);
-        docx.setEnabled(enable);
-        xlsx.setEnabled(enable);
+    public void enableComponents(boolean blocked) {
+        //endWith.setEnabled(blocked);
+        //startWith.setEnabled(blocked);
+        pdf.setEnabled(blocked);
+        txt.setEnabled(blocked);
+        ppt.setEnabled(blocked);
+        rar.setEnabled(blocked);
+        zip.setEnabled(blocked);
+        exe.setEnabled(blocked);
+        docx.setEnabled(blocked);
+        xlsx.setEnabled(blocked);
 
-        textExtension.enable(enable);
-        textOwner.enable(enable);
-        textContain.enable(enable);
-        folder.setEnabled(enable);
+        textExtension.setEnabled(blocked);
+        textOwner.setEnabled(blocked);
+        textContain.setEnabled(blocked);
+        folder.setEnabled(blocked);
     }
 }

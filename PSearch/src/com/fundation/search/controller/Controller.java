@@ -196,6 +196,7 @@ public class Controller {
                     frame.getPanelSearch().setDateLastAccess(selectCriteria[0].getDateCreateFrom());
                     frame.getPanelSearch().setDateLastAccessTo(selectCriteria[0].getDateAccessTo());
                     //Multimedia
+                    frame.getTab().enableSetupContainer(selectCriteria[0].getIsMultimediaSelected());
                     frame.getPanelMultimedia().setSelectedMultiMediaSetup(selectCriteria[0].getIsMultimediaSelected());
                     frame.getPanelMultimedia().setOptionAudioCodec(selectCriteria[0].getAudioCode());
                     frame.getPanelMultimedia().setOptionVideoCode(selectCriteria[0].getVideoCode());
