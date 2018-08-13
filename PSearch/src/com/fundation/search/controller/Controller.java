@@ -193,7 +193,7 @@ public class Controller {
                     frame.getPanelSearch().setDateModified(selectCriteria[0].getDateModificateFrom());
                     frame.getPanelSearch().setDateModifiedTo(selectCriteria[0].getDateModificateTo());
                     frame.getPanelSearch().setEnableLastAccess(selectCriteria[0].isEnableLastAccess());
-                    frame.getPanelSearch().setDateLastAccess(selectCriteria[0].getDateCreateFrom());
+                    frame.getPanelSearch().setDateLastAccess(selectCriteria[0].getDateAccessFrom());
                     frame.getPanelSearch().setDateLastAccessTo(selectCriteria[0].getDateAccessTo());
                     //Multimedia
                     frame.getTab().enableSetupContainer(selectCriteria[0].getIsMultimediaSelected());
