@@ -148,7 +148,6 @@ public class Controller {
      * this method has the accion listeenr of the button.
      */
     private void actionListenerDataBaseLoad() {
-        System.out.println("Inicia carga de datos");
         frame.getPanelMultimedia().getButtonLoad().addActionListener(e -> {
             int idSelect = Integer.parseInt(frame.getPanelMultimedia().getTextCriteria());
             try {
@@ -166,8 +165,6 @@ public class Controller {
                 frame.getPanelSearch().setExtensions(selectCriteria[0].getListExtensions());
                 frame.getPanelSearch().setOperator(selectCriteria[0].getOperator());
                 frame.getPanelSearch().setOptionUnitsSize(selectCriteria[0].getUnitForSize());
-                System.out.println(String.valueOf((int) convert.convertTOLongShow(selectCriteria[0].getSize(),
-                        selectCriteria[0].getUnitForSize())));
                 frame.getPanelSearch().setSpinnerSize((int) convert.convertTOLongShow(selectCriteria[0].getSize(),
                         selectCriteria[0].getUnitForSize()));
                 frame.getPanelSearch().setEnableKeySensitive(selectCriteria[0].isKeySensitive());
@@ -196,10 +193,8 @@ public class Controller {
 
             } catch (SQLException e1) {
                 e1.printStackTrace();
-                System.out.println("Ocurrio un error");
             }
         });
-        System.out.println("Finaliza la carga");
     }
 
     /**
