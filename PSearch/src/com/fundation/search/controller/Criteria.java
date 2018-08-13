@@ -117,10 +117,19 @@ public class Criteria {
     private String videoCode;
     private String audioCode;
     private String resolution;
+    private String aspectRatio;
     private double duration;
     private String operatorDurationTime;
     private ArrayList<String> extensionVideo;
     private boolean isMultimediaSelected;
+
+    public String getAspectRatio() {
+        return aspectRatio;
+    }
+
+    public void setAspectRatio(String aspectRatio) {
+        this.aspectRatio = aspectRatio;
+    }
 
     public boolean getIsMultimediaSelected() {
         return isMultimediaSelected;
