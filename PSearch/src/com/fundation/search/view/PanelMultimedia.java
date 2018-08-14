@@ -91,6 +91,7 @@ public class PanelMultimedia extends JPanel {
     private JLabel labelAudioCodec;
     private JLabel labelAspecRadio;
     private JLabel labelFondo;
+    private JLabel labelImagenMultimedia;
 
     // PanelTable to multimedia.
     private PanelTable panelTable;
@@ -146,13 +147,17 @@ public class PanelMultimedia extends JPanel {
         labelAspecRadio = new JLabel("ASPECT RADIO:");
         labelOtherExtension = new JLabel("OTHER EXTENSION:");
         // add image fund of multimedia.
-        ImageIcon iconeFondo = new ImageIcon("src/com/fundation/search/view/imagen/fondo3.jpg");
+        ImageIcon iconeFondo = new ImageIcon("src/com/fundation/search/view/imagen/fondos123f.png");
         labelFondo = new JLabel(iconeFondo);
+
+        ImageIcon iconeMultimedia = new ImageIcon("src/com/fundation/search/view/imagen/pic002.png");
+        labelImagenMultimedia = new JLabel(iconeMultimedia);
 
         textCriteria = new JTextField(50);
         textOtherExtension = new JTextField();
-
+        //ImageIcon iconeLoad = new ImageIcon("src/com/fundation/search/view/imagen/load1.png");
         buttonLoad = new JButton("LOAD");
+        //ImageIcon iconeSave = new ImageIcon("src/com/fundation/search/view/imagen/load1.png");
         buttonSave = new JButton("SAVE");
 
         listResolution = new String[]{" ", "0:1 480x360", "640:343 1280x686",
@@ -311,7 +316,7 @@ public class PanelMultimedia extends JPanel {
         multimediaConfig.gridx = 1;
         multimediaConfig.gridy = 6;
         multimediaConfig.gridwidth = 1;
-        multimediaConfig.gridheight = 1;
+        multimediaConfig.gridheight = 2;
         multimediaConfig.weightx = 1.0;
         multimediaConfig.fill = GridBagConstraints.HORIZONTAL;
         containerFileSetup.add(spinnerDuration, multimediaConfig);
@@ -320,12 +325,13 @@ public class PanelMultimedia extends JPanel {
         multimediaConfig.gridy = 6;
         multimediaConfig.gridwidth = 2;
         multimediaConfig.gridheight = 1;
+        multimediaConfig.weightx = 0.1;
         multimediaConfig.fill = GridBagConstraints.HORIZONTAL;
         containerFileSetup.add(operatorTime, multimediaConfig);
 
 
-        GridLayout extensionsLayout = new GridLayout(0, 3);
-        containerFileExtensions.setBounds(310, 50, 300, 200);
+        GridLayout extensionsLayout = new GridLayout(0, 2);
+        containerFileExtensions.setBounds(310, 50, 165, 200);
         containerFileExtensions.setVisible(true);
 
         containerFileExtensions.setBackground(new java.awt.Color(201, 222, 244));
@@ -370,7 +376,7 @@ public class PanelMultimedia extends JPanel {
         dataBaseLayout.gridwidth = 1;
         dataBaseLayout.gridheight = 1;
         containerFileDateBase.add(buttonSave, dataBaseLayout);
-
+        // change LOAD
         dataBaseLayout.gridx = 2;
         dataBaseLayout.gridy = 1;
         dataBaseLayout.gridwidth = 1;
@@ -387,6 +393,7 @@ public class PanelMultimedia extends JPanel {
         containerFileDateBase.add(panelTableBD, dataBaseLayout);
 
         labelFondo.setBounds(0, 0, 1500, 400);
+        labelImagenMultimedia.setBounds(480,100,150,150);
 
         LOGGER.info("settingPanel: exit");
     }
@@ -401,6 +408,7 @@ public class PanelMultimedia extends JPanel {
         add(containerFileExtensions);
         add(containerFileDateBase);
         add(panelTable);
+        add(labelImagenMultimedia);
         add(labelFondo);
         LOGGER.info("addComponents: exit");
     }
