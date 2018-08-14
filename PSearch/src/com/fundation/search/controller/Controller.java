@@ -70,6 +70,8 @@ public class Controller {
      * lOGGER
      */
     private static final Logger LOGGER = LoggerSearch.getInstance().getLogger();
+    private boolean existErrorDate;
+    private String unitTime;
 
     /**
      * this a constuctor.
@@ -81,6 +83,7 @@ public class Controller {
         validator = new ValidatorData();
         convert = new Convert();
         criteria = new Criteria();
+        existErrorDate = false;
         dataBaseLoad();
         actionListener();
         actionListenerDataBaseSave();
@@ -101,8 +104,13 @@ public class Controller {
                     buildCriteria();
                     search.setCriteria(criteria);
                     search.searchByCriteria(criteria);
+
                     List<Asset> listResult = search.getResult();
                     frame.cleanTable();
+                    if(!existErrorDate){
+                        frame.getPanelSearch().showErrorMessage("Dates invalid");
+                        return;
+                    }
                     for (Asset file : listResult) {
                         String[] row;
                         if (file instanceof AssetFile) {
@@ -117,12 +125,15 @@ public class Controller {
                         } else {
                             AssetMultimedia assetMultimedia = (AssetMultimedia) file;
                             String resolution = assetMultimedia.getDisplayAspect() + " " + assetMultimedia.getWidth() + "x" + assetMultimedia.getHeight();
+                            Double value = (Math.ceil(assetMultimedia.getrFrameRate().doubleValue()));
+                            String frameRate = value.intValue() + " fps";
+                            double duration = convert.convertTimeDurationToDoubleShow(Double.toString(assetMultimedia.getDuration()),unitTime);
                             row = new String[]{Boolean.toString(false), assetMultimedia.getFileName(),
                                     String.format("%.3f", convert.convertTOLongShow(assetMultimedia.getSize(), unityForSize)).concat(" ").concat(unityForSize), assetMultimedia.getPath(),
                                     Boolean.toString(assetMultimedia.getIsIshidden()), assetMultimedia.getExtensions(), assetMultimedia.getOwner(), Boolean.toString(assetMultimedia.getReadOnly()),
                                     convert.convertDateToString(assetMultimedia.getDateCreate()), convert.convertDateToString(assetMultimedia.getDateModificate()),
-                                    convert.convertDateToString(assetMultimedia.getDateAccess()), assetMultimedia.getrFrameRate().toString(),
-                                    resolution, assetMultimedia.getCodecName(), assetMultimedia.getAudioCodecName(), Double.toString(assetMultimedia.getDuration())};
+                                    convert.convertDateToString(assetMultimedia.getDateAccess()), frameRate,
+                                    resolution, assetMultimedia.getCodecName(), assetMultimedia.getAudioCodecName(), String.format("%.2f",duration).concat(" ").concat(unitTime)};
                             frame.addRow(row);
                         }
                     }
@@ -264,29 +275,31 @@ public class Controller {
         boolean dateLassAccess = frame.getPanelSearch().getEnableLastAccess();
         ArrayList<String> listExtensions = frame.getPanelSearch().getExtensions();
         boolean multimediaSelected = frame.getPanelMultimedia().getenableMediaSetup();
+        existErrorDate =validator.validateDates(dateAccessFrom,dateAccessTo)
+                &&validator.validateDates(dateModifyFrom,dateModifyTo)
+                &&validator.validateDates(dateCreateFrom,dateCreateTo);
+            //builder criteria
+            CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
+            criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator, unityForSize);
+            criteriaBuilder.buildFileAdvance(folder, readOnly, dateModifyFrom, dateModifyTo, dateCreateFrom,
+                    dateCreateTo, dateAccessFrom, dateAccessTo, keySensitive, owner, contain, listExtensions,
+                    endWith, startWith, multimediaSelected, dateCreate, dateModified, dateLassAccess);
+            if (multimediaSelected) {
+                //multimedia
+                String frameRate = frame.getPanelMultimedia().getOptionFrameRate();
+                String videoCode = frame.getPanelMultimedia().getOptionVideoCode();
+                String audioCode = frame.getPanelMultimedia().getOptionAudioCodec();
+                String resolution = frame.getPanelMultimedia().getOptionUnitsResolution();
+                String operatorDurationTime = frame.getPanelMultimedia().getOperatorTime();// < > =
+                unitTime = frame.getPanelMultimedia().getUnitTime();//e.g. second
+                double durationVideo = convert.convertTimeDurationToDouble(frame.getPanelMultimedia().getDuration(), unitTime);
+                ArrayList<String> extensionsMultimedia = frame.getPanelMultimedia().getOtherExtensions();
+                String aspectRatio = frame.getPanelMultimedia().getAspectRadio();
+                criteriaBuilder.buildMultimedia(frameRate, videoCode, audioCode,
+                        resolution, durationVideo, operatorDurationTime, unitTime, extensionsMultimedia, aspectRatio);
+            }
+            this.criteria = criteriaBuilder.build();
 
-
-        //builder criteria
-        CriteriaBuilder criteriaBuilder = new CriteriaBuilder();
-        criteriaBuilder.buildFile(path, fileName, hidden, sizeValue, operator, unityForSize);
-        criteriaBuilder.buildFileAdvance(folder, readOnly, dateModifyFrom, dateModifyTo, dateCreateFrom,
-                dateCreateTo, dateAccessFrom, dateAccessTo, keySensitive, owner, contain, listExtensions,
-                endWith, startWith, multimediaSelected, dateCreate, dateModified, dateLassAccess);
-        if (multimediaSelected) {
-            //multimedia
-            String frameRate = frame.getPanelMultimedia().getOptionFrameRate();
-            String videoCode = frame.getPanelMultimedia().getOptionVideoCode();
-            String audioCode = frame.getPanelMultimedia().getOptionAudioCodec();
-            String resolution = frame.getPanelMultimedia().getOptionUnitsResolution();
-            String operatorDurationTime = frame.getPanelMultimedia().getOperatorTime();// < > =
-            String unitTime = frame.getPanelMultimedia().getUnitTime();//e.g. second
-            double duration = convert.convertTimeDurationToDouble(frame.getPanelMultimedia().getDuration(), unitTime);
-            ArrayList<String> extensionsMultimedia = frame.getPanelMultimedia().getOtherExtensions();
-            String aspectRatio = frame.getPanelMultimedia().getAspectRadio();
-            criteriaBuilder.buildMultimedia(frameRate, videoCode, audioCode,
-                    resolution, duration, operatorDurationTime, unitTime, extensionsMultimedia, aspectRatio);
-        }
-        this.criteria = criteriaBuilder.build();
         LOGGER.info("buildCriteria: exit");
     }
 

@@ -18,6 +18,7 @@ import com.fundation.search.controller.Criteria;
 import com.fundation.search.database.SearchQuery;
 import com.fundation.search.utils.Convert;
 import com.fundation.search.utils.LoggerSearch;
+import com.fundation.search.utils.ValidatorData;
 import com.google.gson.Gson;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
@@ -65,6 +66,7 @@ public class Search {
 
     Convert convert;
     private Criteria criteria;
+    private ValidatorData validate;
     /**
      * fileList is a file list that save files according to criterias
      */
@@ -86,6 +88,7 @@ public class Search {
         fileList = new ArrayList<>();
         //ultime = {"",""};
         convert = new Convert();
+        validate = new ValidatorData();
         LOGGER.info("Consturctor search : exit");
     }
 
@@ -506,69 +509,68 @@ public class Search {
                         } else {
                             ffprobePath = new File(".").getCanonicalPath() + SLASH + "resources" + SLASH + "ffprobe";
                         }
+                        if(validate.isMultimediaFile(extension)) {
+                            System.out.println("es multimedia ++++++++++++");
+                            //values multimedia
+                            ffprobe = new FFprobe(ffprobePath);
+                            probeResult = ffprobe.probe(pathFile);
+                            stream = probeResult.getStreams().get(0);
 
-                        System.out.println(file.getName() + " nombre del archivo");
+                            // video information
+                            String codecName = stream.codec_name;
+                            String codecLongName = stream.codec_long_name;
+                            //resolution
+                            int width = stream.width;
+                            int height = stream.height;
+                            String displayAspect = stream.display_aspect_ratio;
+                            //
+                            Fraction rFrameRate = stream.r_frame_rate;
+                            double startTime = stream.start_time;
+                            double duration = stream.duration;
+                            long bitRate = stream.bit_rate;
+                            long nbFrames = stream.nb_frames;
+                            System.out.println("-------------video----------------");
+                            System.out.println("codecName: " + codecName);
+                            System.out.println("codecLongName: " + codecLongName);
+                            System.out.println("width: " + width);
+                            System.out.println("height: " + height);
+                            System.out.println("dispaly ascpect radio: " + displayAspect);
+                            System.out.println("FrameRate: " + rFrameRate.toString());
 
-                        //values multimedia
-                        ffprobe = new FFprobe(ffprobePath);
-                        probeResult = ffprobe.probe(pathFile);
-                        stream = probeResult.getStreams().get(0);
+                            System.out.println("start time: " + startTime);
+                            System.out.println("duration: " + duration);
+                            System.out.println("bitRate: " + bitRate);
+                            System.out.println("nbFrames: " + nbFrames);
 
-                        // video information
-                        String codecName = stream.codec_name;
-                        String codecLongName = stream.codec_long_name;
-                        //resolution
-                        int width = stream.width;
-                        int height = stream.height;
-                        String displayAspect = stream.display_aspect_ratio;
-                        //
-                        Fraction rFrameRate = stream.r_frame_rate;
-                        double startTime = stream.start_time;
-                        double duration = stream.duration;
-                        long bitRate = stream.bit_rate;
-                        long nbFrames = stream.nb_frames;
-                        System.out.println("-------------video----------------");
-                        System.out.println("codecName: " + codecName);
-                        System.out.println("codecLongName: " + codecLongName);
-                        System.out.println("width: " + width);
-                        System.out.println("height: " + height);
-                        System.out.println("dispaly ascpect radio: " + displayAspect);
-                        System.out.println("FrameRate: " + rFrameRate.toString());
-
-                        System.out.println("start time: " + startTime);
-                        System.out.println("duration: " + duration);
-                        System.out.println("bitRate: " + bitRate);
-                        System.out.println("nbFrames: " + nbFrames);
-
-                        // audio information
-                        stream = probeResult.getStreams().get(1);
-                        String audioCodecName = stream.codec_name;
-                        String audioCodecNameLong = stream.codec_long_name;
-                        String audioCodecTag = stream.codec_tag;
-                        int audioChannels = stream.channels;
-                        String audioChannelsLayout = stream.channel_layout;
-                        double audioStarTime = stream.start_time;
-                        double audioDuration = stream.duration;
-                        long audioBitRate = stream.bit_rate;
-                        long audioMaxBitRate = stream.max_bit_rate;
-                        long audioNbFrame = stream.nb_frames;
-                        //data.setAudioCodecName(audioCodecName);
-                        System.out.println("---------------audio------------------");
-                        System.out.println("audioCodec: " + audioCodecName);
-                        System.out.println("audicoCodecLong: " + audioCodecNameLong);
-                        System.out.println("audioCodecTag: " + audioCodecTag);
-                        System.out.println("audioChannels: " + audioChannels);
-                        System.out.println("audioChannelsLayout: " + audioChannelsLayout);
-                        System.out.println("audioStartTime: " + audioStarTime);
-                        System.out.println("audioDuration: " + audioDuration);
-                        System.out.println("audioBitRate: " + audioBitRate);
-                        System.out.println("audioMaxBitRate: " + audioMaxBitRate);
-                        System.out.println("audioNbFrame: " + audioNbFrame);
-                        Asset asset = AssetFactory.getAsset(pathFile,hidden,size,owner,lastAccess,lastCreate,lastModified,
-                                readOnly,fileName,extension,codecName,codecLongName,width,height,displayAspect,rFrameRate,duration,
-                                bitRate,nbFrames,audioCodecName);
-                        fileList.add(asset);
-
+                            // audio information
+                            stream = probeResult.getStreams().get(1);
+                            String audioCodecName = stream.codec_name;
+                            String audioCodecNameLong = stream.codec_long_name;
+                            String audioCodecTag = stream.codec_tag;
+                            int audioChannels = stream.channels;
+                            String audioChannelsLayout = stream.channel_layout;
+                            double audioStarTime = stream.start_time;
+                            double audioDuration = stream.duration;
+                            long audioBitRate = stream.bit_rate;
+                            long audioMaxBitRate = stream.max_bit_rate;
+                            long audioNbFrame = stream.nb_frames;
+                            //data.setAudioCodecName(audioCodecName);
+                            System.out.println("---------------audio------------------");
+                            System.out.println("audioCodec: " + audioCodecName);
+                            System.out.println("audicoCodecLong: " + audioCodecNameLong);
+                            System.out.println("audioCodecTag: " + audioCodecTag);
+                            System.out.println("audioChannels: " + audioChannels);
+                            System.out.println("audioChannelsLayout: " + audioChannelsLayout);
+                            System.out.println("audioStartTime: " + audioStarTime);
+                            System.out.println("audioDuration: " + audioDuration);
+                            System.out.println("audioBitRate: " + audioBitRate);
+                            System.out.println("audioMaxBitRate: " + audioMaxBitRate);
+                            System.out.println("audioNbFrame: " + audioNbFrame);
+                            Asset asset = AssetFactory.getAsset(pathFile, hidden, size, owner, lastAccess, lastCreate, lastModified,
+                                    readOnly, fileName, extension, codecName, codecLongName, width, height, displayAspect, rFrameRate, duration,
+                                    bitRate, nbFrames, audioCodecName);
+                            fileList.add(asset);
+                        }
                     } catch (IOException | NullPointerException exception) {
 
                     } catch (IndexOutOfBoundsException ex) {
@@ -734,7 +736,7 @@ public class Search {
      * @param criteriaJSON
      * @return
      */
-    private Criteria converToCriteria(String criteriaJSON) {
+    public Criteria converToCriteria(String criteriaJSON) {
         final Gson json = new Gson();
         final Criteria criteria = json.fromJson(criteriaJSON, Criteria.class);
         return criteria;

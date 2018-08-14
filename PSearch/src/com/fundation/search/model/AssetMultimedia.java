@@ -15,6 +15,8 @@ package com.fundation.search.model;
 
 import org.apache.commons.lang3.math.Fraction;
 
+import java.util.Date;
+
 /**
  * @autor Franz Silva Milan [AT-07]
  */
@@ -122,7 +124,33 @@ public class AssetMultimedia extends Asset {
      * Audio Nb Frame is the audioNbFrame.
      */
     private long audioNbFrame;
-
+    public AssetMultimedia(String path, boolean hidden, long size, String owner,
+                           Date lastAccessTime, Date lastCreationtime, Date lasModified, boolean readOnly, String nameFile,
+                           String exten, String codecName, String codecLongName, int width, int height, String displayAspect, Fraction rFrameRate,
+                           double duration, long bitRate, long nbFrames, String audioCodecName){
+        setPath(path);
+        setIshidden(hidden);
+        setSize(size);
+        setOwner(owner);
+        setDateAccess(lastAccessTime);
+        setDateCreate(lastCreationtime);
+        setDateModificate(lasModified);
+        setReadOnly(readOnly);
+        setFileName(nameFile);
+        setExtensions(exten);
+        setCodecName(codecName);
+        setCodecLongName(codecLongName);
+        //resolution
+        setWidth(width);//320
+        setHeight(height); //430
+        setDisplayAspect(displayAspect);// e. g. 4:3
+        //end resolution
+        setrFrameRate(rFrameRate);
+        setDuration(duration);
+        setBitRate(bitRate);
+        setNbFrames(nbFrames);
+        setAudioCodecName(audioCodecName);
+    }
 
     /**
      * This method return a duration.
