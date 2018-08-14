@@ -29,8 +29,8 @@ public interface IBuilder {
                                  boolean endWith, boolean startWith, boolean multimediaSelected, boolean dateCreate,
                                  boolean dateModified, boolean dateLassAccess);
 
-    public void buildMultimedia(String frameRare, String videoCode, String audioCode, String resolution, double duration, String operatorDurationTime,
-                                ArrayList<String> extensionVideo,String aspectRatio);
+    public void buildMultimedia(String frameRare, String videoCode, String audioCode, String resolution, double duration,
+                                String operatorDurationTime, String unitTime, ArrayList<String> extensionVideo, String aspectRatio);
 
     public Criteria build();
 }

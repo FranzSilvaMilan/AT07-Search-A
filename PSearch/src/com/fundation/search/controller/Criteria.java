@@ -124,96 +124,25 @@ public class Criteria {
      * this variable contains the word if search on into file.
      */
     private String content;
+    //Multimedia values.
+    private boolean isMultimediaSelected;
 
     private String frameRate;
     private String videoCode;
     private String audioCode;
     private String resolution;
     private String aspectRatio;
+
     private double duration;
     private String operatorDurationTime;
+    private String unitTime;
+
     private ArrayList<String> extensionVideo;
-    private boolean isMultimediaSelected;
-
-    public String getAspectRatio() {
-        return aspectRatio;
-    }
-
-    public void setAspectRatio(String aspectRatio) {
-        this.aspectRatio = aspectRatio;
-    }
-
-    public boolean getIsMultimediaSelected() {
-        return isMultimediaSelected;
-    }
-
-    public void setMultimediaSelected(boolean multimediaSelected) {
-        isMultimediaSelected = multimediaSelected;
-    }
-
-    public String getFrameRate() {
-        return frameRate;
-    }
-
-    public void setFrameRate(String frameRate) {
-        this.frameRate = frameRate;
-    }
-
-
-    public String getVideoCode() {
-        return videoCode;
-    }
-
-    public void setVideoCode(String videoCode) {
-        this.videoCode = videoCode;
-    }
-
-    public String getAudioCode() {
-        return audioCode;
-    }
-
-    public void setAudioCode(String audioCode) {
-        this.audioCode = audioCode;
-    }
-
-    public String getResolution() {
-        return resolution;
-    }
-
-    public void setResolution(String resolution) {
-        this.resolution = resolution;
-    }
-
-    public double getDuration() {
-        return duration;
-    }
-
-    public void setDuration(double duration) {
-        this.duration = duration;
-    }
-
-
-    public ArrayList<String> getExtensionVideo() {
-        return extensionVideo;
-    }
-
-    public void setExtensionVideo(ArrayList<String> extensionVideo) {
-        this.extensionVideo = extensionVideo;
-    }
-
-    public String getOperatorDurationTime() {
-        return operatorDurationTime;
-    }
-
-    public void setOperatorDurationTime(String operatorDurationTime) {
-        this.operatorDurationTime = operatorDurationTime;
-    }
-
 
     /**
      * this  is a constuctot.
      */
-    Criteria() {
+    public Criteria() {
         listExtensions = new ArrayList<>();
         extensionVideo = new ArrayList<>();
     }
@@ -568,7 +497,6 @@ public class Criteria {
     }
 
     /**
-     *
      * @return
      */
     public boolean isEnableCreate() {
@@ -576,7 +504,6 @@ public class Criteria {
     }
 
     /**
-     *
      * @param enableCreate
      */
     public void setEnableCreate(boolean enableCreate) {
@@ -584,7 +511,6 @@ public class Criteria {
     }
 
     /**
-     *
      * @return
      */
     public boolean isEnableModified() {
@@ -592,7 +518,6 @@ public class Criteria {
     }
 
     /**
-     *
      * @param enableModified
      */
     public void setEnableModified(boolean enableModified) {
@@ -600,7 +525,6 @@ public class Criteria {
     }
 
     /**
-     *
      * @return
      */
     public boolean isEnableLastAccess() {
@@ -608,10 +532,148 @@ public class Criteria {
     }
 
     /**
-     *
      * @param enableLastAccess
      */
     public void setEnableLastAccess(boolean enableLastAccess) {
         this.enableLastAccess = enableLastAccess;
+    }
+
+    //Multimedia getter and setter
+
+    /**
+     * @return
+     */
+    public boolean getIsMultimediaSelected() {
+        return isMultimediaSelected;
+    }
+
+    /**
+     * @param multimediaSelected
+     */
+    public void setMultimediaSelected(boolean multimediaSelected) {
+        isMultimediaSelected = multimediaSelected;
+    }
+
+    /**
+     * @return
+     */
+    public String getAspectRatio() {
+        return aspectRatio;
+    }
+
+    /**
+     * @param aspectRatio
+     */
+    public void setAspectRatio(String aspectRatio) {
+        this.aspectRatio = aspectRatio;
+    }
+
+    /**
+     * @return
+     */
+    public String getFrameRate() {
+        return frameRate;
+    }
+
+    /**
+     * @param frameRate
+     */
+    public void setFrameRate(String frameRate) {
+        this.frameRate = frameRate;
+    }
+
+    /**
+     * @return
+     */
+    public String getVideoCode() {
+        return videoCode;
+    }
+
+    /**
+     * @param videoCode
+     */
+    public void setVideoCode(String videoCode) {
+        this.videoCode = videoCode;
+    }
+
+    /**
+     * @return
+     */
+    public String getAudioCode() {
+        return audioCode;
+    }
+
+    /**
+     * @param audioCode
+     */
+    public void setAudioCode(String audioCode) {
+        this.audioCode = audioCode;
+    }
+
+    /**
+     * @return
+     */
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
+    /**
+     * @return
+     */
+    public ArrayList<String> getExtensionVideo() {
+        return extensionVideo;
+    }
+
+    /**
+     * @param extensionVideo
+     */
+    public void setExtensionVideo(ArrayList<String> extensionVideo) {
+        this.extensionVideo = extensionVideo;
+    }
+
+    /**
+     * @return time in seconds.
+     */
+    public double getDuration() {
+        return duration;
+    }
+
+    /**
+     * @param duration setter of time.
+     */
+    public void setDuration(double duration) {
+        this.duration = duration;
+    }
+
+    /**
+     * @return type time e.g. seconds, minutes, hours.
+     */
+    public String getOperatorDurationTime() {
+        return operatorDurationTime;
+    }
+
+    /**
+     * @param operatorDurationTime
+     */
+    public void setOperatorDurationTime(String operatorDurationTime) {
+        this.operatorDurationTime = operatorDurationTime;
+    }
+
+    /**
+     * @return range of time e.g. > , <, =.
+     */
+    public String getUnitTime() {
+        return unitTime;
+    }
+
+    /**
+     * @param unitTime
+     */
+    public void setUnitTime(String unitTime) {
+        this.unitTime = unitTime;
     }
 }

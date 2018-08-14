@@ -161,4 +161,25 @@ public class Convert {
         }
         return 0.0;
     }
+    /**
+     * This method convert  hours and minutes to seconds.
+     *
+     * @param duration Input string
+     * @param time     Unit Time hour or minute.
+     * @return a double number on unit seconds.
+     */
+    public double convertTimeDurationToDoubleReverse(double duration, String time) {
+        if(time != null) {
+            if (time.equalsIgnoreCase("second")) {
+                return duration;
+            }
+            if (time.equalsIgnoreCase("minutes")) {
+                return duration / 60.0;
+            }
+            if (time.equalsIgnoreCase("hours")) {
+                return duration / 3600.0;
+            }
+        }
+        return 0.0;
+    }
 }

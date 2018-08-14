@@ -1,3 +1,16 @@
+/*
+ * @(#)PanelTableDB.java
+ *
+ * Copyright (c) 2018 Jala Foundation.
+ * 2643 Av Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * Jala Foundation, ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jala Foundation.
+ */
 package com.fundation.search.view;
 
 import javax.swing.JPanel;
@@ -9,10 +22,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
-//import static com.sun.tools.internal.xjc.reader.Ring.add;
 
 /**
- * class panel of DATA BASE;
+ * This class Search for four critearias path, name, size  and hidden.
+ *
+ * @author Ketty Camacho - AT-[07].
+ * @author Denis Camacho - AT-[07].
+ * @version 1.0.
  */
 public class PanelTableBD extends JPanel {
 
@@ -22,14 +38,16 @@ public class PanelTableBD extends JPanel {
     private JScrollPane scrollPane;
 
     /**
-     * Panel DATA base.
+     *
      */
-
     public PanelTableBD() {
 
         tableBD();
     }
 
+    /**
+     *
+     */
     private void tableBD() {
         String columnHeadBD[] = {"Nro", "NAMES"};
 
@@ -49,10 +67,16 @@ public class PanelTableBD extends JPanel {
 
     }
 
+    /**
+     * @param newRow
+     */
     public void addRow(String[] newRow) {
         modelDB.addRow(newRow);
     }
 
+    /**
+     *
+     */
     public void clean() {
         modelDB.setNumRows(0);
     }
@@ -70,8 +94,6 @@ public class PanelTableBD extends JPanel {
     public JTable getTable() {
         return table;
     }
-
-
 }
 
 

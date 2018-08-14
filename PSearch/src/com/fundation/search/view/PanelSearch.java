@@ -64,6 +64,7 @@ public class PanelSearch extends JPanel {
     private JComboBox<String> operator;
     //array that contains units of the bytes,kb,Mb and Gb.
     private String[] listUnitSize;
+
     private JComboBox<String> optionUnitsSize;
 
     private JLabel LabelSize;
@@ -76,7 +77,9 @@ public class PanelSearch extends JPanel {
     private JLabel labelTo;
     private JLabel labelToM;
     private JLabel labelToL;
-
+    private JLabel labelImagen;
+    private JLabel labelImagenFile;
+    private JLabel labelFondo;
 
     private PanelTable panelTable;
     private JSpinner spinnerSize;
@@ -111,12 +114,6 @@ public class PanelSearch extends JPanel {
     private boolean changeCreate;
     private boolean changeModified;
     private boolean changeLastAccess;
-    //private URL imagen1;
-    //Logger
-    JLabel labelImagen;
-    JLabel labelImagenFile;
-    JLabel labelFondo;
-    String url = "imagen1.png";
 
     private static final Logger LOGGER = LoggerSearch.getInstance().getLogger();
 
@@ -329,9 +326,7 @@ public class PanelSearch extends JPanel {
 
         btSelect.setText("Select Path");
         btSelect.setBounds(290, 100, 120, 33);
-        //btSelect.setBackground(Color.blue);
         btSelect.setForeground(Color.blue);
-
 
         //btSelect.setBackground(new Color(9, 244, 184));
         btSelect.setBorder(blacking);
@@ -439,7 +434,6 @@ public class PanelSearch extends JPanel {
         labelImagen.setBounds(800, 0, 400, 100);
         labelImagenFile.setBounds(850, 0, 300, 300);
         labelFondo.setBounds(0, 0, 900, 400);
-        //labelImagen.setIcon(icone);
 
         actionBottom();
 
@@ -789,36 +783,66 @@ public class PanelSearch extends JPanel {
         return dateLastAccessTo.getDate();
     }
 
+    /**
+     *
+     * @param textFile
+     */
     public void setTextFile(String textFile) {
         this.textFile.setText(textFile);
     }
 
+    /**
+     *
+     * @param textPath
+     */
     public void setTextPath(String textPath) {
         this.textPath.setText(textPath);
     }
 
-
+    /**
+     *
+     * @param textOwner
+     */
     public void setTextOwner(String textOwner) {
         this.textOwner.setText(textOwner);
     }
 
+    /**
+     *
+     * @param textContain
+     */
     public void setTextContain(String textContain) {
         this.textContain.setText(textContain);
     }
 
-
+    /**
+     *
+     * @param operator
+     */
     public void setOperator(String operator) {
         this.operator.setSelectedItem(operator);
     }
 
+    /**
+     *
+     * @param optionUnitsSize
+     */
     public void setOptionUnitsSize(String optionUnitsSize) {
         this.optionUnitsSize.setSelectedItem(optionUnitsSize);
     }
 
+    /**
+     *
+     * @param dateCreate
+     */
     public void setDateCreate(Date dateCreate) {
         this.dateCreate.setDate(dateCreate);
     }
 
+    /**
+     *
+     * @param dateCreateTo
+     */
     public void setDateCreateTo(Date dateCreateTo) {
         this.dateCreateTo.setDate(dateCreateTo);
     }
@@ -839,10 +863,6 @@ public class PanelSearch extends JPanel {
         this.dateLastAccessTo.setDate(dateLastAccessTo);
     }
 
-
-    /* public void setDateLastAccessTo(JDateChooser dateLastAccessTo) {
-         this.dateLastAccessTo.setDate(dateLastAccessTo);
-     }*/
     public void setSpinnerSize(int spinnerSize) {
         this.spinnerSize.setValue(spinnerSize);
     }
@@ -964,20 +984,6 @@ public class PanelSearch extends JPanel {
     }
 
     /**
-     * this method clean table.
-     */
-    public void cleanTable() {
-        panelTable.clean();
-    }
-
-    /**
-     * @return
-     */
-    public PanelTable getPanelTable() {
-        return panelTable;
-    }
-
-    /**
      * this method
      *
      * @param evt
@@ -994,8 +1000,7 @@ public class PanelSearch extends JPanel {
     }
 
     public void enableComponents(boolean blocked) {
-        //endWith.setEnabled(blocked);
-        //startWith.setEnabled(blocked);
+
         pdf.setEnabled(blocked);
         txt.setEnabled(blocked);
         ppt.setEnabled(blocked);
