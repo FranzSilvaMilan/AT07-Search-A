@@ -13,6 +13,7 @@ package com.fundation.search.utils;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * This class ValidatorData can be valid, MultimediaResult and maybe SearchFolder.
@@ -21,11 +22,13 @@ import java.text.SimpleDateFormat;
  * @version 1.0.
  */
 
+
 public class ValidatorData {
     /**
      * @param path is the directory of files.
      * @return if is valid or no.
      */
+
     public boolean isPathValid(String path) {
         File file = new File(path);
         return file.exists();
@@ -58,5 +61,43 @@ public class ValidatorData {
             return false;
         }
         return true;
+    }
+
+    /**
+     *
+     * @param dateFrom
+     * @param dateTo
+     * @return
+     */
+    public boolean validateDates(Date dateFrom, Date dateTo) {
+        Convert convert = new Convert();
+        if(dateFrom == null && dateTo == null){
+            return true;
+        }
+        Date dateIni = convert.convertDateToDateIni(dateFrom);
+        Date dateFin = convert.convertDateToDateFin(dateTo);
+        return dateIni.before(dateFin);
+    }
+
+    public boolean isMultimediaFile(String file){
+        if(file.equalsIgnoreCase(".mp4")){
+            return true;
+        }
+        if(file.equalsIgnoreCase(".wmv")){
+            return true;
+        }
+        if(file.equalsIgnoreCase(".mov")){
+            return true;
+        }
+        if(file.equalsIgnoreCase(".avi")){
+            return true;
+        }
+        if(file.equalsIgnoreCase(".xvidi")){
+            return true;
+        }
+        if(file.equalsIgnoreCase(".3gp")){
+            return true;
+        }
+        return false;
     }
 }

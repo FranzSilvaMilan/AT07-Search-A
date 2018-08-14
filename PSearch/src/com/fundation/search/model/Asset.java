@@ -56,10 +56,6 @@ public class Asset {
      * this variable contains  is file is redOnly.
      */
     private boolean readOnly;
-    /**
-     * this variable contains the word if search on into file.
-     */
-    private String content;
 
     /**
      * this method get
