@@ -18,6 +18,7 @@ import com.fundation.search.utils.LoggerSearch;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
 import org.apache.log4j.Logger;
+import org.omg.CORBA.PUBLIC_MEMBER;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -142,7 +143,7 @@ public class PanelSearch extends JPanel {
         ImageIcon iconeFile = new ImageIcon("src/com/fundation/search/view/imagen/fileColor.png");
         labelImagenFile = new JLabel(iconeFile);
 
-        ImageIcon iconeFondo = new ImageIcon("src/com/fundation/search/view/imagen/fondo3.jpg");
+        ImageIcon iconeFondo = new ImageIcon("src/com/fundation/search/view/imagen/fondos123.jpg");
         labelFondo = new JLabel(iconeFondo);
 
 
@@ -186,7 +187,7 @@ public class PanelSearch extends JPanel {
 
 
         radioGruop = new ButtonGroup();
-        ImageIcon iconeSelectPhat = new ImageIcon("src/com/fundation/search/view/imagen/selectPath.png");
+        ImageIcon iconeSelectPhat = new ImageIcon("src/com/fundation/search/view/imagen/Path.png");
         btSelect = new JButton(iconeSelectPhat);
         ImageIcon iconeSearch = new ImageIcon("src/com/fundation/search/view/imagen/search.png");
         buttonSearch = new JButton(iconeSearch);
@@ -264,19 +265,19 @@ public class PanelSearch extends JPanel {
 
         //Search by Calendar for date create.
         enableCreate.setEnabled(true);
-        enableCreate.setBounds(235, 140, 100, 20);
+        enableCreate.setBounds(235, 160, 100, 20);
         enableCreate.setBackground(new Color(250, 252, 252));
 
-        dateCreate.setBounds(5, 140, 100, 20);
+        dateCreate.setBounds(5, 160, 100, 20);
         dateCreate.setBorder(loweredetched);
         dateCreate.setEnabled(false);
         ((JTextFieldDateEditor) dateCreate.getDateEditor()).setEditable(false);
 
-        labelTo.setBounds(105, 140, 30, 20);
+        labelTo.setBounds(105, 160, 30, 20);
         labelTo.setForeground(new Color(1, 1, 33));
         labelTo.setBorder(loweredetched);
 
-        dateCreateTo.setBounds(135, 140, 100, 20);
+        dateCreateTo.setBounds(135, 160, 100, 20);
         dateCreateTo.setBorder(loweredetched);
         dateCreateTo.setEnabled(false);
         ((JTextFieldDateEditor) dateCreateTo.getDateEditor()).setEditable(false);
@@ -284,19 +285,19 @@ public class PanelSearch extends JPanel {
         //Search by Calendar for date modified.
 
         enableModified.setEnabled(true);
-        enableModified.setBounds(235, 160, 110, 20);
+        enableModified.setBounds(235, 180, 110, 20);
         enableModified.setBackground(new Color(250, 252, 252));
 
-        dateModified.setBounds(5, 160, 100, 20);
+        dateModified.setBounds(5, 180, 100, 20);
         dateModified.setBorder(loweredetched);
         dateModified.setEnabled(false);
         ((JTextFieldDateEditor) dateModified.getDateEditor()).setEditable(false);
 
-        labelToM.setBounds(105, 160, 30, 20);
+        labelToM.setBounds(105, 180, 30, 20);
         labelToM.setForeground(new Color(1, 1, 33));
         labelToM.setBorder(loweredetched);
 
-        dateModifiedTo.setBounds(135, 160, 100, 20);
+        dateModifiedTo.setBounds(135, 180, 100, 20);
         dateModifiedTo.setBorder(loweredetched);
         dateModifiedTo.setEnabled(false);
         ((JTextFieldDateEditor) dateModifiedTo.getDateEditor()).setEditable(false);
@@ -305,19 +306,19 @@ public class PanelSearch extends JPanel {
         //Search by Calendar for date last access.
 
         enableLastAccess.setEnabled(true);
-        enableLastAccess.setBounds(235, 180, 130, 20);
+        enableLastAccess.setBounds(235, 200, 130, 20);
         enableLastAccess.setBackground(new Color(250, 252, 252));
 
-        dateLastAccess.setBounds(5, 180, 100, 20);
+        dateLastAccess.setBounds(5, 200, 100, 20);
         dateLastAccess.setBorder(loweredetched);
         dateLastAccess.setEnabled(false);
         ((JTextFieldDateEditor) dateLastAccess.getDateEditor()).setEditable(false);
 
-        labelToL.setBounds(105, 180, 30, 20);
+        labelToL.setBounds(105, 200, 30, 20);
         labelToL.setForeground(new Color(1, 1, 33));
         labelToL.setBorder(loweredetched);
 
-        dateLastAccessTo.setBounds(135, 180, 100, 20);
+        dateLastAccessTo.setBounds(135, 200, 100, 20);
         dateLastAccessTo.setBorder(loweredetched);
         dateLastAccessTo.setEnabled(false);
         ((JTextFieldDateEditor) dateLastAccessTo.getDateEditor()).setEditable(false);
@@ -325,26 +326,26 @@ public class PanelSearch extends JPanel {
         //Button and operators.
 
         btSelect.setText("Select Path");
-        btSelect.setBounds(290, 100, 120, 33);
+        btSelect.setBounds(310, 100, 158, 51);
         btSelect.setForeground(Color.blue);
 
         //btSelect.setBackground(new Color(9, 244, 184));
         btSelect.setBorder(blacking);
 
         LabelSize.setBounds(10, 100, 100, 30);
-        operator.setBounds(230, 100, 50, 30);
+        operator.setBounds(240, 100, 70, 30);
         operator.setBackground(new Color(250, 252, 252));
         operator.setBorder(blacking);
-        optionUnitsSize.setBounds(160, 100, 70, 30);
+        optionUnitsSize.setBounds(160, 100, 85, 30);
         optionUnitsSize.setBackground(new Color(250, 252, 252));
         optionUnitsSize.setBorder(blacking);
         spinnerSize.setValue(0);
         spinnerSize.setBounds(90, 100, 70, 30);
         spinnerSize.setBackground(new Color(250, 252, 252));
         spinnerSize.setBorder(blacking);
-        buttonSearch.setBounds(450, 180, 150, 41);
+        buttonSearch.setBounds(630, 200, 150, 49);
         buttonSearch.setBackground(new Color(9, 244, 184));
-        buttonSearch.setBorder(blacking);
+        //buttonSearch.setBorder(blacking);
 
         //Search by extension.
 
