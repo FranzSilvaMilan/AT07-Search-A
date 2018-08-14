@@ -17,22 +17,16 @@ package com.fundation.search.view;
 import com.fundation.search.utils.LoggerSearch;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
-import org.apache.log4j.Logger;
-import org.omg.CORBA.PUBLIC_MEMBER;
-
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.event.*;
+import javax.swing.filechooser.*;
+import org.apache.log4j.Logger;
 
 /**
  * This class Asset can be FileResult SearchFolder.
@@ -267,6 +261,7 @@ public class PanelSearch extends JPanel {
         enableCreate.setEnabled(true);
         enableCreate.setBounds(235, 160, 100, 20);
         enableCreate.setBackground(new Color(250, 252, 252));
+        enableCreate.setOpaque(false);
 
         dateCreate.setBounds(5, 160, 100, 20);
         dateCreate.setBorder(loweredetched);
@@ -276,6 +271,7 @@ public class PanelSearch extends JPanel {
         labelTo.setBounds(105, 160, 30, 20);
         labelTo.setForeground(new Color(1, 1, 33));
         labelTo.setBorder(loweredetched);
+        labelTo.setOpaque(false);
 
         dateCreateTo.setBounds(135, 160, 100, 20);
         dateCreateTo.setBorder(loweredetched);
@@ -287,6 +283,7 @@ public class PanelSearch extends JPanel {
         enableModified.setEnabled(true);
         enableModified.setBounds(235, 180, 110, 20);
         enableModified.setBackground(new Color(250, 252, 252));
+        enableModified.setOpaque(false);
 
         dateModified.setBounds(5, 180, 100, 20);
         dateModified.setBorder(loweredetched);
@@ -296,6 +293,7 @@ public class PanelSearch extends JPanel {
         labelToM.setBounds(105, 180, 30, 20);
         labelToM.setForeground(new Color(1, 1, 33));
         labelToM.setBorder(loweredetched);
+        labelToM.setOpaque(false);
 
         dateModifiedTo.setBounds(135, 180, 100, 20);
         dateModifiedTo.setBorder(loweredetched);
@@ -308,6 +306,7 @@ public class PanelSearch extends JPanel {
         enableLastAccess.setEnabled(true);
         enableLastAccess.setBounds(235, 200, 130, 20);
         enableLastAccess.setBackground(new Color(250, 252, 252));
+        enableLastAccess.setOpaque(false);
 
         dateLastAccess.setBounds(5, 200, 100, 20);
         dateLastAccess.setBorder(loweredetched);
@@ -317,6 +316,7 @@ public class PanelSearch extends JPanel {
         labelToL.setBounds(105, 200, 30, 20);
         labelToL.setForeground(new Color(1, 1, 33));
         labelToL.setBorder(loweredetched);
+        labelToL.setOpaque(false);
 
         dateLastAccessTo.setBounds(135, 200, 100, 20);
         dateLastAccessTo.setBorder(loweredetched);
@@ -328,6 +328,7 @@ public class PanelSearch extends JPanel {
         btSelect.setText("Select Path");
         btSelect.setBounds(310, 100, 158, 51);
         btSelect.setForeground(Color.blue);
+        btSelect.setOpaque(false);
 
         //btSelect.setBackground(new Color(9, 244, 184));
         btSelect.setBorder(blacking);
@@ -345,6 +346,7 @@ public class PanelSearch extends JPanel {
         spinnerSize.setBorder(blacking);
         buttonSearch.setBounds(630, 200, 150, 49);
         buttonSearch.setBackground(new Color(9, 244, 184));
+        buttonSearch.setOpaque(false);
         //buttonSearch.setBorder(blacking);
 
         //Search by extension.
@@ -360,34 +362,42 @@ public class PanelSearch extends JPanel {
         pdf.setEnabled(true);
         pdf.setBounds(630, 115, 60, 23);
         pdf.setBackground(new Color(250, 252, 252));
+        pdf.setOpaque(false);
 
         docx.setEnabled(true);
         docx.setBounds(700, 115, 60, 23);
         docx.setBackground(new Color(250, 252, 252));
+        docx.setOpaque(false);
 
         exe.setEnabled(true);
         exe.setBounds(630, 135, 60, 23);
         exe.setBackground(new Color(250, 252, 252));
+        exe.setOpaque(false);
 
         txt.setEnabled(true);
         txt.setBounds(700, 135, 60, 23);
         txt.setBackground(new Color(250, 252, 252));
+        txt.setOpaque(false);
 
         ppt.setEnabled(true);
         ppt.setBounds(630, 155, 60, 23);
         ppt.setBackground(new Color(250, 252, 252));
+        ppt.setOpaque(false);
 
         zip.setEnabled(true);
         zip.setBounds(700, 155, 60, 23);
         zip.setBackground(new Color(250, 252, 252));
+        zip.setOpaque(false);
 
         xlsx.setEnabled(true);
         xlsx.setBounds(630, 175, 60, 23);
         xlsx.setBackground(new Color(250, 252, 252));
+        xlsx.setOpaque(false);
 
         rar.setEnabled(true);
         rar.setBounds(700, 175, 60, 23);
         rar.setBackground(new Color(250, 252, 252));
+        rar.setOpaque(false);
 
         //Search by owner of files.
 
@@ -411,24 +421,30 @@ public class PanelSearch extends JPanel {
 
         endWith.setBounds(410, 18, 100, 18);
         endWith.setBackground(new Color(250, 252, 252));
+        endWith.setOpaque(false);
         startWith.setBounds(410, 40, 100, 18);
         startWith.setBackground(new Color(250, 252, 252));
+        startWith.setOpaque(false);
 
         //Search by only read,hidden and sensitive file.
 
         enableOnlyRead.setEnabled(true);
         enableOnlyRead.setBounds(10, 50, 90, 20);
         enableOnlyRead.setBackground(new Color(250, 252, 252));
+        enableOnlyRead.setOpaque(false);
 
         hiddenCheck.setBounds(100, 50, 80, 20);
         hiddenCheck.setBackground(new Color(250, 252, 252));
+        hiddenCheck.setOpaque(false);
 
         enableKeySensitive.setBounds(180, 50, 120, 20);
         enableKeySensitive.setBackground(new Color(250, 252, 252));
+        enableKeySensitive.setOpaque(false);
 
         folder.setEnabled(true);
         folder.setBounds(300, 50, 80, 20);
         folder.setBackground(new Color(250, 252, 252));
+        folder.setOpaque(false);
         /**
          * this is format of image interface.
          */
@@ -901,7 +917,7 @@ public class PanelSearch extends JPanel {
         zip.setSelected(false);
         rar.setSelected(false);
         docx.setSelected(false);
-        textExtension.setText(" ");
+        textExtension.setText(null);
         for (String valuesExtencion : listExtencions) {
             if (valuesExtencion.contains("pdf")) {
                 pdf.setSelected(true);
