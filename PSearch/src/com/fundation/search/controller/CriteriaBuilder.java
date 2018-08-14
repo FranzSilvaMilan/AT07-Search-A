@@ -75,8 +75,8 @@ public class CriteriaBuilder implements IBuilder {
     }
 
     @Override
-    public void buildMultimedia(String frameRare, String videoCode, String audioCode, String resolution, double duration, String operatorDurationTime,
-                                ArrayList<String> extensionVideo, String aspectRatio) {
+    public void buildMultimedia(String frameRare, String videoCode, String audioCode, String resolution, double duration,
+                                String operatorDurationTime,String unitTime ,ArrayList<String> extensionVideo, String aspectRatio) {
         System.out.println("buildea multimedia");
         if (frameRare != null) {
             criteria.setFrameRate(frameRare);
@@ -103,6 +103,7 @@ public class CriteriaBuilder implements IBuilder {
         if (aspectRatio != null) {
             criteria.setAspectRatio(aspectRatio);
         }
+        criteria.setUnitTime(unitTime);
 
     }
 

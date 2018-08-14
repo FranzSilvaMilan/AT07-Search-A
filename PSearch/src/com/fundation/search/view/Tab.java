@@ -21,14 +21,16 @@ import java.awt.*;
  * This class Search for four critearias path, name, size  and hidden.
  *
  * @author Franz Silva - AT-[07].
+ * @author Ketty Camacho - AT-[07].
+ * @author Denis Camacho - AT-[07].
  * @version 1.0.
  */
-public class Tab extends JTabbedPane{
+public class Tab extends JTabbedPane {
 
     PanelSearch panelSearch;
     PanelMultimedia panelMultimedia;
 
-    public void iniComponentsTab(){
+    public void iniComponentsTab() {
         panelSearch = new PanelSearch();
         panelMultimedia = new PanelMultimedia();
         enableSetupContainer(false);
@@ -66,11 +68,11 @@ public class Tab extends JTabbedPane{
 
     }
 
-    public PanelSearch getPanelSearch(){
+    /**
+     * @return
+     */
+    public PanelSearch getPanelSearch() {
         return panelSearch;
     }
 
-    public PanelMultimedia getPanelMultimedia() {
-        return panelMultimedia;
-    }
 }

@@ -204,6 +204,10 @@ public class Controller {
                     frame.getPanelMultimedia().setOptionUnitsResolution(selectCriteria[0].getResolution());
                     frame.getPanelMultimedia().setOptionAspecRadio(selectCriteria[0].getAspectRatio());
                     frame.getPanelMultimedia().setExtensionsMultimedia(selectCriteria[0].getExtensionVideo());
+                    frame.getPanelMultimedia().setTimeDuration((int) convert.convertTimeDurationToDoubleReverse(
+                            selectCriteria[0].getDuration(), selectCriteria[0].getUnitTime()));
+                    frame.getPanelMultimedia().setOperatorTime(selectCriteria[0].getOperatorDurationTime());
+                    frame.getPanelMultimedia().setUnitTime(selectCriteria[0].getUnitTime());
 
                 } catch (SQLException e1) {
                     e1.printStackTrace();
@@ -274,13 +278,13 @@ public class Controller {
             String videoCode = frame.getPanelMultimedia().getOptionVideoCode();
             String audioCode = frame.getPanelMultimedia().getOptionAudioCodec();
             String resolution = frame.getPanelMultimedia().getOptionUnitsResolution();
-            String operatorDurationTime = frame.getPanelMultimedia().getOperator();// < > =
-            String unitDuration = frame.getPanelMultimedia().getOperationTime();//e.g. second
-            double duration = convert.convertTimeDurationToDouble(frame.getPanelMultimedia().getDuration(), unitDuration);
+            String operatorDurationTime = frame.getPanelMultimedia().getOperatorTime();// < > =
+            String unitTime = frame.getPanelMultimedia().getUnitTime();//e.g. second
+            double duration = convert.convertTimeDurationToDouble(frame.getPanelMultimedia().getDuration(), unitTime);
             ArrayList<String> extensionsMultimedia = frame.getPanelMultimedia().getOtherExtensions();
             String aspectRatio = frame.getPanelMultimedia().getAspectRadio();
             criteriaBuilder.buildMultimedia(frameRate, videoCode, audioCode,
-                    resolution, duration, operatorDurationTime, extensionsMultimedia, aspectRatio);
+                    resolution, duration, operatorDurationTime, unitTime, extensionsMultimedia, aspectRatio);
         }
         this.criteria = criteriaBuilder.build();
         LOGGER.info("buildCriteria: exit");
