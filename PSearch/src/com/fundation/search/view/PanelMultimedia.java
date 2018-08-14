@@ -47,8 +47,6 @@ public class PanelMultimedia extends JPanel {
     private JCheckBox wmv;
     private JCheckBox avi;
     private JCheckBox xvidi;
-    private JCheckBox mpg;
-    private JCheckBox flv;
 
     // JTextField to multimedia.
     private JTextField textCriteria;
@@ -126,16 +124,16 @@ public class PanelMultimedia extends JPanel {
 
         // checkbox of the extensions.
         mp4 = new JCheckBox(".MP4");
-        mpeg = new JCheckBox(".MPEG");
+        mpeg = new JCheckBox(".3GP");
         mov = new JCheckBox(".MOV");
         wmv = new JCheckBox(".WMV");
         avi = new JCheckBox(".AVI");
         xvidi = new JCheckBox(".XVIDI");
-        mpg = new JCheckBox(".MPG");
-        flv = new JCheckBox(".FLV");
+
         enableMediaSetup = new JCheckBox("Enable Multimedia");
         enableMediaSetup.setBounds(10, 10, 210, 30);
         enableMediaSetup.setSelected(false);
+        enableMediaSetup.setOpaque(false);
 
         labelDataBase = new JLabel("DATA BASE");
         labelCriteria = new JLabel("CRITERIA:");
@@ -160,14 +158,14 @@ public class PanelMultimedia extends JPanel {
         //ImageIcon iconeSave = new ImageIcon("src/com/fundation/search/view/imagen/load1.png");
         buttonSave = new JButton("SAVE");
 
-        listResolution = new String[]{" ", "0:1 480x360", "640:343 1280x686",
+        listResolution = new String[]{"All", "0:1 480x360", "640:343 1280x686",
                 "3:2 720x480", "4:3 176x144", "4:3 178x576", "4:3 320x240", "16:9 1280x720", "45:19 720x304", "180:101 720x404"};
         operatiorOptions = new String[]{">", "<", "="};
-        listTime = new String[]{" ", "second", "minutes", "hours"};
-        listVideoCode = new String[]{" ", "H264", "H263", "MPEG4", "WNV1"};
-        listFrameRate = new String[]{" ", "24 fps", "25 fps", "30 fps", "60 fps"};
-        listAduioCodec = new String[]{" ", "mp3", "aac", "amr_nb"};
-        listAspecRadio = new String[]{" ", "0:1", "3:2", "4:3", "16:9", "21:9", "45:19", "180:101"};
+        listTime = new String[]{"second", "minutes", "hours"};
+        listVideoCode = new String[]{"All", "H264", "H263", "MPEG4", "WNV1"};
+        listFrameRate = new String[]{"All", "24 fps", "25 fps", "30 fps", "60 fps"};
+        listAduioCodec = new String[]{"All", "mp3", "aac", "amr_nb"};
+        listAspecRadio = new String[]{"All", "0:1", "3:2", "4:3", "16:9", "21:9", "45:19", "180:101"};
 
         operatorTime = new JComboBox<>(operatiorOptions);
         optionUnitsResolution = new JComboBox<>(listResolution);
@@ -228,6 +226,7 @@ public class PanelMultimedia extends JPanel {
 
         containerFileSetup.setLayout(multimediaSetup);
         containerFileSetup.setBorder(BorderFactory.createTitledBorder("Multimedia Setup"));
+        containerFileSetup.setOpaque(false);
 
         multimediaConfig.gridx = 0;
         multimediaConfig.gridy = 0;
@@ -337,14 +336,22 @@ public class PanelMultimedia extends JPanel {
         containerFileExtensions.setBackground(new java.awt.Color(201, 222, 244));
         containerFileExtensions.setLayout(extensionsLayout);
         containerFileExtensions.setBorder(BorderFactory.createTitledBorder("Multimedia extensions"));
+        containerFileExtensions.setOpaque(false);
+
+        mp4.setOpaque(false);
+        wmv.setOpaque(false);
+        mpeg.setOpaque(false);
+        mov.setOpaque(false);
+        avi.setOpaque(false);
+        xvidi.setOpaque(false);
 
         containerFileExtensions.add(mp4);
         containerFileExtensions.add(wmv);
-        containerFileExtensions.add(mpg);
+        containerFileExtensions.add(mpeg);
         containerFileExtensions.add(mov);
         containerFileExtensions.add(avi);
         containerFileExtensions.add(xvidi);
-        containerFileExtensions.add(mpg);
+
 
         GridBagLayout gbl = new GridBagLayout();
         GridBagConstraints dataBaseLayout = new GridBagConstraints();
@@ -391,9 +398,10 @@ public class PanelMultimedia extends JPanel {
         dataBaseLayout.weightx = 1.0;
         dataBaseLayout.fill = GridBagConstraints.BOTH;
         containerFileDateBase.add(panelTableBD, dataBaseLayout);
+        containerFileDateBase.setOpaque(false);
 
         labelFondo.setBounds(0, 0, 1500, 400);
-        labelImagenMultimedia.setBounds(480,100,150,150);
+        labelImagenMultimedia.setBounds(480, 100, 150, 150);
 
         LOGGER.info("settingPanel: exit");
     }
@@ -431,17 +439,11 @@ public class PanelMultimedia extends JPanel {
         if (mov.isSelected()) {
             extensions.add(mov.getText());
         }
-        if (mpg.isSelected()) {
-            extensions.add(mpg.getText());
-        }
         if (wmv.isSelected()) {
             extensions.add(wmv.getText());
         }
         if (avi.isSelected()) {
             extensions.add(avi.getText());
-        }
-        if (flv.isSelected()) {
-            extensions.add(flv.getText());
         }
         if (mpeg.isSelected()) {
             extensions.add(mpeg.getText());
@@ -461,7 +463,7 @@ public class PanelMultimedia extends JPanel {
     public String getOperatorTime() {
         LOGGER.info("getOperatorTime: enter");
         LOGGER.info("getOperatorTime: exit");
-        if (operatorTime.getSelectedItem().equals(" ")) {
+        if (operatorTime.getSelectedItem().equals("All")) {
             return null;
         } else {
             return operatorTime.getSelectedItem().toString();
@@ -476,7 +478,7 @@ public class PanelMultimedia extends JPanel {
     public String getOptionVideoCode() {
         LOGGER.info("getOptionVideoCode: enter");
         LOGGER.info("getOptionVideoCode: exit");
-        if (optionVideoCode.getSelectedItem().equals(" ")) {
+        if (optionVideoCode.getSelectedItem().equals("All")) {
             return null;
         } else {
             return optionVideoCode.getSelectedItem().toString();
@@ -489,7 +491,7 @@ public class PanelMultimedia extends JPanel {
     public String getOptionUnitsResolution() {
         LOGGER.info("getOptionUnitsResolution: enter");
         LOGGER.info("getOptionUnitsResolution: exit");
-        if (optionUnitsResolution.getSelectedItem().equals(" ")) {
+        if (optionUnitsResolution.getSelectedItem().equals("All")) {
             return null;
         } else {
 
@@ -501,7 +503,7 @@ public class PanelMultimedia extends JPanel {
      * @return selected option of aspect radio of file multimedia.
      */
     public String getAspectRadio() {
-        if (optionAspecRadio.getSelectedItem().equals(" ")) {
+        if (optionAspecRadio.getSelectedItem().equals("All")) {
             return null;
         } else {
             return optionAspecRadio.getSelectedItem().toString();
@@ -514,7 +516,7 @@ public class PanelMultimedia extends JPanel {
     public String getUnitTime() {
         LOGGER.info("getUnitTime: enter");
         LOGGER.info("getUnitTime: exit");
-        if (unitTime.getSelectedItem().equals(" ")) {
+        if (unitTime.getSelectedItem().equals("All")) {
             return null;
         } else {
             return unitTime.getSelectedItem().toString();
@@ -527,7 +529,7 @@ public class PanelMultimedia extends JPanel {
     public String getOptionFrameRate() {
         LOGGER.info("getOptionFrameRate: enter");
         LOGGER.info("getOptionFrameRate: exit");
-        if (optionFrameRate.getSelectedItem().equals(" ")) {
+        if (optionFrameRate.getSelectedItem().equals("All")) {
             return null;
         } else {
             return optionFrameRate.getSelectedItem().toString();
@@ -540,7 +542,7 @@ public class PanelMultimedia extends JPanel {
     public String getOptionAudioCodec() {
         LOGGER.info("getOptionAudioCodec: enter");
         LOGGER.info("getOptionAudioCodec: exit");
-        if (optionAudioCodec.getSelectedItem().equals(" ")) {
+        if (optionAudioCodec.getSelectedItem().equals("All")) {
             return null;
         } else {
 
@@ -629,7 +631,7 @@ public class PanelMultimedia extends JPanel {
         if (dateOptionAspecRadio != null) {
             this.optionAspecRadio.setSelectedItem(dateOptionAspecRadio);
         } else {
-            optionAspecRadio.setSelectedItem(" ");
+            optionAspecRadio.setSelectedItem("All");
         }
     }
 
@@ -642,7 +644,7 @@ public class PanelMultimedia extends JPanel {
         if (dateOptionVideoCode != null) {
             this.optionVideoCode.setSelectedItem(dateOptionVideoCode);
         } else {
-            optionVideoCode.setSelectedItem(" ");
+            optionVideoCode.setSelectedItem("All");
         }
     }
 
@@ -655,7 +657,7 @@ public class PanelMultimedia extends JPanel {
         if (dateOptionFrameRate != null) {
             this.optionFrameRate.setSelectedItem(dateOptionFrameRate);
         } else {
-            optionFrameRate.setSelectedItem(" ");
+            optionFrameRate.setSelectedItem("All");
         }
     }
 
@@ -668,7 +670,7 @@ public class PanelMultimedia extends JPanel {
         if (dateOptionAudioCodec != null) {
             this.optionAudioCodec.setSelectedItem(dateOptionAudioCodec);
         } else {
-            optionAudioCodec.setSelectedItem(" ");
+            optionAudioCodec.setSelectedItem("All");
         }
     }
 
@@ -681,7 +683,7 @@ public class PanelMultimedia extends JPanel {
         if (operatorTime != null) {
             this.operatorTime.setSelectedItem(operatorTime);
         } else {
-            this.operatorTime.setSelectedItem(" ");
+            this.operatorTime.setSelectedItem("All");
         }
     }
 
@@ -711,7 +713,7 @@ public class PanelMultimedia extends JPanel {
         mov.setSelected(false);
         xvidi.setSelected(false);
         avi.setSelected(false);
-        mpg.setSelected(false);
+        mpeg.setSelected(false);
 
         for (String valuesExtension : listextencionsMultimedia) {
             if (valuesExtension.contains("MP4")) {
@@ -734,8 +736,8 @@ public class PanelMultimedia extends JPanel {
                 xvidi.setSelected(true);
                 continue;
             }
-            if (valuesExtension.contains("MPG")) {
-                mpg.setSelected(true);
+            if (valuesExtension.contains("3GP")) {
+                mpeg.setSelected(true);
                 continue;
             }
 
