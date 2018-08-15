@@ -49,10 +49,6 @@ public class Asset {
     private Date dateAccess;
 
     /**
-     * this cariable contains if is keySensitive.
-     */
-    private boolean keySensitive;
-    /**
      * this variable contains  is file is redOnly.
      */
     private boolean readOnly;
@@ -128,26 +124,6 @@ public class Asset {
     public void setReadOnly(boolean readOnly) {
         this.readOnly = readOnly;
     }
-
-    /**
-     * this method get if is key sentive the word.
-     *
-     * @return value of variable
-     */
-    public boolean isKeySensitive() {
-        return keySensitive;
-    }
-
-    /**
-     * set a new value.
-     *
-     * @param keySensitive with a new value.
-     */
-    public void setKeySensitive(boolean keySensitive) {
-        this.keySensitive = keySensitive;
-    }
-
-
 
     /**
      * this method get

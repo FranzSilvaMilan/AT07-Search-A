@@ -97,7 +97,7 @@ public class Search {
      * @return list all the files contained within the path.
      */
     //add the asset multimedia
-    private void searchByPath(String path) {
+    public void searchByPath(String path) {
         LOGGER.info("searchByPath: into");
         if (!criteria.getIsMultimediaSelected()) {
             try {
@@ -150,7 +150,7 @@ public class Search {
     /**
      * @param nameFile .
      */
-    private void searchByName(String nameFile, boolean keysensitive) {
+    public void searchByName(String nameFile, boolean keysensitive) {
         LOGGER.info("searchByName: into" + nameFile + " " + keysensitive);
         List<Asset> listFilter = new ArrayList<>();
         fileList.forEach(file -> {
@@ -197,7 +197,7 @@ public class Search {
      * @param size     is the file size.
      * @param operator is "<" or ">" or "=".
      */
-    private void searchBySize(double size, char operator) {
+    public void searchBySize(double size, char operator) {
         LOGGER.info("seachBySize: into");
         List<Asset> listFilter = new ArrayList<>();
         for (Asset file : fileList) {
@@ -228,7 +228,7 @@ public class Search {
      * @param isHidden has the value true or false to display the hidden files.
      */
 
-    private void searchHiddenFiles(boolean isHidden) {
+    public void searchHiddenFiles(boolean isHidden) {
         LOGGER.info("seachHiddenfiles: into");
         List<Asset> listFilter = new ArrayList<>();
         if (isHidden) {
@@ -321,7 +321,7 @@ public class Search {
      *
      * @param pharse The text for search into files.
      */
-    private void searchIntoFile(String pharse) {
+    public void searchIntoFile(String pharse) {
         LOGGER.info(" searchIntofile: enter");
 
         fileList.removeIf(file -> {
@@ -434,7 +434,7 @@ public class Search {
      * @param dateCreateIni Is the init date for lastAccessTime time on a file.
      * @param dateCreateFin Is the end date for lastAccessTime time on a file.
      */
-    private void searchByDateCreate(Date dateCreateIni, Date dateCreateFin) {
+    public void searchByDateCreate(Date dateCreateIni, Date dateCreateFin) {
         LOGGER.info("searchByDateCreate: into");
         Date dateIni = convert.convertDateToDateIni(dateCreateIni);
         Date dateFin = convert.convertDateToDateFin(dateCreateFin);
@@ -469,7 +469,7 @@ public class Search {
      * @param dateAccessIni Is the init date for lastAccessTime time on a file.
      * @param dateAccessFin Is the end date for lastAccessTime time on a file.
      */
-    private void searchByLastDateAccess(Date dateAccessIni, Date dateAccessFin) {
+    public void searchByLastDateAccess(Date dateAccessIni, Date dateAccessFin) {
         LOGGER.info("searchByLastDateAccess: into");
         Date dateIni = convert.convertDateToDateIni(dateAccessIni);
         Date dateFin = convert.convertDateToDateFin(dateAccessFin);
@@ -480,7 +480,7 @@ public class Search {
         LOGGER.info("searchByLastDateAccess: exit");
     }
 
-    private void addMultimediaAttributes(String path) {
+    public void addMultimediaAttributes(String path) {
         LOGGER.info("addMultimediaAttributes: into");
         try {
             File[] files = new File(path).listFiles();
@@ -567,8 +567,8 @@ public class Search {
                             System.out.println("audioMaxBitRate: " + audioMaxBitRate);
                             System.out.println("audioNbFrame: " + audioNbFrame);
                             Asset asset = AssetFactory.getAsset(pathFile, hidden, size, owner, lastAccess, lastCreate, lastModified,
-                                    readOnly, fileName, extension, codecName, codecLongName, width, height, displayAspect, rFrameRate, duration,
-                                    bitRate, nbFrames, audioCodecName);
+                                    readOnly, fileName, extension, codecName, width, height, displayAspect, rFrameRate, duration,
+                                    audioCodecName);
                             fileList.add(asset);
                         }
                     } catch (IOException | NullPointerException exception) {
@@ -601,7 +601,7 @@ public class Search {
         LOGGER.info("seachByFrameRate: exit");
     }
 
-    private void searchByDuration(Double time, String operator) {
+    public void searchByDuration(Double time, String operator) {
         LOGGER.info("searchByDuration: into");
         if (operator.equalsIgnoreCase(">")) {
             fileList.removeIf(file -> !(((AssetMultimedia) file).getDuration() > time));
@@ -620,7 +620,7 @@ public class Search {
      *
      * @param videoCodec Multimedia video codec Criteria.
      */
-    private void searchByVideoCodec(String videoCodec) {
+    public void searchByVideoCodec(String videoCodec) {
         LOGGER.info("searchByVideoCodec: into");
         fileList.removeIf(file -> {
             AssetMultimedia multimediaResult = (AssetMultimedia) file;
@@ -634,7 +634,7 @@ public class Search {
      *
      * @param audioCodec Multimedia video codec Criteria.
      */
-    private void searchByAudioCodec(String audioCodec) {
+    public void searchByAudioCodec(String audioCodec) {
         LOGGER.info("searchByAudioCodec: into");
         fileList.removeIf(file -> {
             AssetMultimedia multimediaResult = (AssetMultimedia) file;
@@ -648,7 +648,7 @@ public class Search {
      *
      * @param multimediaResolution Multimedia Resolution Criteria.
      */
-    private void searchByResolution(String multimediaResolution) {
+    public void searchByResolution(String multimediaResolution) {
         LOGGER.info("searchByResolution: into");
         fileList.removeIf(file -> {
             AssetMultimedia multimediaResult = (AssetMultimedia) file;
@@ -664,7 +664,7 @@ public class Search {
      *
      * @param aspectRatio Multimedia Resolution Criteria.
      */
-    private void searchByAspectRatio(String aspectRatio) {
+    public void searchByAspectRatio(String aspectRatio) {
         LOGGER.info("searchByAspectRatio: into");
         fileList.removeIf(file -> {
             AssetMultimedia multimediaResult = (AssetMultimedia) file;

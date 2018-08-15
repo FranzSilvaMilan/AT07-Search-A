@@ -54,6 +54,7 @@ public class FrameMain extends JFrame {
         setLayout(null);
         this.getContentPane().setBackground(Color.DARK_GRAY);
         setVisible(true);
+        setResizable(false);
     }
 
     private void initComponentTable() {
