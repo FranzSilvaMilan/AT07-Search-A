@@ -2,9 +2,12 @@ package com.fundation.search.controller;
 
 import com.fundation.search.utils.Convert;
 import com.fundation.search.utils.ValidatorData;
-import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,6 +15,7 @@ import static org.junit.Assert.assertTrue;
 
 public class TestCriteria {
     private Criteria criteria;
+    private static final String SLASH = System.getProperty("file.separator");
 
     /**
      *
@@ -25,9 +29,11 @@ public class TestCriteria {
      *
      */
     @Test
-    public void testSetPath() {
-        final String path = "E:\\testFiles";
-        assertTrue(new ValidatorData().isPathValid(path));
+    public void testSetPath() throws IOException {
+        final String path = new File(".").getCanonicalPath() + SLASH +"test"+SLASH+"testDirectory";
+        ValidatorData valit =new ValidatorData();
+        boolean isValid = valit.isPathValid(path);
+        assertTrue(isValid);
         criteria.setPath(path);
         assertEquals(path, criteria.getPath());
     }
