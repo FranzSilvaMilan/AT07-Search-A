@@ -154,6 +154,7 @@ public class Controller {
                 String nameCriteria = frame.getPanelMultimedia().getTextCriteria();
                 search.createJson(criteria, nameCriteria);
                 dataBaseLoad();
+                frame.getPanelSearch().showErrorMessage("Saved Criteria");
             }
         });
     }
@@ -219,7 +220,7 @@ public class Controller {
                             selectCriteria[0].getDuration(), selectCriteria[0].getUnitTime()));
                     frame.getPanelMultimedia().setOperatorTime(selectCriteria[0].getOperatorDurationTime());
                     frame.getPanelMultimedia().setUnitTime(selectCriteria[0].getUnitTime());
-
+                    frame.getPanelSearch().showErrorMessage("Loaded Criteria");
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
