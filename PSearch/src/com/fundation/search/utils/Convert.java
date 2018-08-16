@@ -23,6 +23,7 @@ import java.util.Date;
 public class Convert {
     private static final int MODIFIER = 1024;
     private static final double MODIFIERSHOW = 1024;
+
     /**
      * @param size   long of file.
      * @param choose of size.
@@ -42,13 +43,14 @@ public class Convert {
         }
         return size;
     }
+
     /**
      * @param size   long of file.
      * @param choose of size.
      * @return size in bits.
      */
     public double convertTOLongShow(long size, String choose) {
-        double sizeSw=size;
+        double sizeSw = size;
         switch (choose) {
             case "Gb":
                 sizeSw /= (MODIFIERSHOW * MODIFIERSHOW * MODIFIERSHOW);
@@ -88,42 +90,42 @@ public class Convert {
         }
         return result;
     }
+
     public Date convertStringToDate(String dateString) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         try {
-                Date newDate = formatter.parse(dateString);
-                return newDate;
+            Date newDate = formatter.parse(dateString);
+            return newDate;
 
-        }catch (Exception e){return null;}
+        } catch (Exception e) {
+            return null;
+        }
 
     }
 
     public Date convertDateToDateIni(Date date) {
         try {
             String result = "";
-            Date date1 = new Date();
-            if (date != null) {
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                result = dateFormat.format(date);
-                date1 = dateFormat.parse(result);
-            }
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            result = dateFormat.format(date);
+            Date date1 = dateFormat.parse(result);
             return date1;
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return null;
     }
 
     public Date convertDateToDateFin(Date date) {
         try {
-            Date newDate = new Date();
-            if (date != null) {
-                String argTime = "23:59";
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
-                String dateTime = sdf.format(date) + " " + argTime;
-               newDate = dateFormat.parse(dateTime);
-            }
+            String argTime = "23:59";
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
+            String dateTime = sdf.format(date) + " " + argTime;
+            Date newDate = dateFormat.parse(dateTime);
+
             return newDate;
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
         return null;
 
     }
@@ -136,7 +138,7 @@ public class Convert {
      * @return a double number on unit seconds.
      */
     public double convertTimeDurationToDouble(String duration, String time) {
-        if(time != null) {
+        if (time != null) {
             if (time.equalsIgnoreCase("second")) {
                 return Double.parseDouble(duration);
             }
@@ -158,7 +160,7 @@ public class Convert {
      * @return a double number on unit seconds.
      */
     public double convertTimeDurationToDoubleShow(String duration, String time) {
-        if(time != null) {
+        if (time != null) {
             if (time.equalsIgnoreCase("second")) {
                 return Double.parseDouble(duration);
             }
@@ -180,7 +182,7 @@ public class Convert {
      * @return a double number on unit seconds.
      */
     public double convertTimeDurationToDoubleReverse(double duration, String time) {
-        if(time != null) {
+        if (time != null) {
             if (time.equalsIgnoreCase("second")) {
                 return duration;
             }
