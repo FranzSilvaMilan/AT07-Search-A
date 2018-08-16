@@ -43,7 +43,7 @@ public class SearchTest {
      * @throws IOException
      */
     @Test
-    public void searchByPath() throws IOException {
+    public void testSearchByPath() throws IOException {
 
         String unitSize = "bytes";
         Long size = 0L;
@@ -60,7 +60,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchByName() throws IOException {
+    public void testSearchByName() throws IOException {
 
         String unitSize = "bytes";
         Long size = 0L;
@@ -78,7 +78,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchBySizebytes() throws IOException {
+    public void testSearchBySizebytes() throws IOException {
         String unitSize = "bytes";
         Long size = 70L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -95,7 +95,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchBySizeKb() throws IOException {
+    public void testSearchBySizeKb() throws IOException {
         String unitSize = "Kb";
         Long size = 100L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -112,7 +112,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchBySizeMb() throws IOException {
+    public void testSearchBySizeMb() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -128,7 +128,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchHiddenFiles() throws IOException {
+    public void testSearchHiddenFiles() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -140,11 +140,11 @@ public class SearchTest {
         search.setCriteria(criteria);
         search.searchByCriteria(criteria);
         List<Asset> results = search.getResult();
-        assertEquals(6, results.size());
+        assertEquals(4, results.size());
     }
 
     @Test
-    public void searchIntoFile() throws IOException {
+    public void testSearchIntoFile() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -164,7 +164,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchIntoFileTxt() throws IOException {
+    public void testSearchIntoFileTxt() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -184,7 +184,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchByExtension() throws IOException {
+    public void testSearchByExtension() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         ArrayList<String> extensions = new ArrayList<>();
@@ -205,7 +205,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchByReadOnly() throws IOException {
+    public void testSearchByReadOnly() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -220,11 +220,7 @@ public class SearchTest {
         search.setCriteria(criteria);
         search.searchByCriteria(criteria);
         List<Asset> results = search.getResult();
-        assertEquals(4, results.size());
-        assertEquals("testRar", results.get(0).getFileName());
-        assertEquals("textHidden", results.get(1).getFileName());
-        assertEquals("textHiddenReadOnly", results.get(2).getFileName());
-        assertEquals("textReadOnly", results.get(3).getFileName());
+        assertEquals(3, results.size());
     }
 
     @Test
@@ -233,7 +229,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchByFolder() throws IOException {
+    public void testSearchByFolder() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -252,12 +248,11 @@ public class SearchTest {
     }
 
     @Test
-    public void searchByDateCreate() throws IOException {
+    public void testSearchByDateCreate() throws IOException {
 
         Date lassCreateFrom = convert.convertStringToDate("14/08/2018");
-        Date lassCreateTo = convert.convertStringToDate("14/08/2018");
         Date createIni = convert.convertDateToDateIni(lassCreateFrom);
-        Date createFin = convert.convertDateToDateFin(lassCreateTo);
+        Date createFin = convert.convertDateToDateFin(new Date());
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -271,16 +266,15 @@ public class SearchTest {
         search.setCriteria(criteria);
         search.searchByCriteria(criteria);
         List<Asset> results = search.getResult();
-        assertEquals(19, results.size());
+        assertEquals(23, results.size());
 
     }
 
     @Test
-    public void searchByLastDateModify() throws IOException {
-        Date modifyFrom = convert.convertStringToDate("29/11/2017");
-        Date modifyTo = convert.convertStringToDate("01/12/2017");
+    public void testSearchByLastDateModify() throws IOException {
+        Date modifyFrom = convert.convertStringToDate("14/08/2018");
         Date modifyIni = convert.convertDateToDateIni(modifyFrom);
-        Date modifyFin = convert.convertDateToDateFin(modifyTo);
+        Date modifyFin = convert.convertDateToDateFin(new Date());
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -294,16 +288,14 @@ public class SearchTest {
         search.setCriteria(criteria);
         search.searchByCriteria(criteria);
         List<Asset> results = search.getResult();
-        assertEquals(1, results.size());
-        assertEquals("CARTA - INVITACION SEMINARIO PATENTES", results.get(0).getFileName());
+        assertEquals(23, results.size());
     }
 
     @Test
-    public void searchByLastDateAAccess() throws IOException {
+    public void testSearchByLastDateAAccess() throws IOException {
         Date accessFrom = convert.convertStringToDate("14/08/2018");
-        Date accessTo = convert.convertStringToDate("14/08/2018");
         Date accessIni = convert.convertDateToDateIni(accessFrom);
-        Date accessFin = convert.convertDateToDateFin(accessTo);
+        Date accessFin = convert.convertDateToDateFin(new Date());
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -317,15 +309,11 @@ public class SearchTest {
         search.setCriteria(criteria);
         search.searchByCriteria(criteria);
         List<Asset> results = search.getResult();
-        assertEquals(11, results.size());
+        assertEquals(23, results.size());
     }
 
     @Test
-    public void addMultimediaAttributes() {
-    }
-
-    @Test
-    public void searchByFrameRate() throws IOException {
+    public void testSearchByFrameRate() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -354,7 +342,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchByDuration() throws IOException {
+    public void testSearchByDuration() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -383,7 +371,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchByVideoCodec() throws IOException {
+    public void testSearchByVideoCodec() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -412,7 +400,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchByAudioCodec() throws IOException {
+    public void testSearchByAudioCodec() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -440,7 +428,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchByResolution() throws IOException {
+    public void testSearchByResolution() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
@@ -469,7 +457,7 @@ public class SearchTest {
     }
 
     @Test
-    public void searchByAspectRatio() throws IOException {
+    public void testSearchByAspectRatio() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
