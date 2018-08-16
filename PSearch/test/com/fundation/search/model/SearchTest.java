@@ -29,6 +29,7 @@ public class SearchTest {
 
     /**
      * init component before each unit test
+     *
      * @throws Exception
      */
     @Before
@@ -39,8 +40,9 @@ public class SearchTest {
     }
 
     /**
-     * test search by path
-     * @throws IOException
+     * this method test search by path and get all files that path contains.
+     *
+     * @throws IOException if path dont exist.
      */
     @Test
     public void testSearchByPath() throws IOException {
@@ -59,6 +61,11 @@ public class SearchTest {
         assertEquals(23, results.size());
     }
 
+    /**
+     * this method test search by name kb of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchByName() throws IOException {
 
@@ -77,6 +84,11 @@ public class SearchTest {
         assertEquals("Informe Final 3 V1", results.get(0).getFileName());
     }
 
+    /**
+     * this method test search by zise bytes of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchBySizebytes() throws IOException {
         String unitSize = "bytes";
@@ -94,6 +106,11 @@ public class SearchTest {
         assertEquals("CARTA - INVITACION SEMINARIO PATENTES", results.get(0).getFileName());
     }
 
+    /**
+     * this method test search by zise kb of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchBySizeKb() throws IOException {
         String unitSize = "Kb";
@@ -111,6 +128,11 @@ public class SearchTest {
         assertEquals("folderHidden", results.get(1).getFileName());
     }
 
+    /**
+     * this method test search by size Mb of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchBySizeMb() throws IOException {
         String unitSize = "Mb";
@@ -127,6 +149,11 @@ public class SearchTest {
         assertEquals(8, results.size());
     }
 
+    /**
+     * this method test search hidden of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchHiddenFiles() throws IOException {
         String unitSize = "Mb";
@@ -143,12 +170,16 @@ public class SearchTest {
         assertEquals(4, results.size());
     }
 
+    /**
+     * this method test search word into file of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchIntoFile() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
-        //C:\Users\Omen\Desktop\fundacion_jala\modulo 2\PROGRA 102\proyect_search\AT07-Search-A\PSearch\test\testDirectory
         String path = new File(".").getCanonicalPath() + SLASH + "test"
                 + SLASH + "testDirectory";
         criteriaBuild.buildFile(path, "", false, sizeValue, ">", unitSize);
@@ -163,6 +194,11 @@ public class SearchTest {
         assertEquals("metodologia corregir", results.get(1).getFileName());
     }
 
+    /**
+     * this method test search word into file of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchIntoFileTxt() throws IOException {
         String unitSize = "Mb";
@@ -183,6 +219,11 @@ public class SearchTest {
         assertEquals("testSameName", results.get(0).getFileName());
     }
 
+    /**
+     * this method test search by extension of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchByExtension() throws IOException {
         String unitSize = "Mb";
@@ -204,12 +245,16 @@ public class SearchTest {
         assertEquals(6, results.size());
     }
 
+    /**
+     * this method test search by read only of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchByReadOnly() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
-        //C:\Users\Omen\Desktop\fundacion_jala\modulo 2\PROGRA 102\proyect_search\AT07-Search-A\PSearch\test\testDirectory
         String path = new File(".").getCanonicalPath() + SLASH + "test"
                 + SLASH + "testDirectory";
         criteriaBuild.buildFile(path, "", false, sizeValue, ">", unitSize);
@@ -223,17 +268,16 @@ public class SearchTest {
         assertEquals(3, results.size());
     }
 
-    @Test
-    public void searchByOwner() throws IOException {
-
-    }
-
+    /**
+     * this method test search by date modify of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchByFolder() throws IOException {
         String unitSize = "Mb";
         Long size = 0L;
         Long sizeValue = convert.convertTOLong(size, unitSize);
-        //C:\Users\Omen\Desktop\fundacion_jala\modulo 2\PROGRA 102\proyect_search\AT07-Search-A\PSearch\test\testDirectory
         String path = new File(".").getCanonicalPath() + SLASH + "test"
                 + SLASH + "testDirectory";
         criteriaBuild.buildFile(path, "", false, sizeValue, ">", unitSize);
@@ -247,6 +291,11 @@ public class SearchTest {
         assertEquals(4, results.size());
     }
 
+    /**
+     * this method test search by date create of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchByDateCreate() throws IOException {
 
@@ -270,6 +319,11 @@ public class SearchTest {
 
     }
 
+    /**
+     * this method test search by date modify of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchByLastDateModify() throws IOException {
         Date modifyFrom = convert.convertStringToDate("14/08/2018");
@@ -291,6 +345,11 @@ public class SearchTest {
         assertEquals(23, results.size());
     }
 
+    /**
+     * this method test search by date Access of file.
+     *
+     * @throws IOException if path dont exist.
+     */
     @Test
     public void testSearchByLastDateAAccess() throws IOException {
         Date accessFrom = convert.convertStringToDate("14/08/2018");
@@ -312,6 +371,11 @@ public class SearchTest {
         assertEquals(23, results.size());
     }
 
+    /**
+     * this method test search by frame rate of video.
+     *
+     * @throws IOException if dont get metada of videos
+     */
     @Test
     public void testSearchByFrameRate() throws IOException {
         String unitSize = "Mb";
@@ -341,6 +405,11 @@ public class SearchTest {
         assertEquals(0, results.size());
     }
 
+    /**
+     * this method test search by duration of video.
+     *
+     * @throws IOException if dont get metada of videos
+     */
     @Test
     public void testSearchByDuration() throws IOException {
         String unitSize = "Mb";
@@ -370,6 +439,11 @@ public class SearchTest {
         assertEquals("The Simpson", results.get(0).getFileName());
     }
 
+    /**
+     * this method test search by video codec of video.
+     *
+     * @throws IOException if dont get metada of videos
+     */
     @Test
     public void testSearchByVideoCodec() throws IOException {
         String unitSize = "Mb";
@@ -399,6 +473,11 @@ public class SearchTest {
         assertEquals("videoplayback", results.get(0).getFileName());
     }
 
+    /**
+     * this method test search by audio codec of video.
+     *
+     * @throws IOException
+     */
     @Test
     public void testSearchByAudioCodec() throws IOException {
         String unitSize = "Mb";
@@ -427,6 +506,11 @@ public class SearchTest {
         assertEquals(4, results.size());
     }
 
+    /**
+     * this method test search by resolution of video.
+     *
+     * @throws IOException if dont get metada of videos
+     */
     @Test
     public void testSearchByResolution() throws IOException {
         String unitSize = "Mb";
@@ -456,6 +540,11 @@ public class SearchTest {
         assertEquals("Cute Love Story By Kjtoons", results.get(0).getFileName());
     }
 
+    /**
+     * this method test search by acpect ratio of video.
+     *
+     * @throws IOException if dont get metada of videos
+     */
     @Test
     public void testSearchByAspectRatio() throws IOException {
         String unitSize = "Mb";
@@ -482,9 +571,5 @@ public class SearchTest {
         search.searchByCriteria(criteria);
         List<Asset> results = search.getResult();
         assertEquals(3, results.size());
-    }
-
-    @Test
-    public void createJson() {
     }
 }

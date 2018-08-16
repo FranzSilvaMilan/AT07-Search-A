@@ -95,7 +95,7 @@ public class Controller {
     /**
      * this method has the accion listeenr of the button.
      */
-    private void actionListener() {
+    public void actionListener() {
         LOGGER.info("actionListener: into");
         frame.getPanelSearch().getButtonSearch().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
